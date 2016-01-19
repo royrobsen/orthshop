@@ -248,7 +248,7 @@ class ShopController extends Controller
         
         $catId = $request->query->get('cid');
 
-        $finder = $this->container->get('fos_elastica.finder.search.article');
+        $finder = $this->container->get('fos_elastica.finder.my_index.article');
         $boolQuery = new \Elastica\Query\BoolQuery();
                
         if ($request->query->get('c') != NULL) {
