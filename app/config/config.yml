@@ -90,9 +90,9 @@ swiftmailer:
 
 fos_elastica:
   clients:
-    default: { host: 'dWe3mAZctUiGgaCQmDFOAwlPQwP6U0hU:@orth.west-eu.azr.facetflow.io', port: 443 }
+    default: { host: 'localhost', port: 9200 }
   indexes:
-    my_index:
+    search:
       client: default
       settings:
         index:
