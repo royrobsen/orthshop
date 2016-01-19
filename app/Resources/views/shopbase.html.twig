@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="/assets/ico/favicon.png">
+    <title>Ute Orth - Bekleidung + Technik</title>
+    <!-- Bootstrap core CSS -->
+    <link href="/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+    
+    {% block js_top %}
+        
+    <!-- styles needed by swiper slider -->
+    <link href="/assets/css/idangerous.swiper.css" rel="stylesheet">
+
+    {% endblock %}
+    <!-- Custom styles for this template -->
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/skin-5.css" rel="stylesheet">
+    <!-- Just for debugging purposes. -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- include pace script for automatic web page progress bar  -->
+
+    <script>
+        paceOptions = {
+            elements: true
+        };
+    </script>
+    <script src="/assets/js/pace.min.js"></script>
+    <script type="text/javascript">
+    function swapStyleSheet(sheet){
+    document.getElementById('pagestyle').setAttribute('href', sheet);
+    }
+    </script> <style>.themeControll{background:#2d3e50;height:auto;width:100px;position:fixed;left:0;padding:20px;top:20%;z-index:999999;-webkit-transform:translateX(0);-moz-transform:translateX(0);-o-transform:translateX(0);-ms-transform:translateX(0);transform:translateX(0);opacity:1;-ms-filter:none;filter:none;-webkit-transition:opacity .5s linear,-webkit-transform .7s cubic-bezier(.56,.48,0,.99);-moz-transition:opacity .5s linear,-moz-transform .7s cubic-bezier(.56,.48,0,.99);-o-transition:opacity .5s linear,-o-transform .7s cubic-bezier(.56,.48,0,.99);-ms-transition:opacity .5s linear,-ms-transform .7s cubic-bezier(.56,.48,0,.99);transition:opacity .5s linear,transform .7s cubic-bezier(.56,.48,0,.99);}.themeControll.active{display:block;-webkit-transform:translateX(-100px);-moz-transform:translateX(-100px);-o-transform:translateX(-100px);-ms-transform:translateX(-1020px);transform:translateX(-100px);-webkit-transition:opacity .5s linear,-webkit-transform .7s cubic-bezier(.56,.48,0,.99);-moz-transition:opacity .5s linear,-moz-transform .7s cubic-bezier(.56,.48,0,.99);-o-transition:opacity .5s linear,-o-transform .7s cubic-bezier(.56,.48,0,.99);-ms-transition:opacity .5s linear,-ms-transform .7s cubic-bezier(.56,.48,0,.99);transition:opacity .5s linear,transform .7s cubic-bezier(.56,.48,0,.99);}.themeControll a{border-radius:3px;clear:both;display:block;height:25px;margin-bottom:4px;width:50px;}.tbtn{background:#2D3E50;color:#FFFFFF!important;font-size:30px;height:auto;padding:10px;position:absolute;right:-40px;top:0;width:40px;cursor:pointer;}.tbtn2{transform: rotate(90deg); transform-origin: left top 0;}@media (max-width: 780px) {.themeControll{display:none;}}</style>
+</head>
+
+<body>
+
+<!-- Modal Signup start -->
+<div class="modal signUpContent fade" id="ModalSignup" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+                <h3 class="modal-title-site text-center"> REGISTRIEREN </h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group reg-username">
+                    <div>
+                        <input name="login" class="form-control input" size="20" placeholder="Vollständiger Name"
+                               type="text">
+                    </div>
+                </div>
+                <div class="form-group reg-email">
+                    <div>
+                        <input name="reg" class="form-control input" size="20" placeholder="Emailadresse" type="text">
+                    </div>
+                </div>
+                <div class="form-group reg-password">
+                    <div>
+                        <input name="password" class="form-control input" size="20" placeholder="Passwort"
+                               type="password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <div class="checkbox login-remember">
+                            <label>
+                                <input name="rememberme" id="rememberme" value="forever" checked="checked"
+                                       type="checkbox">
+                                Merken </label>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <input name="submit" class="btn  btn-block btn-lg btn-primary" value="REGISTRIEREN" type="submit">
+                    </div>
+                </div>
+                <!--userForm-->
+
+            </div>
+            <div class="modal-footer">
+                <p class="text-center"> Schon Kunde? <a data-toggle="modal" data-dismiss="modal" href="#ModalLogin">
+                    Einloggen </a></p>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+
+    </div>
+    <!-- /.modal-dialog -->
+
+</div>
+<!-- /.ModalSignup End -->
+
+<!-- Fixed navbar start -->
+<div class="navbar navbar-tshop navbar-fixed-top megamenu" role="navigation">
+    <div class="navbar-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 col-xs-6 col-md-6">
+                    <div class="pull-left ">
+                        <ul class="userMenu ">
+                            <li><a href="#"> <span class="hidden-xs">Fragen?</span><i
+                                    class="glyphicon glyphicon-info-sign hide visible-xs "></i> </a></li>
+                            <li class="phone-number"><a href="callto:+49415287870"> <span> <i
+                                    class="glyphicon glyphicon-phone-alt "></i></span> <span class="hidden-xs"
+                                                                                             style="margin-left:5px"> +49 4152 87 87 0 </span>
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-xs-6 col-md-6 no-margin no-padding">
+                    <div class="pull-right">
+                        <ul class="userMenu">
+                            <li><a href="/account/my-account"><span class="hidden-xs"> Mein Konto</span> <i
+                                    class="glyphicon glyphicon-user hide visible-xs "></i></a></li>
+                                   {% if is_granted('ROLE_USER') %}     
+                                    <li><a href="/logout"> <span class="hidden-xs">Ausloggen</span>
+                                   {% else %}
+                                   <li><a href="/login"> <span class="hidden-xs">Einloggen</span>    
+                                   {% endif %}         
+                                <i class="glyphicon glyphicon-log-in hide visible-xs "></i> </a></li>
+                                {% if not is_granted('ROLE_USER') %} 
+                            <li class="hidden-xs"><a href="#" data-toggle="modal" data-target="#ModalSignup"> Neuer Kunde </a></li>
+                                {% endif %}  
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/.navbar-top-->
+
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span
+                    class="sr-only"> Toggle navigation </span> <span class="icon-bar"> </span> <span
+                    class="icon-bar"> </span> <span class="icon-bar"> </span></button>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-cart"><i
+                    class="fa fa-shopping-cart colorWhite"> </i> <span
+                    class="cartRespons colorWhite"> Korb ($210.00) </span></button>
+            <a class="navbar-brand" href="/"> <img src="/images/logo.png" alt="Ute Orth"> </a>
+
+            <!-- this part for mobile -->
+            <div class="search-box pull-right hidden-lg hidden-md hidden-sm">
+                <div class="input-group">
+                    <button class="btn btn-nobg getFullSearch" type="button"><i class="fa fa-search"> </i></button>
+                </div>
+                <!-- /input-group -->
+
+            </div>
+        </div>
+
+        <!-- this part is duplicate from cartMenu  keep it for mobile -->
+        <div class="navbar-cart  collapse">
+            <div class="cartMenu  col-lg-4 col-xs-12 col-md-4 ">
+                <div class="w100 miniCartTable scroll-pane">
+                    <table>
+                        <tbody>
+                        <tr class="miniCartProduct">
+                            <td style="20%" class="miniCartProductThumb">
+                                <div><a href="product-details.html"> <img src="/images/product/3.jpg" alt="img"> </a>
+                                </div>
+                            </td>
+                            <td style="40%">
+                                <div class="miniCartDescription">
+                                    <h4><a href="product-details.html"> TSHOP T shirt Black </a></h4>
+                                    <span class="size"> 12 x 1.5 L </span>
+
+                                    <div class="price"><span> $8.80 </span></div>
+                                </div>
+                            </td>
+                            <td style="10%" class="miniCartQuantity"><a> X 1 </a></td>
+                            <td style="15%" class="miniCartSubtotal"><span> $8.80 </span></td>
+                            <td style="5%" class="delete"><a> x </a></td>
+                        </tr>
+                        <tr class="miniCartProduct">
+                            <td style="20%" class="miniCartProductThumb">
+                                <div><a href="product-details.html"> <img src="/images/product/2.jpg" alt="img"> </a>
+                                </div>
+                            </td>
+                            <td style="40%">
+                                <div class="miniCartDescription">
+                                    <h4><a href="product-details.html"> TSHOP T shirt Black </a></h4>
+                                    <span class="size"> 12 x 1.5 L </span>
+
+                                    <div class="price"><span> $8.80 </span></div>
+                                </div>
+                            </td>
+                            <td style="10%" class="miniCartQuantity"><a> X 1 </a></td>
+                            <td style="15%" class="miniCartSubtotal"><span> $8.80 </span></td>
+                            <td style="5%" class="delete"><a> x </a></td>
+                        </tr>
+                        <tr class="miniCartProduct">
+                            <td style="20%" class="miniCartProductThumb">
+                                <div><a href="product-details.html"> <img src="/images/product/5.jpg" alt="img"> </a>
+                                </div>
+                            </td>
+                            <td style="40%">
+                                <div class="miniCartDescription">
+                                    <h4><a href="product-details.html"> TSHOP T shirt Black </a></h4>
+                                    <span class="size"> 12 x 1.5 L </span>
+
+                                    <div class="price"><span> $8.80 </span></div>
+                                </div>
+                            </td>
+                            <td style="10%" class="miniCartQuantity"><a> X 1 </a></td>
+                            <td style="15%" class="miniCartSubtotal"><span> $8.80 </span></td>
+                            <td style="5%" class="delete"><a> x </a></td>
+                        </tr>
+                        <tr class="miniCartProduct">
+                            <td style="20%" class="miniCartProductThumb">
+                                <div><a href="product-details.html"> <img src="/images/product/3.jpg" alt="img"> </a>
+                                </div>
+                            </td>
+                            <td style="40%">
+                                <div class="miniCartDescription">
+                                    <h4><a href="product-details.html"> TSHOP T shirt Black </a></h4>
+                                    <span class="size"> 12 x 1.5 L </span>
+
+                                    <div class="price"><span> $8.80 </span></div>
+                                </div>
+                            </td>
+                            <td style="10%" class="miniCartQuantity"><a> X 1 </a></td>
+                            <td style="15%" class="miniCartSubtotal"><span> $8.80 </span></td>
+                            <td style="5%" class="delete"><a> x </a></td>
+                        </tr>
+                        <tr class="miniCartProduct">
+                            <td style="20%" class="miniCartProductThumb">
+                                <div><a href="product-details.html"> <img src="/images/product/3.jpg" alt="img"> </a>
+                                </div>
+                            </td>
+                            <td style="40%">
+                                <div class="miniCartDescription">
+                                    <h4><a href="product-details.html"> TSHOP T shirt Black </a></h4>
+                                    <span class="size"> 12 x 1.5 L </span>
+
+                                    <div class="price"><span> $8.80 </span></div>
+                                </div>
+                            </td>
+                            <td style="10%" class="miniCartQuantity"><a> X 1 </a></td>
+                            <td style="15%" class="miniCartSubtotal"><span> $8.80 </span></td>
+                            <td style="5%" class="delete"><a> x </a></td>
+                        </tr>
+                        <tr class="miniCartProduct">
+                            <td style="20%" class="miniCartProductThumb">
+                                <div><a href="product-details.html"> <img src="/images/product/4.jpg" alt="img"> </a>
+                                </div>
+                            </td>
+                            <td style="40%">
+                                <div class="miniCartDescription">
+                                    <h4><a href="product-details.html"> TSHOP T shirt Black </a></h4>
+                                    <span class="size"> 12 x 1.5 L </span>
+
+                                    <div class="price"><span> $8.80 </span></div>
+                                </div>
+                            </td>
+                            <td style="10%" class="miniCartQuantity"><a> X 1 </a></td>
+                            <td style="15%" class="miniCartSubtotal"><span> $8.80 </span></td>
+                            <td style="5%" class="delete"><a> x </a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--/.miniCartTable-->
+
+                <div class="miniCartFooter  miniCartFooterInMobile text-right">
+                    <h3 class="text-right subtotal"> Subtotal: $210 </h3>
+                    <a class="btn btn-sm btn-danger"> <i class="fa fa-shopping-cart"> </i> VIEW CART </a> <a
+                        class="btn btn-sm btn-primary"> CHECKOUT </a></div>
+                <!--/.miniCartFooter-->
+
+            </div>
+            <!--/.cartMenu-->
+        </div>
+        <!--/.navbar-cart-->
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#"> Home </a></li>
+                <li class="dropdown megamenu-fullwidth"><a data-toggle="dropdown" class="dropdown-toggle" href="#"> SERVICE <b class="caret"> </b> </a>
+                    <ul class="dropdown-menu">
+                        <li class="megamenu-content ">
+                            <ul class="col-lg-3  col-sm-3 col-md-3 unstyled noMarginLeft newCollectionUl">
+                                <li class="no-border">
+                                    <p class="promo-1"><strong> Was wir bieten </strong></p>
+                                </li>
+                                <li><a href="/arbeitsschutz"> Arbeitsschutz </a></li>
+                                <li><a href="/berufsbekleidung"> Berufsbekleidung </a></li>
+                                <li><a href="/emblemservice"> Emblemservice </a></li>
+                                <li><a href="/hygieneartikel"> Hygieneartikel </a></li>
+                                <li><a href="/werkzeugtechnik"> Werkzeugtechik </a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- change width of megamenu = use class > megamenu-fullwidth, megamenu-60width, megamenu-40width -->
+                <li class="dropdown megamenu-fullwidth"><a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    SHOP <b class="caret"> </b> </a>
+                    <ul class="dropdown-menu">
+                        <li class="megamenu-content">
+
+                            <!-- megamenu-content -->
+
+                            <h3 class="promo-1 no-margin hidden-xs"> Von Bekleidung bis Technik - hier findet man alles! </h3>
+
+                            <h3 class="promo-1sub hidden-xs"> </h3>
+                            <ul class="col-lg-2  col-sm-2 col-md-2 unstyled">
+                                <li class="no-border">
+                                    <p><strong> Arbeitsschutz</strong></p>
+                                </li>
+                                <li><a href="/shop/suche/1435"> Atemschutz </a></li>
+                                <li><a href="/shop/suche/664"> Augenschutz </a></li>
+                                <li><a href="/shop/suche/465"> Brandschutz </a></li>
+                                <li><a href="/shop/suche/2468"> Erste Hilfe </a></li>
+                                <li><a href="/shop/suche/574"> Gebotszeichen </a></li>
+                                <li><a href="/shop/suche/659"> Gehörschutz </a></li>
+                                <li><a href="/shop/suche/679"> Handschutz </a></li>
+                                <li><a href="/shop/suche/2473"> Hautschutz & -pflege </a></li>
+                                <li><a href="/shop/suche/693"> Hitzeschutz </a></li>
+                                <li><a href="/shop/suche/666"> Kopfschutz </a></li>
+                                <li><a href="/shop/suche/701"> PSA gegen Absturz </a></li>
+                                <li><a href="/shop/suche/99"> Sonstiger Arbeitsschutz </a></li>
+                            </ul>
+                            <ul class="col-lg-2  col-sm-2 col-md-2 unstyled">
+                                <li class="no-border">
+                                    <p><strong> Berufsbekleidung </strong></p>
+                                </li>
+                                <li><b><a href="category.html"> Hakro </a></b></li>
+                                <li><b><a href="category.html"> Kübler </a></b></li>
+                                <li><a href="/shop/suche/1519"> Arbeitskleidung </a></li>
+                                <li><a href="/shop/suche/2406"> Chemikalienschutz </a></li>
+                                <li><a href="/shop/suche/2405"> Einwegbekleidung </a></li>
+                                <li><a href="/shop/suche/1498"> Forstbekleidung </a></li>
+                                <li><a href="/shop/suche/1574"> Kälteschutz </a></li>
+                                <li><a href="/shop/suche/1610"> Schweisser- und Hitzeschutz </a></li>
+                                <li><a href="/shop/suche/2431"> Warnschutz </a></li>
+                                <li><a href="/shop/suche/2425"> Wetter-/Regenschutz </a></li>
+                                <li><a href="/shop/suche/1512"> Zunftbekleidung</a></li>
+                            </ul>
+                            <ul class="col-lg-2  col-sm-2 col-md-2 unstyled">
+                                <li class="no-border">
+                                    <p><strong> Schuhe </strong></p>
+                                </li>
+                                <li><b><a href="category.html"> Atlas </a></b></li>
+                                <li><b><a href="category.html"> LeMaitre </a></b></li>
+                                <li><b><a href="category.html"> Otter </a></b></li>
+                                <li><a href="/shop/suche/1590"> Schuhe </a></li>
+                                <li><a href="/shop/suche/1591"> Stiefel</a></li>
+                                <li><a href="/shop/suche/1589"> Sandalen</a></li>
+                                <li><a href="/shop/suche/1594"> Socken</a></li>
+                                <li><a href="/shop/suche/1592"> Gummistiefel</a></li>
+                                <li><a href="/shop/suche/1593"> Schuhzubehör</a></li>
+                            </ul>
+                            <ul class="col-lg-2  col-sm-2 col-md-2 unstyled">
+                                <li class="no-border">
+                                    <p><strong> Technik </strong></p>
+                                </li>
+                                <li><a href="/shop/suche/6088"> Bautechnik </a></li>
+                                <li><a href="/shop/suche/6089"> Befestigungstechnik </a></li>
+                                <li><a href="/shop/suche/6090"> Beschlagsysteme & Sicherheitstechnik </a></li>
+                                <li><a href="/shop/suche/354"> Elektrotechnik </a></li>
+                                <li><a href="/shop/suche/817"> Garten- und Landschaftsbau </a></li>
+                                <li><a href="/shop/suche/3823"> Industrietechnik </a></li>
+                                <li><a href="/shop/suche/3855"> Lager- und Betriebseinrichtung </a></li>
+                                <li><a href="/shop/suche/127"> Maschinenelemente, Befestigungsmittel </a></li>
+                                <li><a href="/shop/suche/61"> Schweiß- und Schneidtechnik</a></li>
+                                <li><a href="/shop/suche/115"> Werkzeuge </a></li>
+                                <li><a href="/shop/suche/119"> Werkzeugmaschinen </a></li>
+                            </ul>
+                            <ul class="col-lg-2  col-sm-2 col-md-2 unstyled">
+                                <li class="no-border">
+                                    <p><strong> Werkzeuge</strong></p>
+                                </li>
+                                <li><a href="/suche?c=6232"> Messtechnik</a></li>
+                                <li><a href="/suche?c6296="> Schleiftechnik </a></li>
+                            </ul>
+                            <ul class="col-lg-2  col-sm-2 col-md-2 unstyled">
+                                <li class="no-border">
+                                    <p><strong> Hygiene & Reinigung </strong></p>
+                                </li>
+                                <li><a href="blank-page.html"> Abfallbeseitung </a></li>
+                                <li><a href="single-subscribe-modal.html"> Reinigungsmittel</a></li>
+                                <li><a href="error-page.html"> Waschraumausstattung </a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                
+
+                {% if is_granted('ROLE_BCUSTOMER') %} 
+                    <li><a href="/account/bestellsystem"> Bestellsystem </a></li>
+                {% endif %}
+
+
+            </ul>
+
+            <!--- this part will be hidden for mobile version -->
+            <div class="nav navbar-nav navbar-right hidden-xs">
+                <div class="dropdown  cartMenu "><a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i
+                        class="fa fa-shopping-cart"> </i> <span class="cartRespons"> Warenkorb</span> <b
+                        class="caret"> </b> </a>
+
+                            {{ render(controller('OrthIndexBundle:Shop:miniCart', { 'max': 3 })) }}
+                        
+                </div>
+                <!--/.cartMenu-->
+
+                <div class="search-box">
+                    <div class="input-group">
+                        <button class="btn btn-nobg getFullSearch" type="button"><i class="fa fa-search">  </i> <span style="font-size: 14px; font-weight: 600; line-height: 20px;">  Suche </span> </button>
+                    </div>
+                    <!-- /input-group -->
+
+                </div>
+                <!--/.search-box -->
+            </div>
+            <!--/.navbar-nav hidden-xs-->
+        </div>
+        <!--/.nav-collapse -->
+
+    </div>
+    <!--/.container -->
+
+    <div class="search-full text-right"><a class="pull-right search-close"> <i class=" fa fa-times-circle"> </i> </a>
+        <form action="/shop/suche" method="get">
+            <div class="searchInputBox pull-right">
+                <input type="search" name="q" placeholder="Suchbegriff eingeben"
+                       class="search-input">
+                <button class="btn-nobg search-btn" type="submit"><i class="fa fa-search"> </i></button>
+            </div>
+        </form>    
+    </div>
+    <!--/.search-full-->
+
+</div>
+<div class="themeControll">
+<h3 class="uppercase color-white text-center" style="width: 60px; font-size: 10px; line-height: 12px;"> Sie haben Fragen oder brauchen Hilfe?</h3>
+<p class="tbtn">
+    <i class="fa fa-angle-double-left"></i>
+</p>
+<p class="tbtn2">
+    HILFE
+</p>
+</div>                       
+                                
+{% block content %}
+<!-- /.Fixed navbar  -->
+<div class="banner banner-boxes">
+    <div class="slider-content"><span class="prevControl sliderControl"> <i class="fa fa-angle-left fa-3x "></i></span>
+        <span class="nextControl sliderControl"> <i class="fa fa-angle-right fa-3x "></i></span>
+
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide slide-2x">
+                    <div class="box-slider-content">
+                        <div class="box-text">
+                            <a class="btn btn-stroke-light"> ÜBER UNS</a></div>
+                        <div class="box-content-overly">
+                            <!-- Delete this div if you dont want overly effect -->
+                        </div>
+                        <a href="#" class="box-img"> <img src="/images/slider/box/1.jpg" alt="img"></a></div>
+                </div>
+                <div class="swiper-slide slide-2x">
+                    <div class="slider-box-top">
+                        <div class="box-slider-content">
+                            <div class="box-text-table">
+                                <div class="box-text-cell">
+                                    <h1 class="bolder-style light" style="font-size: 40px;"><a href="#">EMBLEMSERVICE</a></h1>
+                                    <span class="bolder-sub"> <a href="#"> WIR BESTICKEN, BEFLOCKEN UND PATCHEN </a> </span></div>
+                            </div>
+                            <div class="box-content-overly">
+                                <!-- Delete this div if you dont want overly effect -->
+                            </div>
+                            <a href="#" class="box-img"> <img src="/images/slider/box/emblembg.jpg" alt="img"></a></div>
+                    </div>
+                    <div class="slider-box-bottom">
+                        <div class="box-slider-content">
+                            <div class="box-text-table">
+                                <div class="box-text-cell">
+                                    <h1 class="bolder-style light" style="font-size: 40px;"><a href="#">Werkzeugtechnik</a></h1>
+                                    <span class="bolder-sub"> <a href="#"> Ihr Parter im C-Teile Management </a> </span></div>
+                            </div>
+                            <div class="box-content-overly">
+                                <!-- Delete this div if you dont want overly effect -->
+                            </div>
+                            <a href="#" class="box-img"> <img src="/images/slider/box/werkzeug.jpg" alt="img"> </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide slide-2x">
+                    <div class="box-slider-content">
+                        <div class="box-text bottom-align">
+                            <h2>Berufsbekleidung</h2>
+                            <a class="btn btn-stroke-light"> Jetzt ansehen</a></div>
+                        <a href="#" class="box-img"> <img src="/images/slider/box/berufsbekleidung.jpg" alt="img"></a>
+
+                        <div class="box-content-overly"><a href="#" class="box-blank-url"> </a></div>
+                    </div>
+                </div>
+                <div class="swiper-slide slide-4x">
+                    <div class="box-4in a">
+                        <div class="box-slider-content"><a href="#" class="box-img"> <img src="/images/slider/box/4a.jpg"
+                                                                                          alt="img"></a>
+
+                            <div class="box-content-overly"><a href="#" class="box-blank-url"> </a></div>
+                        </div>
+                    </div>
+                    <div class="box-4in b">
+                        <div class="box-slider-content"><a href="#" class="box-img"> <img src="/images/slider/box/4b.jpg"
+                                                                                          alt="img"></a>
+
+                            <div class="box-content-overly"><a href="#" class="box-blank-url"> </a></div>
+                        </div>
+                    </div>
+                    <div class="box-4in c">
+                        <div class="box-slider-content"><a href="#" class="box-img"> <img src="/images/slider/box/4c.jpg"
+                                                                                          alt="img"></a>
+
+                            <div class="box-content-overly box-content-overly-white">
+                                <div class="box-text-table">
+                                    <div class="box-text-cell"><a class="btn btn-stroke-dark"> VIEW DEAL</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-4in d">
+                        <div class="box-slider-content"><a href="#" class="box-img"> <img src="/images/slider/box/4d.jpg"
+                                                                                          alt="img"></a>
+
+                            <div class="box-content-overly box-content-overly-white">
+                                <div class="box-text-table">
+                                    <div class="box-text-cell"><a class="btn btn-stroke-dark"> VIEW DEAL</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide slide-2x">
+                    <div class="box-slider-content"><a href="#" class="box-img"> <img src="/images/slider/box/6.jpg"
+                                                                                      alt="img"></a>
+
+                        <div class="box-content-overly box-content-overly-white">
+                            <div class="box-text-table">
+                                <div class="box-text-cell ">
+                                    <div class="box-text-cell-inner dark">
+                                        <h1>New Summer Look</h1>
+
+                                        <p>Veggies es bonus vobis, proinde vos postulo essum magis
+                                            kohlrabi welsh onion daikon amaranth.</p>
+                                        <a class="btn btn-stroke-dark"> SHOP NOW</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide slide-2x">
+                    <div class="slider-box-top">
+                        <div class="box-slider-content">
+                            <div class="box-content-overly box-content-overly-white">
+                                <div class="box-text-table">
+                                    <div class="box-text-cell"><span class="price dealprice"> Werkzeuge </span> <a
+                                            class="btn btn-stroke-dark"> Ansehen</a></div>
+                                </div>
+                            </div>
+                            <a href="#" class="box-img"> <img src="/images/slider/box/werkzeug.jpg" alt="img"></a></div>
+                    </div>
+                    <div class="slider-box-bottom">
+                        <div class="box-4in c">
+                            <div class="box-slider-content"><a href="#" class="box-img"> <img
+                                    src="/images/slider/box/7b1.jpg" alt="img"></a>
+
+                                <div class="box-content-overly box-content-overly-white">
+                                    <div class="box-text-table">
+                                        <div class="box-text-cell"><span class="price"> $ 450 </span> <a
+                                                class="btn btn-stroke-dark"> VIEW DEAL</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-4in d">
+                            <div class="box-slider-content"><a href="#" class="box-img"> <img
+                                    src="/images/slider/box/7b2.jpg" alt="img"></a>
+
+                                <div class="box-content-overly box-content-overly-white">
+                                    <div class="box-text-table">
+                                        <div class="box-text-cell"><span class="price"> $ 680 </span> <a
+                                                class="btn btn-stroke-dark"> VIEW DEAL</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide slide-1x">
+                    <div class="box-slider-content"><a href="#" class="box-img last-child-slide"> <img
+                            src="/images/slider/box/5.jpg" alt="img"></a>
+
+                        <div class="box-content-overly box-content-overly-white">
+                            <div class="box-text-table">
+                                <div class="box-text-cell ">
+                                    <div class="box-text-cell-inner dark">
+                                        <h1>Discover it</h1>
+
+                                        <p>Veggies es bonus vobis, proinde vos postulo essum magis
+                                            kohlrabi welsh onion daikon amaranth.</p>
+                                        <a class="btn btn-stroke-dark"> SHOP NOW</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-pagination"></div>
+        </div>
+
+        <!--/.full-container-->
+    </div>
+</div>
+<!--/.banner style1-->
+
+<div class="container main-container">
+
+    <!-- Main component call to action -->
+
+    <div class="row featuredPostContainer globalPadding style2">
+        <h3 class="section-title style2 text-center"><span>PREMIUM LIEFERANTEN</span></h3>
+      
+        <section class="logos-grid wf-container animation-builder grid-ready">
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell border-left-none">
+                <div class="borders" style="height: 80px; line-height: 80px;">
+                    <a title="" target="_blank" href="http://kuebler.eu">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="CG" src="/images/suppliers/Kuebler_Logo1.png">
+                    </a>
+                </div>    
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
+                <div class="borders" style="height: 80px; line-height: 80px;">
+                    <a title="" target="_blank" href="http://atlasschuhe.de">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Greiff" src="/images/suppliers/atlas.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
+                <div class="borders" style="height: 80px; line-height: 80px;">
+                    <a title="" target="_blank" href="http://www.otter-schutz.de/">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Hiza" src="/images/suppliers/otter.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
+                <div class="borders" style="height: 80px; line-height: 80px;">
+                    <a title="" target="_blank" href="http://www.jobman.se/">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Hummel" src="/images/suppliers/jobman.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
+                <div class="borders" style="height: 80px; line-height: 80px;">
+                    <a title="" target="_blank" href="http://www.hakro.com/">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Hummel" src="/images/suppliers/hakro.png">
+                    </a>
+                </div>
+            </div>
+        </section>
+        <div class="clearfix"></div>
+        <h3 class="section-title style2 text-center"><span>WEITERE LIEFERANTEN</span></h3>
+        
+        <section class="logos-grid wf-container animation-builder grid-ready">
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell border-left-none">
+                <div class="borders" style="height: 80px; line-height: 80px;">
+                    <a title="" target="_blank" href="http://www.cginternational.de/blaetterkataloge-95.html">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="CG" src="http://ute-orth.de/wp-content/uploads/2014/01/cg.png">
+                    </a>
+                </div>    
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
+                <div class="borders" style="height: 80px; line-height: 80px;">
+                    <a title="" target="_blank" href="http://greiff.de/kollektion/corporate-wear/">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Greiff" src="http://ute-orth.de/wp-content/uploads/2014/01/greiff.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
+                <div class="borders" style="height: 80px; line-height: 80px;">
+                    <a title="" target="_blank" href="http://www.hiza.de/">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Hiza" src="http://ute-orth.de/wp-content/uploads/2014/01/hiza.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
+                <div class="borders" style="height: 80px; line-height: 80px;">
+                    <a title="" target="_blank" href="http://www.hummel.net/">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Hummel" src="http://ute-orth.de/wp-content/uploads/2014/01/hummel.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
+                <div class="borders" style="height: 80px; line-height: 80px;">
+                    <a title="" target="_blank" href="http://www.leiber.de/component/content/article/9-service/9-kataloge">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Leiber" src="http://ute-orth.de/wp-content/uploads/2014/01/leiber.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell" >
+                <div class="borders" style="height: 80px; line-height: 80px;">
+                    <a title="" target="_blank" href="http://www.olymp.com/de/home.html">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Olymp" src="http://ute-orth.de/wp-content/uploads/2014/01/olymp.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
+                <div class="borders" style="height: 80px; line-height: 80px;">
+                    <a title="" target="_blank" href="http://www.russelleurope.com/catalogue">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="russel" src="http://ute-orth.de/wp-content/uploads/2014/01/russel.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
+                <div class="borders" style="height: 80px; line-height: 80px;">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="dräger" src="http://ute-orth.de/wp-content/uploads/2014/02/dräger.png">
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
+                <div class="borders" style="height: 80px; line-height: 80px;">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="feldtmann" src="http://ute-orth.de/wp-content/uploads/2014/02/feldtmann.png">
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
+                <div class="borders" style="height: 80px; line-height: 80px;">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Texxor" src="http://ute-orth.de/wp-content/uploads/2014/02/texxor.png">
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell border-left-none">
+                <div class="borders" style="">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="3M" src="http://ute-orth.de/wp-content/uploads/2014/03/3M.png">
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
+                <div class="borders" style="">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Ansell" src="http://ute-orth.de/wp-content/uploads/2014/03/ansell.png">
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
+                <div class="borders" style="">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Greven" src="http://ute-orth.de/wp-content/uploads/2014/03/greven.png">
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
+                <div class="borders" style="">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Moldex" src="http://ute-orth.de/wp-content/uploads/2014/03/moldex.png">
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
+                <div class="borders" style="">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Peltor" src="http://ute-orth.de/wp-content/uploads/2014/03/peltor.png">
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell border-left-none">
+                <div class="borders" style="">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Plum" src="http://ute-orth.de/wp-content/uploads/2014/03/plum.png">
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
+                <div class="borders" style="">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Schuberth" src="http://ute-orth.de/wp-content/uploads/2014/03/schuberth.png">
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
+                <div class="borders" style="">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Söhngen" src="http://ute-orth.de/wp-content/uploads/2014/03/söngen.png">
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
+                <div class="borders" style="">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Voss" src="http://ute-orth.de/wp-content/uploads/2014/03/voss.png">
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
+                <div class="borders" style="">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Seidensticker" src="http://ute-orth.de/wp-content/uploads/2015/09/seidensticker.png">
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell border-left-none border-bottom-none">
+                <div class="borders" style="">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Eterna" src="http://ute-orth.de/wp-content/uploads/2015/09/eterna.png">
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell border-bottom-none">
+                <div class="borders" style="">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Nordwest" src="http://ute-orth.de/wp-content/uploads/2015/09/nw3.png">
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell border-bottom-none">
+                <div class="borders" style="">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Promat" src="http://ute-orth.de/wp-content/uploads/2015/09/promat1.png">
+                </div>
+            </div>  
+        </section>
+    </div>
+    <!--/.featuredPostContainer-->
+</div>
+<!-- /main container -->
+
+<div class="parallax-section parallax-image-1">
+    <div class="container">
+        <div class="row ">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="parallax-content clearfix">
+                    <h1 class="parallaxPrce"> 200 € </h1>
+
+                    <h2 class="uppercase">Lieferung Frei Haus ab einem Warenwert von 200 €*</h2>
+
+                    <h3> *gültig nur für Paketdienstfähige Bestellungen </h3>
+
+                    <div style="clear:both"></div>
+                    <a href="/shop" class="btn btn-discover "> <i class="fa fa-shopping-cart"></i> JETZT ZUM SHOP </a></div>
+            </div>
+        </div>
+        <!--/.row-->
+    </div>
+    <!--/.container-->
+</div>
+<!--/.parallax-image-1-->
+
+<div class="container main-container">
+
+    <!-- Main component call to action -->
+
+    <div class="morePost row featuredPostContainer style2 globalPaddingTop ">
+        <h3 class="section-title style2 text-center"><span>FEATURES PRODUCT</span></h3>
+
+        <div class="container">
+            <div class="row xsResponse">
+                <div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                    <div class="product">
+                        <a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"
+                           data-placement="left">
+                            <i class="glyphicon glyphicon-heart"></i>
+                        </a>
+
+                        <div class="image">
+                            <div class="quickview">
+                                <a title="Quick View" class="btn btn-xs  btn-quickview"
+                                   data-target="#product-details-modal" data-toggle="modal"> Quick View </a>
+                            </div>
+                            <a href="product-details.html"><img src="images/product/30.jpg" alt="img"
+                                                                class="img-responsive"></a>
+
+                            <div class="promotion"><span class="new-product"> NEW</span> <span
+                                    class="discount">15% OFF</span></div>
+                        </div>
+                        <div class="description">
+                            <h4><a href="product-details.html">aliquam erat volutpat</a></h4>
+
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                            <span class="size">XL / XXL / S </span></div>
+                        <div class="price"><span>$25</span> <span class="old-price">$75</span></div>
+                        <div class="action-control"><a class="btn btn-primary"> <span class="add2cart"><i
+                                class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a></div>
+                    </div>
+                </div>
+                <!--/.item-->
+                <div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                    <div class="product">
+                        <a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"
+                           data-placement="left">
+                            <i class="glyphicon glyphicon-heart"></i>
+                        </a>
+
+                        <div class="image">
+                            <div class="quickview">
+                                <a title="Quick View" class="btn btn-xs  btn-quickview"
+                                   data-target="#product-details-modal" data-toggle="modal"> Quick View </a>
+                            </div>
+                            <a href="product-details.html"><img src="images/product/31.jpg" alt="img"
+                                                                class="img-responsive"></a>
+
+                            <div class="promotion"><span class="discount">15% OFF</span></div>
+                        </div>
+                        <div class="description">
+                            <h4><a href="product-details.html">ullamcorper suscipit lobortis </a></h4>
+
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                            <span class="size">XL / XXL / S </span></div>
+                        <div class="price"><span>$25</span></div>
+                        <div class="action-control"><a class="btn btn-primary"> <span class="add2cart"><i
+                                class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a></div>
+                    </div>
+                </div>
+                <!--/.item-->
+                <div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                    <div class="product">
+                        <a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"
+                           data-placement="left">
+                            <i class="glyphicon glyphicon-heart"></i>
+                        </a>
+
+                        <div class="image">
+                            <div class="quickview">
+                                <a title="Quick View" class="btn btn-xs  btn-quickview"
+                                   data-target="#product-details-modal" data-toggle="modal"> Quick View </a>
+                            </div>
+                            <a href="product-details.html"><img src="images/product/34.jpg" alt="img"
+                                                                class="img-responsive"></a>
+
+                            <div class="promotion"><span class="new-product"> NEW</span></div>
+                        </div>
+                        <div class="description">
+                            <h4><a href="product-details.html">demonstraverunt lectores </a></h4>
+
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                            <span class="size">XL / XXL / S </span></div>
+                        <div class="price"><span>$25</span></div>
+                        <div class="action-control"><a class="btn btn-primary"> <span class="add2cart"><i
+                                class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a></div>
+                    </div>
+                </div>
+                <!--/.item-->
+                <div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                    <div class="product">
+                        <a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"
+                           data-placement="left">
+                            <i class="glyphicon glyphicon-heart"></i>
+                        </a>
+
+                        <div class="image">
+                            <div class="quickview">
+                                <a title="Quick View" class="btn btn-xs  btn-quickview"
+                                   data-target="#product-details-modal" data-toggle="modal"> Quick View </a>
+                            </div>
+                            <a href="product-details.html"><img src="images/product/12.jpg" alt="img"
+                                                                class="img-responsive"></a></div>
+                        <div class="description">
+                            <h4><a href="product-details.html">humanitatis per</a></h4>
+
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                            <span class="size">XL / XXL / S </span></div>
+                        <div class="price"><span>$25</span></div>
+                        <div class="action-control"><a class="btn btn-primary"> <span class="add2cart"><i
+                                class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a></div>
+                    </div>
+                </div>
+                <!--/.item-->
+                <div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                    <div class="product">
+                        <a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"
+                           data-placement="left">
+                            <i class="glyphicon glyphicon-heart"></i>
+                        </a>
+
+                        <div class="image">
+                            <div class="quickview">
+                                <a title="Quick View" class="btn btn-xs  btn-quickview"
+                                   data-target="#product-details-modal" data-toggle="modal"> Quick View </a>
+                            </div>
+                            <a href="product-details.html"><img src="images/product/33.jpg" alt="img"
+                                                                class="img-responsive"></a></div>
+                        <div class="description">
+                            <h4><a href="product-details.html">Eodem modo typi</a></h4>
+
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                            <span class="size">XL / XXL / S </span></div>
+                        <div class="price"><span>$25</span></div>
+                        <div class="action-control"><a class="btn btn-primary"> <span class="add2cart"><i
+                                class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a></div>
+                    </div>
+                </div>
+                <!--/.item-->
+                <div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                    <div class="product">
+                        <a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"
+                           data-placement="left">
+                            <i class="glyphicon glyphicon-heart"></i>
+                        </a>
+
+                        <div class="image">
+                            <div class="quickview">
+                                <a title="Quick View" class="btn btn-xs  btn-quickview"
+                                   data-target="#product-details-modal" data-toggle="modal"> Quick View </a>
+                            </div>
+                            <a href="product-details.html"><img src="images/product/10.jpg" alt="img"
+                                                                class="img-responsive"></a></div>
+                        <div class="description">
+                            <h4><a href="product-details.html">sequitur mutationem </a></h4>
+
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                            <span class="size">XL / XXL / S </span></div>
+                        <div class="price"><span>$25</span></div>
+                        <div class="action-control"><a class="btn btn-primary"> <span class="add2cart"><i
+                                class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a></div>
+                    </div>
+                </div>
+                <!--/.item-->
+                <div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                    <div class="product">
+                        <a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"
+                           data-placement="left">
+                            <i class="glyphicon glyphicon-heart"></i>
+                        </a>
+
+                        <div class="image">
+                            <div class="quickview">
+                                <a title="Quick View" class="btn btn-xs  btn-quickview"
+                                   data-target="#product-details-modal" data-toggle="modal"> Quick View </a>
+                            </div>
+                            <a href="product-details.html"><img src="images/product/37.jpg" alt="img"
+                                                                class="img-responsive"></a></div>
+                        <div class="description">
+                            <h4><a href="product-details.html">consuetudium lectorum.</a></h4>
+
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                            <span class="size">XL / XXL / S </span></div>
+                        <div class="price"><span>$25</span></div>
+                        <div class="action-control"><a class="btn btn-primary"> <span class="add2cart"><i
+                                class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a></div>
+                    </div>
+                </div>
+                <!--/.item-->
+                <div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                    <div class="product">
+                        <a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"
+                           data-placement="left">
+                            <i class="glyphicon glyphicon-heart"></i>
+                        </a>
+
+                        <div class="image">
+                            <div class="quickview">
+                                <a title="Quick View" class="btn btn-xs  btn-quickview"
+                                   data-target="#product-details-modal" data-toggle="modal"> Quick View </a>
+                            </div>
+                            <a href="product-details.html"><img src="images/product/35.jpg" alt="img"
+                                                                class="img-responsive"></a></div>
+                        <div class="description">
+                            <h4><a href="product-details.html">parum claram</a></h4>
+
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                            <span class="size">XL / XXL / S </span></div>
+                        <div class="price"><span>$25</span> <span class="old-price">$75</span></div>
+                        <div class="action-control"><a class="btn btn-primary"> <span class="add2cart"><i
+                                class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a></div>
+                    </div>
+                </div>
+                <!--/.item-->
+                <div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                    <div class="product">
+                        <a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"
+                           data-placement="left">
+                            <i class="glyphicon glyphicon-heart"></i>
+                        </a>
+
+                        <div class="image">
+                            <div class="quickview">
+                                <a title="Quick View" class="btn btn-xs  btn-quickview"
+                                   data-target="#product-details-modal" data-toggle="modal"> Quick View </a>
+                            </div>
+                            <a href="product-details.html"><img src="images/product/13.jpg" alt="img"
+                                                                class="img-responsive"></a></div>
+                        <div class="description">
+                            <h4><a href="product-details.html">duis dolore </a></h4>
+
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                            <span class="size">XL / XXL / S </span></div>
+                        <div class="price"><span>$25</span></div>
+                        <div class="action-control"><a class="btn btn-primary"> <span class="add2cart"><i
+                                class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a></div>
+                    </div>
+                </div>
+                <!--/.item-->
+                <div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                    <div class="product">
+                        <a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"
+                           data-placement="left">
+                            <i class="glyphicon glyphicon-heart"></i>
+                        </a>
+
+                        <div class="image">
+                            <div class="quickview">
+                                <a title="Quick View" class="btn btn-xs  btn-quickview"
+                                   data-target="#product-details-modal" data-toggle="modal"> Quick View </a>
+                            </div>
+                            <a href="product-details.html"><img src="images/product/21.jpg" alt="img"
+                                                                class="img-responsive"></a>
+
+                            <div class="promotion"><span class="new-product"> NEW</span> <span
+                                    class="discount">15% OFF</span></div>
+                        </div>
+                        <div class="description">
+                            <h4><a href="product-details.html">aliquam erat volutpat</a></h4>
+
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                            <span class="size">XL / XXL / S </span></div>
+                        <div class="price"><span>$25</span></div>
+                        <div class="action-control"><a class="btn btn-primary"> <span class="add2cart"><i
+                                class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a></div>
+                    </div>
+                </div>
+                <!--/.item-->
+                <div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                    <div class="product">
+                        <a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"
+                           data-placement="left">
+                            <i class="glyphicon glyphicon-heart"></i>
+                        </a>
+
+                        <div class="image">
+                            <div class="quickview">
+                                <a title="Quick View" class="btn btn-xs  btn-quickview"
+                                   data-target="#product-details-modal" data-toggle="modal"> Quick View </a>
+                            </div>
+                            <a href="product-details.html"><img src="images/product/14.jpg" alt="img"
+                                                                class="img-responsive"></a>
+
+                            <div class="promotion"><span class="discount">15% OFF</span></div>
+                        </div>
+                        <div class="description">
+                            <h4><a href="product-details.html">ullamcorper suscipit lobortis </a></h4>
+
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                            <span class="size">XL / XXL / S </span></div>
+                        <div class="price"><span>$25</span></div>
+                        <div class="action-control"><a class="btn btn-primary"> <span class="add2cart"><i
+                                class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a></div>
+                    </div>
+                </div>
+                <!--/.item-->
+                <div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                    <div class="product">
+                        <a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"
+                           data-placement="left">
+                            <i class="glyphicon glyphicon-heart"></i>
+                        </a>
+
+                        <div class="image">
+                            <div class="quickview">
+                                <a title="Quick View" class="btn btn-xs  btn-quickview"
+                                   data-target="#product-details-modal" data-toggle="modal"> Quick View </a>
+                            </div>
+                            <a href="product-details.html"><img src="images/product/17.jpg" alt="img"
+                                                                class="img-responsive"></a>
+
+                            <div class="promotion"><span class="new-product"> NEW</span></div>
+                        </div>
+                        <div class="description">
+                            <h4><a href="product-details.html">demonstraverunt lectores </a></h4>
+
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                            <span class="size">XL / XXL / S </span></div>
+                        <div class="price"><span>$25</span></div>
+                        <div class="action-control"><a class="btn btn-primary"> <span class="add2cart"><i
+                                class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a></div>
+                    </div>
+                </div>
+                <!--/.item-->
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+                <div class="load-more-block text-center"><a class="btn btn-thin" href="#"> <i
+                        class="fa fa-plus-sign">+</i> load more products</a></div>
+            </div>
+        </div>
+        <!--/.container-->
+    </div>
+    <!--/.featuredPostContainer-->
+
+    <hr class="no-margin-top">
+    <div class="width100 section-block ">
+        <div class="row featureImg">
+            <div class="col-md-3 col-sm-3 col-xs-6"><a href="category.html"><img src="images/site/new-collection-1.jpg"
+                                                                                 class="img-responsive" alt="img"></a>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-6"><a href="category.html"><img src="images/site/new-collection-2.jpg"
+                                                                                 class="img-responsive" alt="img"></a>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-6"><a href="category.html"><img src="images/site/new-collection-3.jpg"
+                                                                                 class="img-responsive" alt="img"></a>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-6"><a href="category.html"><img src="images/site/new-collection-4.jpg"
+                                                                                 class="img-responsive" alt="img"></a>
+            </div>
+        </div>
+        <!--/.row-->
+    </div>
+    <!--/.section-block-->
+
+    <div class="width100 section-block">
+        <h3 class="section-title"><span> BRAND</span> <a id="nextBrand" class="link pull-right carousel-nav"> <i
+                class="fa fa-angle-right"></i></a> <a id="prevBrand" class="link pull-right carousel-nav"> <i
+                class="fa fa-angle-left"></i> </a></h3>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="no-margin brand-carousel owl-carousel owl-theme">
+                    <li><a><img src="images/brand/1.gif" alt="img"></a></li>
+                    <li><img src="images/brand/2.png" alt="img"></li>
+                    <li><img src="images/brand/3.png" alt="img"></li>
+                    <li><img src="images/brand/4.png" alt="img"></li>
+                    <li><img src="images/brand/5.png" alt="img"></li>
+                    <li><img src="images/brand/6.png" alt="img"></li>
+                    <li><img src="images/brand/7.png" alt="img"></li>
+                    <li><img src="images/brand/8.png" alt="img"></li>
+                    <li><img src="images/brand/1.gif" alt="img"></li>
+                    <li><img src="images/brand/2.png" alt="img"></li>
+                    <li><img src="images/brand/3.png" alt="img"></li>
+                    <li><img src="images/brand/4.png" alt="img"></li>
+                    <li><img src="images/brand/5.png" alt="img"></li>
+                    <li><img src="images/brand/6.png" alt="img"></li>
+                    <li><img src="images/brand/7.png" alt="img"></li>
+                    <li><img src="images/brand/8.png" alt="img"></li>
+                </ul>
+            </div>
+        </div>
+        <!--/.row-->
+    </div>
+    <!--/.section-block-->
+
+</div>
+<!--main-container-->
+
+<div class="parallax-section parallax-image-2">
+    <div class="w100 parallax-section-overley">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="parallax-content clearfix">
+                        <h1 class="xlarge"> Trusted Seller 500+ </h1>
+                        <h5 class="parallaxSubtitle"> Lorem ipsum dolor sit amet consectetuer </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/.parallax-section-->
+
+<!-- Product Details Modal  -->
+<div class="modal fade" id="product-details-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button aria-hidden="true" data-dismiss="modal" class="close" type="button"> ×</button>
+            <div class="col-lg-5 col-md-5 col-sm-5  col-xs-12">
+
+                <!-- product Image -->
+
+                <div class="main-image  col-lg-12 no-padding style3">
+                    <a class="product-largeimg-link" href="product-details.html"><img src="images/zoom/zoom1.jpg"
+                                                                                      class="img-responsive product-largeimg"
+                                                                                      alt="img">
+                    </a>
+                </div>
+                <!--/.main-image-->
+
+                <div class="modal-product-thumb">
+                    <a class="thumbLink selected"><img data-large="images/zoom/zoom1.jpg" alt="img"
+                                                       class="img-responsive" src="images/zoom/zoom1.jpg">
+                    </a>
+                    <a class="thumbLink"><img data-large="images/zoom/zoom2.jpg" alt="img" class="img-responsive"
+                                              src="images/zoom/zoom2.jpg">
+                    </a>
+                    <a class="thumbLink"><img data-large="images/zoom/zoom3.jpg" alt="img" class="img-responsive"
+                                              src="images/zoom/zoom3.jpg">
+                    </a>
+                </div>
+                <!--/.modal-product-thumb-->
+            </div>
+            <!--/ product Image-->
+
+
+            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 modal-details no-padding">
+                <div class="modal-details-inner">
+                    <h1 class="product-title"> Lorem ipsum dolor sit amet</h1>
+
+                    <h3 class="product-code">Product Code : DEN1098</h3>
+
+                    <div class="product-price"><span class="price-sales"> $70</span> <span
+                            class="price-standard">$95</span></div>
+                    <div class="details-description">
+                        <p>In scelerisque libero ut elit porttitor commodo Suspendisse laoreet magna. </p>
+                    </div>
+                    <div class="color-details"><span class="selected-color"><strong>COLOR</strong></span>
+                        <ul class="swatches Color">
+                            <li class="selected">
+                                <a style="background-color:#f1f40e"> </a>
+                            </li>
+                            <li>
+                                <a style="background-color:#adadad"> </a>
+                            </li>
+                            <li>
+                                <a style="background-color:#4EC67F"> </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--/.color-details-->
+
+                    <div class="productFilter productFilterLook2">
+                        <div class="filterBox">
+                            <select>
+                                <option value="strawberries" selected>Quantity</option>
+                                <option value="mango">1</option>
+                                <option value="bananas">2</option>
+                                <option value="watermelon">3</option>
+                                <option value="grapes">4</option>
+                                <option value="oranges">5</option>
+                                <option value="pineapple">6</option>
+                                <option value="peaches">7</option>
+                                <option value="cherries">8</option>
+                            </select>
+                        </div>
+                        <div class="filterBox">
+                            <select>
+                                <option value="strawberries" selected>Size</option>
+                                <option value="mango">XL</option>
+                                <option value="bananas">XXL</option>
+                                <option value="watermelon">M</option>
+                                <option value="apples">L</option>
+                                <option value="apples">S</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- productFilter -->
+
+                    <div class="cart-actions">
+                        <div class="addto">
+                            <button onclick="productAddToCartForm.submit(this);" class="button btn-cart cart first"
+                                    title="Add to Cart" type="button">Add to Cart
+                            </button>
+                            <a class="link-wishlist wishlist">Add to Wishlist</a></div>
+                    </div>
+                    <!--/.cart-actions-->
+
+                    <div class="product-share clearfix">
+                        <p> SHARE </p>
+
+                        <div class="socialIcon">
+                            <a href="#"> <i class="fa fa-facebook"></i>
+                            </a>
+                            <a href="#"> <i class="fa fa-twitter"></i>
+                            </a>
+                            <a href="#"> <i class="fa fa-google-plus"></i>
+                            </a>
+                            <a href="#"> <i class="fa fa-pinterest"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!--/.product-share-->
+                </div>
+                <!--/.modal-details-inner-->
+            </div>
+            <!--/.modal-details-->
+            <div class="clear"></div>
+        </div>
+        <!--/.modal-content-->
+    </div>
+    <!--/.modal-content-->
+</div>
+<!-- End Modal -->
+{% endblock %}
+<footer>
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3  col-md-3 col-sm-4 col-xs-6">
+                    <h3> Support </h3>
+                    <ul>
+                        <li class="supportLi">
+                            <p> Bei Fragen wenden Sie sich bitte an uns </p>
+                            <h4><a class="inline" href="callto:+49415287870"> <strong> <i class="fa fa-phone"> </i> +49 4152
+                                87 87 - 0</strong> </a></h4>
+                            <h4><a class="inline" href="mailto:info@ute-orth.de"> <i class="fa fa-envelope-o"> </i>
+                                info@ute-orth.de </a></h4>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
+                    <h3> Shop </h3>
+                    <ul>
+                        <li><a href="/"> Home </a></li>
+                        <li><a href="/kategorien"> Category </a></li>
+                        <li><a href="category2.html"> Category Style 2 [Parallax] </a></li>
+                        <li><a href="sub-category.html"> Sub Category </a></li>
+                    </ul>
+                </div>
+
+                <div style="clear:both" class="hide visible-xs"></div>
+
+                <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
+                    <h3> Information </h3>
+                    <ul>
+                        <li><a href="/impressum"> Impressum </a></li>
+                        <li><a href="/widerruf"> Widerruf </a></li>
+                        <li><a href="/agb"> AGB </a></li>
+                        <li><a href="/versandkosten"> Versandkosten </a></li>
+                        <li><a href="/datenschutz"> Datenschutz </a></li>
+                        <li><a href="/sitemap"> Sitemap </a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
+                    <h3> Mein Konto </h3>
+                    <ul>
+                        <li><a href="/account"> Konto Login </a></li>
+                        <li><a href="/account/my-account"> Mein Konto </a></li>
+                        <li><a href="/account/my-address"> Meine Adressen </a></li>
+                        <li><a href="/account/wishlist"> Wunschliste</a></li>
+                        <li><a href="/account/b2b"> Bestellsystem</a></li>
+                        <li><a href="/account/cart"> Warenkorb </a></li>
+                        <li><a href="/account/order-status"> Bestellstatus </a></li>
+                    </ul>
+                </div>
+
+                <div style="clear:both" class="hide visible-xs"></div>
+
+                <div class="col-lg-3  col-md-3 col-sm-6 col-xs-12 ">
+                    <h3> UP2DATE bleiben </h3>
+                    <ul>
+                        <li>
+                            <div class="input-append newsLatterBox text-center">
+                                <input type="text" class="full text-center" placeholder="Email ">
+                                <button class="btn  bg-gray" type="button"> Subscribe <i
+                                        class="fa fa-long-arrow-right"> </i></button>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="social">
+                        <li><a href="http://facebook.com"> <i class=" fa fa-facebook"> &nbsp; </i> </a></li>
+                        <li><a href="https://plus.google.com"> <i class="fa fa-google-plus"> &nbsp; </i> </a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--/.row-->
+        </div>
+        <!--/.container-->
+    </div>
+    <!--/.footer-->
+
+    <div class="footer-bottom">
+        <div class="container">
+            <p class="pull-left"> &copy; Ute Orth GmbH & Co KG 2015. All rights reserved. </p>
+
+            <div class="pull-right paymentMethodImg"><img height="30" class="pull-right"
+                                                          src="/images/site/payment/master_card.png" alt="img"> <img
+                    height="30" class="pull-right" src="/images/site/payment/visa_card.png" alt="img"><img height="30"
+                                                                                                          class="pull-right"
+                                                                                                          src="/images/site/payment/paypal.png"
+                                                                                                          alt="img">
+                <img height="30" class="pull-right" src="/images/site/payment/american_express_card.png" alt="img"> <img
+                        height="30" class="pull-right" src="/images/site/payment/discover_network_card.png" alt="img">
+                <img height="30" class="pull-right" src="/images/site/payment/google_wallet.png" alt="img">
+
+            </div>
+        </div>
+    </div>
+    <!--/.footer-bottom-->
+</footer>
+
+<!-- Le javascript
+================================================== -->
+
+<!-- Placed at the end of the document so the pages load faster -->
+{% block js_bottom %}
+<script type="text/javascript" src="/assets/js/jquery/jquery-1.10.1.min.js"></script>
+<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/js/idangerous.swiper-2.1.min.js"></script>
+<script>
+    var mySwiper = new Swiper('.swiper-container', {
+        pagination: '.box-pagination',
+        keyboardControl: true,
+        paginationClickable: true,
+        slidesPerView: 'auto',
+        autoResize: true,
+        resizeReInit: true,
+    })
+
+    $('.prevControl').on('click', function (e) {
+        e.preventDefault()
+        mySwiper.swipePrev()
+    })
+    $('.nextControl').on('click', function (e) {
+        e.preventDefault()
+        mySwiper.swipeNext()
+    })
+</script>
+
+<!-- include jqueryCycle plugin -->
+<script src="/assets/js/jquery.cycle2.min.js"></script>
+
+<!-- include easing plugin -->
+<script src="/assets/js/jquery.easing.1.3.js"></script>
+
+<!-- include  parallax plugin -->
+<script type="text/javascript" src="/assets/js/jquery.parallax-1.1.js"></script>
+
+<!-- optionally include helper plugins -->
+<script type="text/javascript" src="/assets/js/helper-plugins/jquery.mousewheel.min.js"></script>
+
+<!-- include mCustomScrollbar plugin //Custom Scrollbar  -->
+
+<script type="text/javascript" src="/assets/js/jquery.mCustomScrollbar.js"></script>
+
+<!-- include checkRadio plugin //Custom check & Radio  -->
+<script type="text/javascript" src="/assets/js/ion-checkRadio/ion.checkRadio.min.js"></script>
+
+<!-- include grid.js // for equal Div height  -->
+<script src="/assets/js/grids.js"></script>
+
+<!-- include carousel slider plugin  -->
+<script src="/assets/js/owl.carousel.min.js"></script>
+
+<!-- jQuery minimalect // custom select   -->
+<script src="/assets/js/jquery.minimalect.min.js"></script>
+
+<!-- include touchspin.js // touch friendly input spinner component   -->
+<script src="/assets/js/bootstrap.touchspin.js"></script>
+
+<!-- include custom script for only homepage  -->
+<script src="/assets/js/home.js"></script>
+
+<!-- include custom script for site  -->
+<script src="/assets/js/script.js"></script>
+{% endblock %}
+{% block js_special %}
+{% endblock %}
+</body>
+</html>

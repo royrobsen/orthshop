@@ -1,0 +1,57 @@
+{% extends "shopbase.html.twig" %}
+
+{% block content %}
+    <div class='container'>
+        <form method="get" action="/search" name='searchform'>
+       <div class="input-group">
+                <span class="input-group-addon">Suche</span>
+               <input class='form-control' name='q'/>
+                 <span class="input-group-btn">
+                     <button class='btn btn-default'>Los</button>                  </span>
+            </div>
+        
+        </form>      
+        <hr />
+        <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12">
+            <div class='col-sm-12 col-lg-6 col-md-6 col-xs-12'>
+                <div id="carousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="item active articleDetailBigImg">
+                        <img src="/bundles/orthindex/images/{{product.0.bild1}}">
+                    </div>
+                    <div class="item">
+                        <img src="/bundles/orthindex/images/{{product.0.bild1}}">
+                    </div>
+                    <div class="item">
+                        <img src="/bundles/orthindex/images/{{product.0.bild1}}">
+                    </div>
+                </div>
+        </div> 
+    <div class="clearfix">
+        <div id="thumbcarousel" class="carousel slide" data-interval="false">
+            <div class="carousel-inner">
+                <div class="item active">
+                    <div data-target="#carousel" data-slide-to="0" class="thumb"><img src="/bundles/orthindex/images/{{product.0.bild1}}"></div>
+                    <div data-target="#carousel" data-slide-to="1" class="thumb"><img src="/bundles/orthindex/images/{{product.0.bild1}}"></div>
+                    <div data-target="#carousel" data-slide-to="2" class="thumb"><img src="/bundles/orthindex/images/{{product.0.bild1}}"></div>
+                    <div data-target="#carousel" data-slide-to="3" class="thumb"><img src="/bundles/orthindex/images/{{product.0.bild1}}"></div>
+                </div><!-- /item -->
+            </div><!-- /carousel-inner -->
+            <a class="left carousel-control" href="#thumbcarousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a class="right carousel-control" href="#thumbcarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+            </div>
+        </div> <!-- /thumbcarousel -->
+    </div><!-- /clearfix -->
+    <div class='col-sm-12 col-lg-6 col-md-6 col-xs-12'>
+                <h2 class="product-desc-view1">{{product.0.beschreibung1}}</h2>
+                <hr />
+                <h4>Kurzbeschreibung</h4>
+                <p>{{product.0.detailText}}</p>
+            </div>
+    <div class="col-sm-2 col-lg-2 col-md-2 col-xs-2"></div>
+    </div>
+{% endblock %}

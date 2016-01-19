@@ -1,0 +1,75 @@
+{% extends "shopbase.html.twig" %}
+{% block content %}
+
+<div class="container main-container headerOffset">
+
+    <div class="row">
+        <div class="breadcrumbDiv col-lg-12">
+            <ul class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li><a href="/account/my-account">Mein Konto</a></li>
+                <li><a href="/account/my-user">Meine Benutzer</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-7">
+            <h1 class="section-title-inner"><span><i
+                    class="glyphicon glyphicon-user"></i> Benutzer verwalten </span></h1>
+
+            <div class="row userInfo">
+                <div class="col-lg-12">
+                    <h2 class="block-title-2"> Ändern Sie hier die Stammdaten und verwalten Sie das Bestellsystem Ihres Benutzers!</h2>
+
+                    <p class="required"><sup>*</sup> Pflichtfeld</p>
+                </div>
+                {{ form_start(form) }}
+                {{ form_errors(form) }}	
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group required">
+                            <label for="InputName">Vorname <sup>*</sup> </label>
+                            {{ form_widget(form.firstName, { 'attr': {'class': 'form-control', 'placeholder' : 'Vorname'} }) }}
+                        </div>
+                        <div class="form-group required">
+                            <label for="InputLastName">Nachname <sup>*</sup> </label>
+                            {{ form_widget(form.lastName, { 'attr': {'class': 'form-control', 'placeholder' : 'Nachname'} }) }}
+                        </div>
+                        <div class="form-group required">
+                            <label for="InputEmail"> E-Mail <sup>*</sup> </label>
+                            {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'placeholder' : 'E-Mail'} }) }}
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        {{form_widget(form.save, { 'attr': {'class':'btn btn-primary'}} ) }}
+                    </div>
+                {{ form_end(form) }}
+                <div class="col-lg-12 clearfix">
+                    <ul class="pager">
+                        <li class="previous pull-right"><a href="/shop"> <i class="fa fa-home"></i> Zum Shop </a>
+                        </li>
+                        <li class="next pull-left"><a href="/account/my-account"> &larr; Zurück zu meinem Konto</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--/row end-->
+
+        </div>
+                <div class="col-lg-3 col-md-3 col-sm-5" style="border-left: 1px solid grey;">
+                    <h3>Verwalten</h3>
+                    <ul class="myAccountList">
+                        <li class="col-lg-12 col-md-12 col-sm-12 col-xs-12  text-center ">
+                            <div class="thumbnail equalheight"><a title="Bestellsystem bearbeiten" href="/account/my-user/{{users.id}}/bestellsystem"><i
+                                        class="fa fa-cart-arrow-down"></i> Bestellsystem bearbeiten</a><br /></div> 
+                        </li>
+                    </ul>
+                </div>
+    </div>
+    <!--/row-->
+
+    <div style="clear:both"></div>
+</div>
+<!-- /wrapper -->
+
+<div class="gap"></div>
+
+{% endblock %}

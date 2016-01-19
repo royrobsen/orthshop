@@ -1,0 +1,84 @@
+{% extends "shopbase.html.twig" %}
+{% block content %}
+
+<div class="container main-container headerOffset">
+
+    <div class="row">
+        <div class="breadcrumbDiv col-lg-12">
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li class="active"> Anmeldung</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-9 col-md-9 col-sm-7">
+            <h1 class="section-title-inner"><span><i class="fa fa-lock"></i> Anmeldung</span></h1>
+
+            <div class="row userInfo">
+
+                <div class="col-xs-12 col-sm-6">
+                    <h2 class="block-title-2"> Konto erstellen </h2>
+
+                    <form role="form" class="regForm">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input title="Bitte geben Sie Ihren Namen ein" type="text"
+                                   class="form-control" placeholder="Vollständiger Name" required minlength="3">
+                        </div>
+                        <div class="form-group">
+                            <label>Emailadresse</label>
+                            <input title="Bitte geben Sie eine gültige E-Mailadresse ein" type="email" class="form-control"
+                                   placeholder="E-Mailadresse" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Passwort</label>
+                            <input required minlength="5"
+                                   title="Bitte geben Sie ein Passwort ein" type="password"
+                                   class="form-control" placeholder="Passwort">
+                        </div>
+                        <div class="error">
+                        </div>
+
+                        <button type="submit" class="btn   btn-primary"><i class="fa fa-user"></i> Konto erstellen
+                        </button>
+                    </form>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <h2 class="block-title-2"><span>Schon registriert?</span></h2>
+                {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData) }}</div>
+                {% endif %} 
+                <form role="form" action="{{ path('orth_security_logincheck') }}" method="post" class="logForm">
+                        <div class="form-group">
+                            <label>Emailadresse</label>
+                            <input type="email" id="username" name="_username" value="{{ last_username }}" class="form-control" placeholder="Emailadresse">
+                        </div>
+                        <div class="form-group">
+                            <label>Passwort</label>
+                            <input type="password" id="password" name="_password" class="form-control" placeholder="Passwort">
+                        </div>
+                        <div class="form-group">
+                            <p><a title="Passwort vergessen" href="/passwort-vergessen">Passwort vergessen? </a></p>
+                        </div>
+                        <button class="btn btn-primary" type="submit"><i class="fa fa-sign-in"></i> Einloggen</button>
+                    </form>
+                </div>
+            </div>
+            <!--/row end-->
+
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-5"></div>
+    </div>
+    <!--/row-->
+
+    <div style="clear:both"></div>
+</div>
+<!-- /wrapper -->
+
+<div class="gap"></div>
+
+{% endblock %}

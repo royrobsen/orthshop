@@ -1,0 +1,59 @@
+{% extends "shopbase.html.twig" %}
+    {% block js_top %}       
+    {% endblock %}
+
+{% block content %}
+<div class="container main-container headerOffset">
+    <div class="row">
+        <div class="breadcrumbDiv col-lg-12">
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li class="active"><a href="category.html">Kasse</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="row userInfo">
+                <div class="col-xs-12 col-sm-12">
+                    <div class="w100 clearfix">
+                        <h2>Vielen Dank für Ihre Bestellung!</h2>
+                        <h4> Wie geht es nun weiter?</h4>
+                        <p>Sie erhalten nun eine Bestellbestätigung per E-Mail, anschließend wird Ihre Bestellung von uns verarbeitet, versendet und berechnet.</p>
+                        
+                        <ul class="orderStep orderStepLook2">
+                            <li class="active" style="width: 25%;"><a href="#"><i style="line-height: 100px !important; font-size: 50px;" class="fa fa-5x fa-share-square-o  "> </i><span>Eingang der Bestellung</span></a>
+                            <li style="width: 25%;"><a href="#"><i style="line-height: 100px !important; font-size: 50px;" class="fa fa-4x fa-check-square "> </i><span>Prüfung der Bestellung</span></a>
+                            <li style="width: 25%;"><a href="#"><i style="line-height: 100px !important; font-size: 50px;" class="fa fa-4x fa-truck fa-flip-horizontal"> </i><span>Anlieferung</span> </a></li>
+                            <li style="width: 25%;"><a href="#"> <i style="line-height: 100px !important; font-size: 50px;" class="fa fa-4x fa-envelope "></i> <span> Berechnung</span></a></li>
+                        </ul>
+                        
+                        <h2>Sie haben Fragen oder Anmerkungen? Melden Sie sich gerne bei uns:</h2>
+                        <div class="gap"></div>
+                        
+                        <ul class="list-inline" style="width: 100%;">
+                            <li style="width: 49%; text-align: center;"><i class="fa fa-phone fa-5x"></i></li>
+                            <li style="width: 49%; text-align: center;"><i class="fa fa-envelope fa-5x"></i></li>
+                        </ul>
+                        <ul class="list-inline" style="width: 100%;">
+                            <li style="width: 49%; text-align: center; font-size: 3em"><br />+49/4152 - 87 87 - 0</li>
+                            <li style="width: 49%; text-align: center; font-size: 3em"><br /><a href="mailto:info@ute-orth.de"> info@ute-orth.de</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/row-->
+
+</div>
+    <div style="clear:both"></div>
+</div>
+<!-- /main-container -->
+
+<div class="gap"></div>
+{% endblock %}
+{% block js_special %}
+<script src="/assets/js/uiTableFilter.js"></script>
+{% endblock %}

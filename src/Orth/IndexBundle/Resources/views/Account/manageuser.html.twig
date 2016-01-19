@@ -1,0 +1,79 @@
+{% extends "shopbase.html.twig" %}
+{% block content %}
+
+<div class="container main-container headerOffset">
+
+    <div class="row">
+        <div class="breadcrumbDiv col-lg-12">
+            <ul class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li><a href="/account/my-account">Mein Konto</a></li>
+                <li><a href="/account/my-user">Meine Benutzer</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-7">
+            <h1 class="section-title-inner"><span><i
+                    class="glyphicon glyphicon-user"></i> Bestellsystem verwalten </span></h1>
+
+            <div class="row userInfo">
+               <form action="" method="post">
+                <div class="col-lg-12">
+                    <h2 class="block-title-2"> Sie können hier das Bestellsystem des Benutzers verändern und verschiedene Berechtigungen vergeben!</h2>
+                    <h4>Haupt-Kategorien aus dem Bestellsystem</h4>
+                </div>
+                {% for category in categories %}
+                    <div class="col-xs-12 col-sm-6 col-lg-4">
+                        <div class="form-group">
+                        <label class="col-md-4 control-label" for="radios">{{category.categoryName}}</label>
+
+                            <div class="col-md-12">
+                                 {% if category.checkedCat == 0 %}
+                                <label class="radio-inline" for="radios-0">
+                                    <input name="{{category.id}}" id="radios-0" value="0" required checked="checked"
+                                           type="radio">
+                                    Nicht sichtbar </label>
+                                <label class="radio-inline" for="radios-1">
+                                    <input name="{{category.id}}" id="radios-1" value="1" required type="radio">
+                                    Sichtbar </label>
+                               {% else %}  
+                                 <label class="radio-inline" for="radios-0">
+                                    <input name="{{category.id}}" id="radios-0" value="0" required type="radio">
+                                    Nicht sichtbar </label>
+                                <label class="radio-inline" for="radios-1">
+                                    <input name="{{category.id}}" id="radios-1" value="1" required checked="checked" type="radio">
+                                    Sichtbar </label>   
+                                    {% endif %}
+                            </div>
+                        </div>
+                    </div>        
+                {% endfor %}                      
+                <div class="col-lg-12">
+                    <button class="btn btn-danger">Speichern</button>
+                </div>
+                </form>                    
+                <div class="col-lg-12 clearfix">
+                                   
+                    <ul class="pager">
+                        <li class="previous pull-right"><a href="/shop"> <i class="fa fa-home"></i> Zum Shop </a>
+                        </li>
+                        <li class="next pull-left"><a href="/account/my-account"> &larr; Zurück zu meinem Konto</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--/row end-->
+
+        </div>
+                <div class="col-lg-3 col-md-3 col-sm-5">
+                </div>
+    </div>
+    <!--/row-->
+
+    <div style="clear:both"></div>
+</div>
+<!-- /wrapper -->
+
+<div class="gap"></div>
+
+{% endblock %}

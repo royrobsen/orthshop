@@ -1,0 +1,7 @@
+orth_index:
+    resource: "@OrthIndexBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

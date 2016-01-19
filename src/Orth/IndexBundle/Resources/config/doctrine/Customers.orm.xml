@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Orth\IndexBundle\Entity\Customers" table="customers">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="lastName" type="text" column="last_name" nullable="false"/>
+    <field name="firstName" type="text" column="first_name" nullable="false"/>
+    <field name="companyName1" type="text" column="company_name1" nullable="false"/>
+    <field name="companyName2" type="text" column="company_name2" nullable="false"/>
+    <field name="companyName3" type="text" column="company_name3" nullable="false"/>
+    <field name="street" type="text" column="street" nullable="false"/>
+    <field name="zipcode" type="text" column="zipcode" nullable="false"/>
+    <field name="city" type="text" column="city" nullable="false"/>
+    <field name="email" type="text" column="email" nullable="false"/>
+    <field name="orgapegNumber" type="integer" column="orgapeg_number" nullable="false"/>
+  </entity>
+</doctrine-mapping>

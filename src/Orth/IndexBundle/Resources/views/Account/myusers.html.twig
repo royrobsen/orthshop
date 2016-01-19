@@ -1,0 +1,96 @@
+{% extends "shopbase.html.twig" %}
+{% block content %}
+
+<div class="container main-container headerOffset">
+
+    <div class="row">
+        <div class="breadcrumbDiv col-lg-12">
+            <ul class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li><a href="/account/my-account">Mein Konto</a></li>
+                <li class="active">Meine Benutzer</li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-lg-10 col-md-10 col-sm-7">
+            <h1 class="section-title-inner"><span><i class="fa fa-map-marker"></i> Meine Benutzer </span></h1>
+
+            <p>Sie können hier Ihre Benutzer anlegen, verwalten und Kategorien/Artikel freigeben.</p>
+                {% for flashMessage in app.session.flashbag.get('notice') %}
+                    <div class="alert alert-success">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+            <div class="row userInfo">
+
+                <div class="col-lg-12">
+                    <h2 class="block-title-2"> Ihre Benutzer werden hier angezeigt. </h2>
+                </div>
+
+                <div class="w100 clearfix">
+                    <div class="col-lg-12">
+                        {% if users is empty %} 
+                        Sie haben noch keine Benutzer erstellt.
+                        <br />
+                        {% endif %} 
+                    </div>
+                    <form id="filter-form"><label>Benutzer suchen: </label><input name="filter" class="form-control" id="filter" value="" maxlength="30" size="30" type="text"></form>
+                    <table class="table adressList">
+                        <tr>
+                            <th>Vorname</th>
+                            <th>Nachname</th>
+                            <th>Funktionen</th>
+                        </tr>  
+                    {% for user in users %} 
+                        <tr>
+                            <td>{{ user.firstName }}</td>
+                            <td>{{ user.lastName }}</td>
+                            <td><a href="/account/my-user/{{user.id}}" class="btn btn-sm btn-success"> <i
+                                    class="fa fa-edit"> </i> Bearbeiten </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                            </tr></tbody></table>
+                </div>
+                <!--/.w100-->
+
+                <div class="col-lg-12 clearfix">
+                    <a class="btn   btn-primary" href="/account/my-user/add"><i class="fa fa-plus-circle"></i> Neuen Benutzer hinzufügen </a>
+                </div>
+
+                <div class="col-lg-12 clearfix">
+                    <ul class="pager">
+                        <li class="previous pull-right"><a href="/shop"> <i class="fa fa-home"></i> Zum Shop </a>
+                        </li>
+                        <li class="next pull-left"><a href="/account/my-account"> &larr; Zurück zu meinem Konto</a></li>
+                    </ul>
+                </div>
+
+            </div>
+            <!--/row end-->
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-5"></div>
+
+    </div>
+    <!--/row-->
+
+    <div style="clear:both"></div>
+</div>
+<!-- /wrapper -->
+
+<div class="gap"></div>
+{% endblock %}
+{% block js_special %}
+<script src="/assets/js/uiTableFilter.js"></script>
+<script type="text/javascript">
+        $(document).ready(function() {
+            $(".delete").click(function(e) {
+                var catId = e.target.id;
+                $("#submitDelete").attr('href', "/account/config/categories/delete-category/"+catId);
+           });
+        });
+</script>
+{% endblock %}

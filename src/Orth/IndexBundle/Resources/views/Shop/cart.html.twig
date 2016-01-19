@@ -1,0 +1,191 @@
+{% extends "shopbase.html.twig" %}
+    {% block js_top %}       
+    {% endblock %}
+
+{% block content %}
+<div class="container main-container headerOffset">
+    <div class="row">
+        <div class="breadcrumbDiv col-lg-12">
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li class="active"><a href="category.html">Warenkorb</a></li>
+            </ul>
+        </div>
+    </div>
+<div class="col-lg-12 col-xs-12 col-md-12 ">
+<table>
+                                {% set gesamtpreis = 0 %}
+                                {% for product in cart %}
+                                <tr class="miniCartProduct {{product.varref}}">
+                                    <td style="width:20%"  rowspan="2" class="miniCartProductThumb">
+                                        <div><a href="product-details.html"> <img src="/images/product/nw/{{product.image.0.picName}}" style="margin: 10px; max-height: 90px;" class="img-responsive" alt="img">
+                                        </a></div>
+                                    </td>
+                                    <td style="width:80%; vertical-align: top;">
+                                        <div class="miniCartDescription">
+                                            <h4><a href="product-details.html"> {{product.shortName}}</a></h4>
+                                            <span class="size">{{product.articlenumber}}</span>
+                                            <span class="size">{% for var in product.varData|reverse %} {% if var.attributeName is defined %}{{var.attributeName}}{% endif %}{% if var.attributeValue is defined %}{{var.attributeValue}} {{var.attributeUnit}} | {% endif %}{% endfor %}</span>
+                                        </div>
+                                    </td>
+                                    </tr>
+                                <tr class="tr-border miniCartAction {{product.varref}}">
+                                    <td style="width:80%" class="delete"><a> <span>{{product.amount}} x {{product.price|number_format(2)}} € </span> <a id="{{product.varref}}" class="btn btn-danger btn-sm pull-right">Entfernen </a> <b class="pull-right" style="padding-right: 10px;"><span class="jSum2">{{(product.amount * product.price)|number_format(2)}}</span> €  </b></td>
+                                </tr>
+                                {% set gesamtpreis = gesamtpreis + (product.amount * product.price) %}
+                                {% endfor %}
+                                {% if cart is empty %}
+                                <tr class="miniCartProduct">
+                                    <td style="width:20%">
+                                          </td>
+                                    <td style="width:60%">
+                                        <div class="miniCartDescription">
+                                            <h4> Noch keine Artikel im Warenkorb! </h4>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endif %}
+                            </table>
+                         
+                        <!--/.miniCartTable-->                            
+                        <div class="miniCartFooter text-right">
+                            <h3 class="text-right subtotal"> Gesamt: <span id="jTotal2">{{gesamtpreis}}</span> € </h3>
+                             <a href="/account/checkout" class="btn btn-sm btn-primary"> KASSE </a></div>
+                        </div>
+                    <!--/.dropdown-menu-->
+              </div>      
+    <div style="clear:both"></div>
+</div>
+<!-- /main-container -->
+
+<div class="gap"></div>
+{% endblock %}
+{% block js_bottom %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js">
+</script>
+
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<!-- include jqueryCycle plugin -->
+<script src="assets/js/jquery.cycle2.min.js"></script>
+<!-- include easing plugin -->
+<script src="assets/js/jquery.easing.1.3.js"></script>
+
+<!-- include  parallax plugin -->
+<script type="text/javascript" src="assets/js/jquery.parallax-1.1.js"></script>
+
+<!-- optionally include helper plugins -->
+<script type="text/javascript" src="assets/js/helper-plugins/jquery.mousewheel.min.js"></script>
+
+<!-- include carousel slider plugin  -->
+<script src="assets/js/owl.carousel.min.js"></script>
+
+<script src='assets/js/jquery.zoom.js'></script>
+<script>
+    $(document).ready(function () {
+               
+        //$('.swipebox').zoom();
+        
+        $('#zoomContent').zoom();
+        $(".zoomThumb a").click(function () {
+            var largeImage = $(this).find("img").attr('data-large');
+            $(".zoomImage1").attr('src', largeImage);
+            $(".zoomImg").attr('src', largeImage);
+            $(".gall-item").attr('href', largeImage);
+
+        });
+
+
+        $('.gall-item').magnificPopup({
+            type: 'image',
+            gallery: {
+                enabled: true
+            }
+        });
+
+        $("#zoomContent").click(function () {
+            //alert();
+            $('.gall-item').trigger('click');
+        });
+
+        // CHANGE IMAGE MODAL THUMB
+
+        $(".product-thumbList a").click(function () {
+            var largeImage = $(this).find("img").attr('data-large');
+            $(".mainImg").attr('src', largeImage);
+
+        });
+
+    });
+</script>
+
+<script src="assets/plugins/magnific/jquery.magnific-popup.min.js"></script>
+
+
+<!-- include mCustomScrollbar plugin //Custom Scrollbar  -->
+
+<script type="text/javascript" src="assets/js/jquery.mCustomScrollbar.js"></script>
+
+<!-- include checkRadio plugin //Custom check & Radio  -->
+<script type="text/javascript" src="assets/js/ion-checkRadio/ion.checkRadio.min.js"></script>
+
+<!-- include grid.js // for equal Div height  -->
+<script src="assets/js/grids.js"></script>
+
+<!-- include carousel slider plugin  -->
+<script src="assets/js/owl.carousel.min.js"></script>
+
+<!-- jQuery minimalect // custom select   -->
+<script src="assets/js/jquery.minimalect.min.js"></script>
+
+<!-- include touchspin.js // touch friendly input spinner component   -->
+<script src="assets/js/bootstrap.touchspin.js"></script>
+
+<!-- include custom script for site  -->
+<script src="assets/js/script.js"></script>
+
+<script src="assets/plugins/rating/bootstrap-rating.min.js"></script>
+<script>
+    $(function () {
+
+        $('.rating-tooltip-manual').rating({
+            extendSymbol: function () {
+                var title;
+                $(this).tooltip({
+                    container: 'body',
+                    placement: 'bottom',
+                    trigger: 'manual',
+                    title: function () {
+                        return title;
+                    }
+                });
+                $(this).on('rating.rateenter', function (e, rate) {
+                    title = rate;
+                    $(this).tooltip('show');
+                })
+                        .on('rating.rateleave', function () {
+                            $(this).tooltip('hide');
+                        });
+            }
+        });
+
+    });
+</script>   
+{% endblock %}
+{% block js_special %}
+<script>
+    $(document).ready(function () {
+        
+        $('#varTable').ddTableFilter();
+        
+    var session;
+    $.ajaxSetup({cache: false})
+    $.get('/getcartsessiondata', function (data) {
+        session = data;
+    });
+
+
+    });
+</script>
+<!-- include custom table filter  -->
+<script src="assets/js/ddtf.js"></script>
+{% endblock %}

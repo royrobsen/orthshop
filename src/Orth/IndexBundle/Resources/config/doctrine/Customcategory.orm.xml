@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Orth\IndexBundle\Entity\Customcategory" table="customcategory">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="categoryName" type="text" column="category_name" nullable="false"/>
+    <field name="customerRef" type="integer" column="customer_ref" nullable="false"/>
+    <field name="userRef" type="integer" column="user_ref" nullable="false"/>
+    <field name="parentRef" type="integer" column="parent_ref" nullable="true"/>
+            <one-to-many
+            field="perm"
+            target-entity="UserPermissions"
+            mapped-by="custcat" />
+            <one-to-many
+            field="customdata"
+            target-entity="Customerdata"
+            mapped-by="custcat" />
+  </entity>
+</doctrine-mapping>

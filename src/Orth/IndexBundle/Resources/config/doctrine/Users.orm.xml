@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Orth\IndexBundle\Entity\Users" table="users">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="customerRef" type="integer" column="customer_ref" nullable="false"/>
+    <field name="firstName" type="text" column="first_name" nullable="false"/>
+    <field name="lastName" type="text" column="last_name" nullable="false"/>
+    <field name="userGroup" type="integer" column="user_group" nullable="false"/>
+    <field name="email" type="text" column="email" nullable="false"/>
+    <field name="passkey" type="text" column="passkey" nullable="false"/>
+  </entity>
+</doctrine-mapping>

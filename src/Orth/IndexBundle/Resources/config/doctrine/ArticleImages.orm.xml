@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Orth\IndexBundle\Entity\ArticleImages" table="article_images">
+    <indexes>
+      <index name="IDX_8AD829EA86701DD9" columns="article_ref"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="picName" type="text" column="pic_name" nullable="false"/>
+    <field name="mimetype" type="text" column="mimetype" nullable="false"/>
+    <field name="sorting" type="integer" column="sorting" nullable="false"/>
+        <many-to-one
+            field="articles"
+            target-entity="Articles"
+            inversed-by="images"
+            join-column="pic_name">
+
+            <join-column name="article_ref" referenced-column-name="id" />
+        </many-to-one>
+  </entity>
+</doctrine-mapping>

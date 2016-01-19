@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Orth\IndexBundle\Entity\ArticleAttributeValues" table="article_attribute_values">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="attributeRef" type="integer" column="attribute_ref" nullable="false"/>
+    <field name="attributeValue" type="text" column="attribute_value" nullable="false"/>
+    <field name="attributeUnit" type="text" column="attribute_unit" nullable="false"/>
+    <field name="sorting" type="integer" column="sorting" nullable="false"/>
+    <field name="varRef" type="integer" column="var_ref" nullable="false"/>
+        <many-to-one
+            field="variants"
+            target-entity="ArticleSuppliers"
+            inversed-by="variantvalues"
+            join-column="attribute_value">
+
+            <join-column name="var_ref" referenced-column-name="id" />
+        </many-to-one>
+  </entity>
+</doctrine-mapping>

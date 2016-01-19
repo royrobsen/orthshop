@@ -1,0 +1,44 @@
+{% extends "shopbase.html.twig" %}
+{% block content %}
+
+<div class="container main-container headerOffset">
+
+    <div class="row">
+        <div class="breadcrumbDiv col-lg-12">
+            <ul class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li><a href="/account/my-account"> Mein Konto </a></li>
+                <li class="active"> Konfiguration </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-7">
+            <h1 class="section-title-inner"><span><i class="fa fa-unlock-alt"></i> Konfiguration </span></h1>
+
+            <div class="row userInfo">
+                <div class="col-xs-12 col-sm-12">
+                    <h2 class="block-title-2"><span>Sie können hier Ihr persönliches Bestellsystem organisieren.</span>
+                    </h2>
+                    <ul class="myAccountList row">
+                        <li class="col-lg-2 col-md-2 col-sm-3 col-xs-4  text-center ">
+                            <div class="thumbnail equalheight"><a title="Orders" href="/account/config/categories"><i
+                                    class="fa fa-th-list"></i> Kategorien </a></div>
+                        </li>
+                    </ul>
+                    <div class="clear clearfix"></div>
+                </div>
+            </div>
+            <!--/row end-->
+
+        </div>
+    </div>
+    <!--/row-->
+
+    <div style="clear:both"></div>
+</div>
+<!-- /wrapper -->
+
+<div class="gap"></div>
+
+{% endblock %}

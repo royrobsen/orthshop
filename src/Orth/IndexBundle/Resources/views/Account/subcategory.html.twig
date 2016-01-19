@@ -1,0 +1,117 @@
+{% extends "shopbase.html.twig" %}
+{% block content %}
+
+<div class="container main-container headerOffset">
+
+    <div class="row">
+        <div class="breadcrumbDiv col-lg-12">
+            <ul class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li><a href="/account/my-account">Mein Konto</a></li>
+                <li><a href="/account/config">Konfiguration</a></li>
+                <li class="active"> Kategorien </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-lg-10 col-md-10 col-sm-7">
+            <h1 class="section-title-inner"><span><i class="fa fa-map-marker"></i> Meine Kategorien </span></h1>
+            
+            <p>Ändern Sie hier Ihre Kategorien für Ihr Bestellsystem. Sie können für eine Kategorie in maximal 2 Unterkategorien aufteilen.</p>
+                {% for flashMessage in app.session.flashbag.get('notice') %}
+                    <div class="alert alert-success">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+            <div class="row userInfo">
+
+                <div class="col-lg-12">
+                    <h2 class="block-title-2"> Ihre Kategorien werden hier angezeigt. </h2>
+                    <p>Sie befinden sich zur Zeit in der Kategorie <b>{{mainCategory.0.categoryName}}</b></p>
+                </div>
+
+                <div class="w100 clearfix">
+                    <div class="col-lg-12">
+                        {% if categories is empty %} 
+                        Sie haben noch keine Kategorien erstellt.
+                        <br />
+                        {% endif %} 
+                    </div>
+                    <form id="filter-form"><label>Kategorie suchen: </label><input name="filter" class="form-control" id="filter" value="" maxlength="30" size="30" type="text"></form>
+                    <table class="table adressList">
+                        <tr>
+                            <th>Kategorie</th>
+
+                            <th>Funktionen</th>
+                        </tr>  
+                    {% for category in categories %} 
+                        <tr>
+                            <td><a href="/account/config/subcategory2/{{category.id}}">{{ category.categoryName }}</a></td>
+                            <td><a href="/account/config/subcategory2/{{category.id}}" class="btn btn-sm btn-warning"> <i
+                                    class="fa fa-th-list"> </i> Unterkategorien </a> <a href="/account/config/categories/edit/{{category.id}}" class="btn btn-sm btn-success"> <i
+                                    class="fa fa-edit"> </i> Bearbeiten </a> <a data-toggle="modal" data-target="#myModal" class="btn btn-sm btn-danger delete" id="{{category.id}}"> <i
+                                    class="fa fa-minus-circle"></i> Löschen </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                            </tr></tbody></table>
+                </div>
+                <!--/.w100-->
+
+                <div class="col-lg-12 clearfix">
+                    <a class="btn   btn-primary" href="/account/config/subcategory/{{mainCategory.0.id}}/add-category"><i class="fa fa-plus-circle"></i> Neue Kategorie hinzufügen </a>
+                </div>
+
+                <div class="col-lg-12 clearfix">
+                    <ul class="pager">
+                        <li class="previous pull-right"><a href="/shop"> <i class="fa fa-home"></i> Zum Shop </a>
+                        </li>
+                        <li class="next pull-left"><a href="/account/config"> &larr; Zurück zu den Kategorien</a></li>
+                    </ul>
+                </div>
+
+            </div>
+            <!--/row end-->
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-5"></div>
+
+    </div>
+    <!--/row-->
+
+    <div style="clear:both"></div>
+</div>
+<!-- /wrapper -->
+
+<div class="gap"></div>
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Kategorie löschen</h4>
+                      </div>
+                      <div class="modal-body">
+                          <h2>Achtung!</h2>
+                        <p>Die Kategorie wird unwiderruflich gelöscht! Damit werden alle beinhalteten Artikel in eine Unbekannten-Kategorie verschoben!</p>
+                      </div>
+                      <div ng-cloak class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+                        <a id="submitDelete" href="#"><button type="button" class="btn btn-danger">Löschen</button></a>
+                      </div>
+                    </div><!-- /.modal-content -->
+                  </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+{% endblock %}
+{% block js_special %}
+<script src="/assets/js/uiTableFilter.js"></script>
+<script type="text/javascript">
+        $(document).ready(function() {
+            $(".delete").click(function(e) {
+                var catId = e.target.id;
+                $("#submitDelete").attr('href', "/account/config/categories/delete-category/"+catId);
+           });
+        });
+</script>
+{% endblock %}

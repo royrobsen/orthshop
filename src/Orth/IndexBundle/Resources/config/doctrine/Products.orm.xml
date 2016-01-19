@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Orth\IndexBundle\Entity\Products" table="products">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="articleNumber" type="text" column="article_number" nullable="false"/>
+    <field name="mainNumber" type="text" column="main_number" nullable="true"/>
+    <field name="beschreibung1" type="text" column="beschreibung1" nullable="false"/>
+    <field name="beschreibung2" type="text" column="beschreibung2" nullable="true"/>
+    <field name="beschreibung3" type="text" column="beschreibung3" nullable="true"/>
+    <field name="mengeneinheit" type="text" column="mengeneinheit" nullable="false"/>
+    <field name="hersteller" type="integer" column="hersteller" nullable="false"/>
+    <field name="warengruppe" type="integer" column="warengruppe" nullable="false"/>
+    <field name="preiseinheit" type="integer" column="preiseinheit" nullable="false"/>
+    <field name="listenpreis" type="float" column="listenpreis" precision="10" scale="0" nullable="false"/>
+    <field name="grundnettopreis" type="float" column="grundnettopreis" precision="10" scale="0" nullable="false"/>
+    <field name="ursprungsland" type="integer" column="ursprungsland" nullable="false"/>
+    <field name="variante1" type="text" column="variante1" nullable="true"/>
+    <field name="variante2" type="text" column="variante2" nullable="true"/>
+    <field name="variante3" type="text" column="variante3" nullable="true"/>
+    <field name="variante4" type="text" column="variante4" nullable="true"/>
+    <field name="ean" type="text" column="ean" nullable="true"/>
+    <field name="klvpe" type="integer" column="klvpe" nullable="false"/>
+    <field name="bild1" type="text" column="bild1" nullable="false"/>
+    <field name="bild2" type="text" column="bild2" nullable="true"/>
+    <field name="bild3" type="text" column="bild3" nullable="true"/>
+    <field name="detailtext" type="text" column="detailtext" nullable="false"/>
+    <field name="sperre" type="integer" column="sperre" nullable="false"/>
+    <field name="sonderartikel" type="integer" column="sonderartikel" nullable="false"/>
+    <field name="featured" type="integer" column="featured" nullable="false"/>
+    <field name="tags" type="text" column="tags" nullable="true"/>
+  </entity>
+</doctrine-mapping>

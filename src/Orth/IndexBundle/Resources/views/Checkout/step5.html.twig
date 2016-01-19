@@ -1,0 +1,191 @@
+{% extends "shopbase.html.twig" %}
+    {% block js_top %}       
+    {% endblock %}
+
+{% block content %}
+<div class="container main-container headerOffset">
+    <div class="row">
+        <div class="breadcrumbDiv col-lg-12">
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li class="active"><a href="category.html">Kasse</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-12">
+            <div class="row userInfo">
+                <div class="col-xs-12 col-sm-12">
+                    <div class="w100 clearfix">
+                        <ul class="orderStep orderStepLook2">
+                            <li><a href="#"> <i class="fa fa-envelope "></i> <span> Rechnungsadresse</span>
+                            </a></li>
+                            <li><a href="#"> <i class="fa fa fa-map-marker  "></i>
+                                <span> Lieferadresse </span></a></li>
+                            <li><a href="#"><i class="fa fa-truck "> </i><span>Versandart</span> </a></li>
+                            <li><a href="#"><i class="fa fa-money  "> </i><span>Zahlungsart</span> </a></li>
+                            <li class="active"><a href="#"><i class="fa fa-check-square "> </i><span>Bestellung</span></a>
+                            </li>
+                        </ul>
+                        <!--/.orderStep end-->
+                    </div>
+                    <div class="w100 clearfix">
+
+
+                        <div class="row userInfo">
+
+                            <div class="col-lg-12">
+                                <h2 class="block-title-2"> Bestellung ansehen </h2>
+                            </div>
+
+
+                            <div class="col-xs-12 col-sm-12">
+                                <div class="cartContent w100 checkoutReview ">
+                                <table style="width:100%">
+                                    {% set gesamtpreis = 0 %}
+                                    {% for product in cart %}
+                                    <tr class="miniCartProduct {{product.varref}}">
+                                        <td style="width:10%"  rowspan="2" class="miniCartProductThumb">
+                                            <div><a href="product-details.html"> <img src="/images/product/nw/{{product.image.0.picName}}" style="margin: 10px; max-height: 90px;" class="img-responsive" alt="img">
+                                            </a></div>
+                                        </td>
+                                        <td style="width:90%; vertical-align: top;">
+                                            <div class="miniCartDescription">
+                                                <h4><a href="product-details.html"> {{product.shortName}}</a></h4>
+                                                <span class="size">{{product.articlenumber}}</span>
+                                                <span class="size">{% for var in product.varData|reverse %} {% if var.attributeName is defined %}{{var.attributeName}}{% endif %}{% if var.attributeValue is defined %}{{var.attributeValue}} {{var.attributeUnit}} | {% endif %}{% endfor %}</span>
+                                            </div>
+                                        </td>
+                                        </tr>
+                                    <tr class="tr-border miniCartAction {{product.varref}}">
+                                        <td style="width:90%" class="delete"><a> <span>{{product.amount}} x {{product.price|number_format(2)}} € </span> <a id="{{product.varref}}" class="btn btn-danger btn-sm pull-right">Entfernen </a> <b class="pull-right" style="padding-right: 10px;"><span class="jSum2">{{(product.amount * product.price)|number_format(2)}}</span> €  </b></td>
+                                    </tr>
+                                    {% set gesamtpreis = gesamtpreis + (product.amount * product.price) %}
+                                    {% endfor %}
+                                    {% if cart is empty %}
+                                    <tr class="miniCartProduct">
+                                        <td style="width:20%">
+                                              </td>
+                                        <td style="width:60%">
+                                            <div class="miniCartDescription">
+                                                <h3> Keine Artikel im Warenkorb! </h3>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                </table>
+                                </div>
+                                <!--cartContent-->
+
+                                <div class="w100 costDetails">
+                                    <div class="table-block" id="order-detail-content">
+                                        <table class="std table" id="cart-summary">
+                                            <tr>
+                                                <td>Positionen (netto)</td>
+                                                <td class="price"><span id="jTotal2">{{gesamtpreis}}</span> €</td>
+                                            </tr>
+                                            <tr style="">
+                                                <td>Fracht (netto)</td>
+                                                <td class="price">5,50 €</td>
+                                            </tr>
+                                            <tr class="cart-total-price ">
+                                                <td>Gesamt (exkl. MwSt)</td>
+                                                <td class="price">{{(gesamtpreis + 5.50)|number_format(2)}} €</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Total tax</td>
+                                                <td id="total-tax" class="price">{{((gesamtpreis+ 5.50) /100 * 19)|number_format(2)}} €</td>
+                                            </tr>
+                                            <tr>
+                                                <td> Total</td>
+                                                <td id="total-price" class="price">{{((gesamtpreis+ 5.50) * 1.19)|number_format(2)}} €</td>
+                                            </tr>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!--/costDetails-->
+
+
+                                <!--/row-->
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                    <!--/row end-->
+
+
+                    <div class="cartFooter w100">
+                        <div class="box-footer">
+                            <div class="pull-left"><a class="btn btn-default" href="{{ path('orth_shop_checkout_step4', app.request.get('_route_params')|merge(app.request.query.all)) }}"> <i
+                                    class="fa fa-arrow-left"></i> &nbsp; Zurück zur Zahlungsart </a></div>
+                            <div class="pull-right"><a href="{{ path('orth_shop_checkout_success', app.request.get('_route_params')|merge(app.request.query.all)) }}" class="btn btn-success btn-small " type="submit">
+                                Bestellen &nbsp; <i class="fa fa-arrow-circle-right"></i> </a></div>
+                        </div>
+
+
+                    </div>
+                    <!--/ cartFooter -->
+                    <input hidden="hidden" name="inv" value="{{ app.request.get("inv") }}"/>
+                    <input hidden="hidden" name="del" value="{{ app.request.get("del") }}"/>
+                    <input hidden="hidden" name="delKind" value="{{ app.request.get("delKind") }}"/>
+                    <input hidden="hidden" name="invKind" value="{{ app.request.get("invKind") }}"/>
+                    </form>
+                </div>
+            </div>
+            <!--/row end--> 
+        </div>    
+        <div class="col-lg-3 col-md-3 col-sm-12 rightSidebar">
+            <div class="w100 cartMiniTable">
+                <table id="cart-summary" class="std table">
+                    <tbody>
+                    <tr>
+                        <td>Positionen (netto)</td>
+                        <td class="price"><span id="jTotal3">{{cartSum|number_format(2)}}</span></td>
+                    </tr>
+                    <tr style="">
+                        <td>Fracht</td>
+                        <td class="price"><span class="success">{{freight|number_format(2)}} €</span></td>
+                    </tr>
+                    <tr class="cart-total-price ">
+                        <td>Gesamt (exkl. MwSt)</td>
+                        <td class="price">{{(cartSum+freight)|number_format(2)}} €</td>
+                    </tr>
+                    <tr>
+                        <td>MwSt. 19%</td>
+                        <td class="price" id="total-tax">{{((cartSum+freight)/100*19)|number_format(2)}} €</td>
+                    </tr>
+                    <tr>
+                        <td>Gesamt inkl. MwSt.</td>
+                        <td class=" site-color" id="total-price">{{((cartSum+freight)*1.19)|number_format(2)}} €</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <!--  /cartMiniTable-->
+
+        </div>
+        <!--/rightSidebar-->
+
+    </div>
+    <!--/row-->
+
+</div>
+    <div style="clear:both"></div>
+</div>
+<!-- /main-container -->
+
+<div class="gap"></div>
+{% endblock %}
+{% block js_special %}
+<script src="/assets/js/uiTableFilter.js"></script>
+{% endblock %}

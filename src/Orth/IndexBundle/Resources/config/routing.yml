@@ -1,0 +1,190 @@
+orth_index_homepage:
+    path:     /
+    defaults: { _controller: OrthIndexBundle:Index:index }
+    
+orth_index_account:
+    path:     /login
+    defaults: { _controller: OrthIndexBundle:Security:login }    
+
+orth_index_impressum:
+    path:     /impressum
+    defaults: { _controller: OrthIndexBundle:Index:impressum }   
+    
+orth_index_agb:
+    path:     /agb
+    defaults: { _controller: OrthIndexBundle:Index:agb } 
+    
+orth_index_datenschutz:
+    path:     /datenschutz
+    defaults: { _controller: OrthIndexBundle:Index:datenschutz } 
+    
+orth_index_widerruf:
+    path:     /widerruf
+    defaults: { _controller: OrthIndexBundle:Index:widerruf } 
+    
+orth_index_arbeitsschutz:
+    path:     /arbeitsschutz
+    defaults: { _controller: OrthIndexBundle:Index:arbeitsschutz } 
+    
+orth_index_berufsbekleidung:
+    path:     /berufsbekleidung
+    defaults: { _controller: OrthIndexBundle:Index:berufsbekleidung } 
+
+orth_index_emblemservice:
+    path:     /emblemservice
+    defaults: { _controller: OrthIndexBundle:Index:emblemservice } 
+    
+orth_index_hygieneartikel:
+    path:     /hygieneartikel
+    defaults: { _controller: OrthIndexBundle:Index:hygieneartikel } 
+        
+orth_index_werkzeugtechnik:
+    path:     /werkzeugtechnik
+    defaults: { _controller: OrthIndexBundle:Index:werkzeugtechnik } 
+    
+orth_shop_kategorien:
+    path:     /kategorien
+    defaults: { _controller: OrthIndexBundle:Shop:kategorien } 
+    
+orth_shop_product:
+    path:     /product
+    defaults: { _controller: OrthIndexBundle:Shop:product } 
+    
+orth_shop_suche:
+    path:     /shop/suche
+    defaults: { _controller: OrthIndexBundle:Shop:suche} 
+    
+orth_shop_catsuche:
+    path:     /shop/suche/{catid}
+    defaults: { _controller: OrthIndexBundle:Shop:catsuche} 
+    
+orth_account_myaccount:
+    path:     /account/my-account
+    defaults: { _controller: OrthIndexBundle:Account:myaccount} 
+    
+orth_account_orderhistory:
+    path:     /account/order-history
+    defaults: { _controller: OrthIndexBundle:Account:orderhistory}
+    
+orth_account_order:
+    path:     /account/order/{id}
+    defaults: { _controller: OrthIndexBundle:Account:order}
+    
+orth_account_myaddress:
+    path:     /account/my-address
+    defaults: { _controller: OrthIndexBundle:Account:myaddress}
+    
+orth_account_addaddress:
+    path:     /account/add-address
+    defaults: { _controller: OrthIndexBundle:Account:addaddress}
+    
+orth_account_personalinfo:
+    path:     /account/personal-info
+    defaults: { _controller: OrthIndexBundle:Account:personalinfo}
+    
+orth_account_wishlist:
+    path:     /account/wishlist
+    defaults: { _controller: OrthIndexBundle:Account:wishlist}
+    
+orth_customershop_bestellsystem:
+    path:     /account/bestellsystem
+    defaults: { _controller: OrthIndexBundle:CustomerShop:bestellsystem}
+    
+orth_security_logincheck:
+    path:   /login_check
+    defaults: { _controller: OrthIndexBundle:Security:login_check }
+    
+logout:
+    path: /logout
+    
+orth_account_deleteaddress:
+    path:   /account/delete-address/{id}
+    defaults: { _controller: OrthIndexBundle:Account:deleteAddress }
+    
+orth_account_editeaddress:
+    path:   /account/edit-address/{id}
+    defaults: { _controller: OrthIndexBundle:Account:editAddress }
+    
+orth_account_changepw:
+    path:   /account/change-password
+    defaults: { _controller: OrthIndexBundle:Account:changePassword }
+    
+orth_account_myuser:
+    path:   /account/my-user
+    defaults: { _controller: OrthIndexBundle:Account:myuser }
+    
+orth_account_myuseredit:
+    path:   /account/my-user/{id}
+    defaults: { _controller: OrthIndexBundle:Account:myuseredit }
+    
+orth_account_myusermanager:
+    path:   /account/my-user/{id}/bestellsystem
+    defaults: { _controller: OrthIndexBundle:Account:myusermanager }
+    
+orth_account_config:
+    path:   /account/config
+    defaults: { _controller: OrthIndexBundle:Account:config }
+    
+orth_account_config_categories:
+    path:   /account/config/categories
+    defaults: { _controller: OrthIndexBundle:Account:configCategories }
+    
+orth_account_config_addcategory:
+    path:   /account/config/categories/add-category
+    defaults: { _controller: OrthIndexBundle:Account:addcategory }
+
+orth_account_config_category:
+    path:   /account/config/category/{id}
+    defaults: { _controller: OrthIndexBundle:Account:category }
+    
+orth_account_config_addsubcategory:
+    path:   /account/config/category/{id}/add-category
+    defaults: { _controller: OrthIndexBundle:Account:addsubcategory }
+         
+orth_cart_sessiondata:
+    path:   /getcartsessiondata
+    defaults: { _controller: OrthIndexBundle:Shop:getcartsessiondata }
+    
+orth_shop_miniCart:
+    path:   /miniCart
+    defaults: { _controller: OrthIndexBundle:Shop:miniCart }    
+    
+orth_shop_shoppingCart:
+    path:   /warenkorb
+    defaults: { _controller: OrthIndexBundle:Shop:shoppingCart }
+    
+orth_shop_removeitem:
+    path:   /removeitem
+    defaults: { _controller: OrthIndexBundle:Shop:removeitem }
+    
+orth_shop_checkout:
+    path:   /account/checkout
+    defaults: { _controller: OrthIndexBundle:Checkout:checkout }
+    
+orth_shop_checkout_step2:
+    path:   /account/checkout/step2
+    defaults: { _controller: OrthIndexBundle:Checkout:step2 }
+    
+orth_shop_checkout_step3:
+    path:   /account/checkout/step3
+    defaults: { _controller: OrthIndexBundle:Checkout:step3 }
+    
+orth_shop_checkout_step4:
+    path:   /account/checkout/step4
+    defaults: { _controller: OrthIndexBundle:Checkout:step4 } 
+    
+orth_shop_checkout_step5:
+    path:   /account/checkout/step5
+    defaults: { _controller: OrthIndexBundle:Checkout:step5 } 
+    
+orth_shop_checkout_success:
+    path:   /account/checkout/final
+    defaults: { _controller: OrthIndexBundle:Checkout:cart2Order } 
+
+orth_customershop_addarticle:
+    path:   /account/add
+    defaults: { _controller: OrthIndexBundle:CustomerShop:addarticle } 
+    
+orth_shop_productedit:
+    path:   /productedit
+    defaults: { _controller: OrthIndexBundle:Shop:productEdit } 

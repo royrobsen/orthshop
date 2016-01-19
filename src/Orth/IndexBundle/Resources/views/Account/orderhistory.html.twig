@@ -1,0 +1,148 @@
+{% extends "shopbase.html.twig" %}
+{% block js_top %}
+    <!-- styles needed by footable  -->
+    <link href="/assets/css/footable-0.1.css" rel="stylesheet" type="text/css"/>
+    <link href="/assets/css/footable.sortable-0.1.css" rel="stylesheet" type="text/css"/>
+{% endblock %}
+{% block content %}
+
+<div class="container main-container headerOffset">
+
+    <div class="row">
+        <div class="breadcrumbDiv col-lg-12">
+            <ul class="breadcrumb">
+                <li><a href="/shop">Home</a></li>
+                <li><a href="/account/my-account">Mein Konto</a></li>
+                <li class="active"> Bestellhistorie </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-7">
+            <h1 class="section-title-inner"><span><i class="fa fa-list-alt"></i> Bestellhistorie </span></h1>
+
+            <div class="row userInfo">
+                <div class="col-lg-12">
+                    <h2 class="block-title-2"> Ihre Bestellungen </h2>
+                </div>
+
+                <div class="col-xs-12 col-sm-12">
+                    <table class="footable">
+                        <thead>
+                        <tr>
+                            <th data-class="expand" data-sort-initial="true"><span
+                                    title="table sorted by this column on load">Auftragsnummer</span></th>
+                            <th data-hide="phone,tablet" data-sort-ignore="true">Menge</th>
+                            <th data-hide="phone,tablet" data-sort-ignore="true">Rechnung</th>
+                            <th data-hide="phone,tablet"><strong>Zahlungsweise</strong></th>
+                            <th data-hide="phone,tablet"><strong></strong></th>
+                            <th data-hide="default"> Preis</th>
+                            <th data-hide="default" data-type="numeric"> Datum</th>
+                            <th data-hide="phone" data-type="numeric"> Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>55684</td>
+                            <td>9
+                                <small>Artikel</small>
+                            </td>
+                            <td><a target="_blank">-</a></td>
+                            <td>Rechnung</td>
+                            <td><a href="/account/order/55684" class="btn btn-primary btn-sm">Bestellung ansehen</a></td>
+                            <td>842,54 €</td>
+                            <td data-value="78025368997">21 Okt 2015</td>
+                            <td data-value="1"><span class="label label-warning">Im Rückstand</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>55654</td>
+                            <td>1
+                                <small>Artikel</small>
+                            </td>
+                            <td><a target="_blank">-</a></td>
+                            <td>Rechnung</td>
+                            <td><a href="/account/order/55654" class="btn btn-primary btn-sm">Bestellung ansehen</a></td>
+                            <td>92,34 €</td>
+                            <td data-value="78025368997">15 Okt 2015</td>
+                            <td data-value="2"><span class="label label-success">Geliefert</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>55689</td>
+                            <td>5
+                                <small>Artikel</small>
+                            </td>
+                            <td><a target="_blank">-</a></td>
+                            <td>Rechnung</td>
+                            <td><a href="/account/order/55689" class="btn btn-primary btn-sm">Bestellung ansehen</a></td>
+                            <td>372,54 €</td>
+                            <td data-value="78025368997">22 Jun 2015</td>
+                            <td data-value="2"><span class="label label-danger">Storniert</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-lg-12 clearfix">
+                    <ul class="pager">
+                        <li class="previous pull-right"><a href="index.html"> <i class="fa fa-home"></i> Zum Shop </a>
+                        </li>
+                        <li class="next pull-left"><a href="account.html"> &larr; Zurück zu meinem Konto</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--/row end-->
+
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-5"></div>
+    </div>
+    <!--/row-->
+        <div class="col-lg-3 col-md-3 col-sm-5"></div>
+    </div>
+    <!--/row-->
+
+    <div style="clear:both"></div>
+</div>
+<!-- /wrapper -->
+
+<div class="gap"></div>
+
+{% endblock %}
+{% block js_bottom %}
+<script type="text/javascript" src="/assets/js/jquery/jquery-1.10.1.min.js"></script>
+<!-- include footable plugin -->
+<script src="/assets/js/footable.js" type="text/javascript"></script>
+<script src="/assets/js/footable.sortable.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.footable').footable();
+    });
+</script> 
+
+<!-- include  parallax plugin -->
+<script type="text/javascript" src="/assets/js/jquery.parallax-1.1.js"></script>
+
+<!-- optionally include helper plugins -->
+<script type="text/javascript" src="/assets/js/helper-plugins/jquery.mousewheel.min.js"></script>
+
+<!-- include mCustomScrollbar plugin //Custom Scrollbar  -->
+
+<script type="text/javascript" src="/assets/js/jquery.mCustomScrollbar.js"></script>
+
+<!-- include checkRadio plugin //Custom check & Radio  -->
+<script type="text/javascript" src="/assets/js/ion-checkRadio/ion.checkRadio.min.js"></script>
+
+<!-- include grid.js // for equal Div height  -->
+<script src="/assets/js/grids.js"></script>
+
+<!-- include carousel slider plugin  -->
+<script src="/assets/js/owl.carousel.min.js"></script>
+
+<!-- jQuery minimalect // custom select   -->
+<script src="/assets/js/jquery.minimalect.min.js"></script>
+
+<!-- include touchspin.js // touch friendly input spinner component   -->
+<script src="/assets/js/bootstrap.touchspin.js"></script>
+{% endblock %}
