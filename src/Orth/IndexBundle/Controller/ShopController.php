@@ -53,7 +53,7 @@ class ShopController extends Controller
 
         $attachments = $em->getRepository('OrthIndexBundle:Attachments')->findBy(array('articleRef' => $article->getId()));
         
-        $breadcrums = $em->getRepository('OrthIndexBundle:Categories')->findBy(array('customerRef' => $user->getCustomerRef()));
+        $curCat = $em->getRepository('OrthIndexBundle:Categories')->findBy(array('parentRef' => $user->getCustomerRef()));
         
         $varTitle = [];
             $i = 0;
