@@ -53,8 +53,10 @@ class ShopController extends Controller
 
         $attachments = $em->getRepository('OrthIndexBundle:Attachments')->findBy(array('articleRef' => $article->getId()));
         
-        $curCat = $em->getRepository('OrthIndexBundle:Categories')->findBy(array('parentRef' => $user->getCustomerRef()));
-        
+        $curCat = $em->getRepository('OrthIndexBundle:Categories')->findOneBy(array('id' => $article->getCatRef()));
+        $parentCat = $em->getRepository('OrthIndexBundle:Categories')->findOneBy(array('id' => $curCat->getParentId()));
+        $grandparentCat = $em->getRepository('OrthIndexBundle:Categories')->findOneBy(array('id' => $parentCat->getParentId()));
+                
         $varTitle = [];
             $i = 0;
         
@@ -175,10 +177,10 @@ class ShopController extends Controller
 
             $custCategories = buildTree( $array);
 
-            return $this->render('OrthIndexBundle:Shop:product.html.twig', array('categories' => $custCategories,'article' => $article, 'variants' => $variants,'varTitle' => $varTitle, 'images' => $images, 'attachments' => $attachments));
+            return $this->render('OrthIndexBundle:Shop:product.html.twig', array('curCat' => $curCat, 'parent' => $parentCat, 'grandparent' => $grandparentCat,'categories' => $custCategories,'article' => $article, 'variants' => $variants,'varTitle' => $varTitle, 'images' => $images, 'attachments' => $attachments));
 
         }
-        return $this->render('OrthIndexBundle:Shop:product.html.twig', array('article' => $article, 'variants' => $variants,'varTitle' => $varTitle, 'images' => $images, 'attachments' => $attachments), $response);
+        return $this->render('OrthIndexBundle:Shop:product.html.twig', array('curCat' => $curCat, 'parent' => $parentCat, 'grandparent' => $grandparentCat,'article' => $article, 'variants' => $variants,'varTitle' => $varTitle, 'images' => $images, 'attachments' => $attachments), $response);
 
     }
     
