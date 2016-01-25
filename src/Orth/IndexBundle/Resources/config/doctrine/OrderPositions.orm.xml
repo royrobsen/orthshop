@@ -8,5 +8,14 @@
     <field name="varRef" type="integer" column="var_ref" nullable="false"/>
     <field name="posPrice" type="float" column="pos_price" precision="10" scale="0" nullable="false"/>
     <field name="posAmount" type="integer" column="pos_amount" nullable="false"/>
+    <many-to-one
+            field="orders"
+            target-entity="Orders"
+            inversed-by="positions"
+            join-column="orderRef">
+
+            <join-column name="order_ref" referenced-column-name="id" />
+    </many-to-one>
+    
   </entity>
 </doctrine-mapping>

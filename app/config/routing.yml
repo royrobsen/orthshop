@@ -1,3 +1,7 @@
+orth_admin:
+    resource: "@OrthAdminBundle/Resources/config/routing.yml"
+    prefix:   /
+
 orth_index:
     resource: "@OrthIndexBundle/Resources/config/routing.yml"
     prefix:   /

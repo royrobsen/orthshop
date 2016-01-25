@@ -52,4 +52,51 @@ class ArticleAttributes
     {
         return $this->id;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $attrValue;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->attrValue = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add attrValue
+     *
+     * @param \Orth\IndexBundle\Entity\ArticleAttributeValues $attrValue
+     * @return ArticleAttributes
+     */
+    public function addAttrValue(\Orth\IndexBundle\Entity\ArticleAttributeValues $attrValue)
+    {
+        $this->attrValue[] = $attrValue;
+
+        return $this;
+    }
+
+    /**
+     * Remove attrValue
+     *
+     * @param \Orth\IndexBundle\Entity\ArticleAttributeValues $attrValue
+     */
+    public function removeAttrValue(\Orth\IndexBundle\Entity\ArticleAttributeValues $attrValue)
+    {
+        $this->attrValue->removeElement($attrValue);
+    }
+
+    /**
+     * Get attrValue
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAttrValue()
+    {
+        return $this->attrValue;
+    }
+    
+    
 }

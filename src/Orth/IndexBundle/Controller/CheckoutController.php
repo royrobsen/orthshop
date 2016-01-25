@@ -303,7 +303,6 @@ class CheckoutController extends Controller
         $freight = 5.50;
         
         $order = new Orders();
-        $orderPositions = new OrderPositions();
         
         $invoiceId = $request->query->get('inv');
         $deliveryId = $request->query->get('del');
@@ -317,6 +316,7 @@ class CheckoutController extends Controller
         $shoppingCart = $em->getRepository('OrthIndexBundle:ShoppingCart')->findBy(array('userRef' => $user->getId()));
         
         $order->setStatus(0);
+        $order->setCustomerOrderNumber(0);
         $order->setInvoiceAdrRef($invoiceId);
         $order->setPaymentMethod($invoiceKind);
         $order->setShippingAdrRef($deliveryId);
@@ -324,15 +324,14 @@ class CheckoutController extends Controller
         $order->setUserRef($user->getId());
         $order->setCustomerRef($user->getCustomerRef());
         $order->setCreatedDate(new \DateTime("now"));
-        
         $em->persist($order);
-        $em->flush();
         
         foreach ($shoppingCart as $item) {
             
+            $orderPositions = new OrderPositions();
             $product = $em->getRepository('OrthIndexBundle:ArticleSuppliers')->findOneBy(array('id' => $item->getVarRef()));
 
-            $orderPositions->setOrderRef($order->getId());
+            $orderPositions->setOrders($order);
             $orderPositions->setPosAmount($item->getAmount());
             $orderPositions->setPosPrice($product->getPrice());
             $orderPositions->setVarRef($item->getVarRef());
@@ -357,6 +356,8 @@ class CheckoutController extends Controller
             
         }
         
+ 
+        $em->flush();
         
         $message = \Swift_Message::newInstance()
         ->setSubject('Bestellbestätigung')

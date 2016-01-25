@@ -12,5 +12,10 @@
     <field name="userRef" type="integer" column="user_ref" nullable="false"/>
     <field name="customerRef" type="integer" column="customer_ref" nullable="false"/>
     <field name="createdDate" type="datetime" column="created_date" nullable="false"/>
+    <field name="customerOrderNumber" type="text" column="customerOrderNumber" nullable="false"/>
+     <one-to-many
+            field="positions"
+            target-entity="OrderPositions"
+            mapped-by="orders" />
   </entity>
 </doctrine-mapping>

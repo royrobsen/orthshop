@@ -31,22 +31,14 @@
         <div class="col-lg-6 col-md-6 col-sm-5">
             <h1 class="product-title"> {{article.shortName}} </h1>
 
-            <h3 class="product-code">Ref-Nr : {{article.articleNumber}}</h3>
-
             <div class="product-price"><span class="price-sales"> ab {{variants.0.price|number_format(2,',','.')}} €</span></div>
             <div class="details-description">
                 <p>{{article.shortDescription}} </p>
             </div>
             <div class="cart-actions">
-                <div class="addto">
-                    <button onclick="productAddToCartForm.submit(this);" class="button btn-cart cart first"
-                            title="In den Warenkorb legen" type="button">In den Korb
-                    </button>
-                    <a class="link-wishlist wishlist">Zur Wunschliste hinzufügen</a></div>
+                  
                 <div style="clear:both"></div>
                 <h3 class="incaps"><i class="fa fa fa-check-circle-o color-in"></i> Auf Lager</h3>
-
-                <h3 style="display:none" class="incaps"><i class="fa fa-minus-circle color-out"></i> Nicht auf Lager</h3>
 
                 <h3 class="incaps"><i class="glyphicon glyphicon-lock"></i> Sicheres Bestellen</h3>
             </div>
@@ -65,13 +57,14 @@
                     {% if variants %}
                     <li class="active"><a href="#variants" data-toggle="tab">Varianten</a></li>
                     <li><a href="#details" data-toggle="tab">Details</a></li>
-                    <li><a href="#shipping" data-toggle="tab">Versand</a></li>
                     {% else %}
                     <li><a class="active" href="#details" data-toggle="tab">Details</a></li>
-                    <li><a href="#shipping" data-toggle="tab">Versand</a></li>
                     {% endif %}
                     {% if attachments %}
                     <li><a href="#downloads" data-toggle="tab">Downloads</a></li>
+                    {% endif %}
+                    {% if is_granted('ROLE_MODERATOR') %} 
+                    <li><a href="#bestellsystem" data-toggle="tab">Bestellsystem</a></li>
                     {% endif %}
                 </ul>
                 <!-- Tab panes -->
@@ -121,37 +114,6 @@
                    {% endif %}    
                         {{article.longDescription}}
                     </div>
-                    <div class="tab-pane" id="shipping">
-                        <table>
-                            <colgroup>
-                                <col style="width:33%">
-                                <col style="width:33%">
-                                <col style="width:33%">
-                            </colgroup>
-                            <tbody>
-                            <tr>
-                                <td>Standard</td>
-                                <td>1-5 business days</td>
-                                <td>$7.95</td>
-                            </tr>
-                            <tr>
-                                <td>Two Day</td>
-                                <td>2 business days</td>
-                                <td>$15</td>
-                            </tr>
-                            <tr>
-                                <td>Next Day</td>
-                                <td>1 business day</td>
-                                <td>$30</td>
-                            </tr>
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <td colspan="3">* Free on orders of $50 or more</td>
-                            </tr>
-                            </tfoot>
-                        </table>
-                    </div>
                     {% if attachments %}
                     <div class="tab-pane" id="downloads">
                         <table class="table">
@@ -167,124 +129,92 @@
                             {% endfor %}
                         </table>
                     </div>   
-                   {% endif %}   
-                </div>
+                   {% endif %} 
+                {% if is_granted('ROLE_MODERATOR') %}  
+                    <div class="tab-pane" id="bestellsystem">
+                          <h2>Zum Bestellsystem hinzufügen</h2>
+                        <p>Der Artikel wird der gewählten Kategorie sofort hinzugefügt! Außerdem können Sie Ihre eigene Artikelnummer hinzufügen, um den Artikel schneller zu finden.</p>
+                        <form name="selectCatForm" method="get" action="/account/add">
+                            <label>Ihre Artikelnummer</label>
+                            <input name="customArtnr" id="varRef" placeholder="Ihre Artikelnummer" />
+                            <input name="varRef" id="varRef" hidden="hidden" value="{{article.id}}" />
+                        <select name="catref" id="catref" placeholder="Wählen Sie eine Kategorie">
+                            <option value="" disabled selected>Wählen Sie eine Kategorie"</option>
+                        {% for cat in categories %}
+                            <optgroup label="{{cat.catName}}">
+                            {% if cat.children is defined %}
+                            {% for child1 in cat.children %}
+                                <option class="catlvl1" value="{{child1.id}}">{{child1.catName}}</option>
+                                {% if child1.children is defined %}
+                                {% for child2 in child1.children %}
+                                <option class="catlvl2" value="{{child2.id}}"> ->  {{child2.catName}}</option>
+                                {% endfor %}
+                                {% endif %}  
+                            {% endfor %} 
+                            {% endif %}
+                            </optgroup>  
+                        {% endfor %}    
+                        </select>
+                        <button class="btn btn-danger">Speichern</button>
+                        </form>
+                    </div>  
+                {% endif %} 
                 <!-- /.tab content -->
-
+                </div>
             </div>
             <!--/.product-tab-->
         
     </div>
     <!--/.row-->
 
-    <div class="row recommended">
-        <h1> ÄHNLICHE ARTIKEL </h1>
 
-        <div id="SimilarProductSlider">
-            <div class="item">
-                <div class="product"><a class="product-image"> <img src="images/product/a1.jpg" alt="img"> </a>
-
-                    <div class="description">
-                        <h4><a href="san-remo-spaghetti">YOUR LIFE</a></h4>
-
-                        <div class="price"><span>$57</span></div>
-                    </div>
-                </div>
-            </div>
-            <!--/.item-->
-
-            <div class="item">
-                <div class="product"><a class="product-image"> <img src="images/product/a2.jpg" alt="img"> </a>
-
-                    <div class="description">
-                        <h4><a href="san-remo-spaghetti">RED CROWN</a></h4>
-
-                        <div class="price"><span>$44</span></div>
-                    </div>
-                </div>
-            </div>
-            <!--/.item-->
-
-            <div class="item">
-                <div class="product"><a class="product-image"> <img src="images/product/a3.jpg" alt="img"> </a>
-
-                    <div class="description">
-                        <h4><a href="san-remo-spaghetti">WHITE GOLD</a></h4>
-
-                        <div class="price"><span>$35</span></div>
-                    </div>
-                </div>
-            </div>
-            <!--/.item-->
-
-            <div class="item">
-                <div class="product"><a class="product-image"> <img src="images/product/a4.jpg" alt="img"> </a>
-
-                    <div class="description">
-                        <h4><a href="san-remo-spaghetti">DENIM 4240</a></h4>
-
-                        <div class="price"> $<span>55</span></div>
-                    </div>
-                </div>
-            </div>
-            <!--/.item-->
-
-            <div class="item">
-                <div class="product"><a class="product-image"> <img src="images/product/30.jpg" alt="img"> </a>
-
-                    <div class="description">
-                        <h4><a href="san-remo-spaghetti">CROWN ROCK</a></h4>
-
-                        <div class="price"><span>$500</span></div>
-                    </div>
-                </div>
-            </div>
-            <!--/.item-->
-
-            <div class="item">
-                <div class="product"><a class="product-image"> <img src="images/product/a5.jpg" alt="img"> </a>
-
-                    <div class="description">
-                        <h4><a href="san-remo-spaghetti">SLIM ROCK</a></h4>
-
-                        <div class="price"><span>$50 </span></div>
-                    </div>
-                </div>
-            </div>
-            <!--/.item-->
-
-            <div class="item">
-                <div class="product"><a class="product-image"> <img src="images/product/36.jpg" alt="img"> </a>
-
-                    <div class="description">
-                        <h4><a href="san-remo-spaghetti">ROCK T-Shirts </a></h4>
-
-                        <div class="price"><span>$130</span></div>
-                    </div>
-                </div>
-            </div>
-            <!--/.item-->
-
-            <div class="item">
-                <div class="product"><a class="product-image"> <img src="images/product/13.jpg" alt="img"> </a>
-
-                    <div class="description">
-                        <h4><a href="san-remo-spaghetti">Denim T-Shirts </a></h4>
-
-                        <div class="price"><span>$43</span></div>
-                    </div>
-                </div>
-            </div>
-            <!--/.item-->
-        </div>
-        <!--/.recommended-->
-        </div>
-    </div>
     <div style="clear:both"></div>
 </div>
 <!-- /main-container -->
 
 <div class="gap"></div>
+{% if is_granted('ROLE_MODERATOR') %}     
+{% if categories is defined %}
+             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Zum Bestellsystem hinzufügen </h4>
+                      </div>
+                      <div class="modal-body">
+                          <h2>Kategorie wählen!</h2>
+                        <p>Der Artikel wird der gewählten Kategorie sofort hinzugefügt!</p>
+                        <form name="selectCatForm" method="get" action="/account/add">
+                            <input name="varRef" id="varRef" value="{{article.id}}" />
+                            
+                        <select name="catref" id="catref" placeholder="Wählen Sie eine Kategorie">
+                        {% for cat in categories %}
+                            <optgroup label="{{cat.catName}}">
+                            {% if cat.children is defined %}
+                            {% for child1 in cat.children %}
+                                <option class="catlvl1" value="{{child1.id}}">{{child1.catName}}</option>
+                                {% if child1.children is defined %}
+                                {% for child2 in child1.children %}
+                                <option class="catlvl2" value="{{child2.id}}"> ->  {{child2.catName}}</option>
+                                {% endfor %}
+                                {% endif %}  
+                            {% endfor %} 
+                            {% endif %}
+                            </optgroup>  
+                        {% endfor %}    
+                        </select>
+                        <button class="btn btn-danger">Speichern</button>
+                        </form>
+                      </div>
+                      <div ng-cloak class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+                      </div>
+                    </div><!-- /.modal-content -->
+                  </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+{% endif %}   
+{% endif %}
 {% endblock %}
 {% block js_bottom %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js">

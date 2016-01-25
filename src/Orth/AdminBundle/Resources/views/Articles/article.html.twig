@@ -1,0 +1,171 @@
+{% extends "adminbase.html.twig" %}
+{% block content %}
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Artikel</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+
+                        </div>
+                        <div class="panel-body">
+                        {{ form_start(form) }}
+                        {{ form_errors(form) }}	                    
+                            <div class="col-xs-12 col-sm-12">
+
+                                <div class="form-group">
+                                    <label for="InputCompany">Artikelname</label>
+                                    {{ form_widget(form.shortName, { 'attr': {'class': 'form-control', 'placeholder' : 'Artikelname'} }) }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="InputCompany2">Kurzbeschreibung</label>
+                                    {{ form_widget(form.shortDescription, { 'attr': {'class': 'form-control', 'placeholder' : 'Kurzbeschreibung'} }) }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="InputCompany3">Artikeltext</label>
+                                    {{ form_widget(form.longDescription, { 'attr': {'class': 'form-control', 'rows' : '4', 'style' : 'width: 100%;min-width: 100%; max-width: 100%;', 'placeholder' : 'Artikeltext'} }) }}
+                                </div>
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    <!-- /.panel panel-default -->
+                </div>
+                <!-- /.col-lg-6" -->
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+
+                        </div>
+                        <div class="panel-body">
+
+                        </div>
+                            <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.panel panel-default -->
+                <!-- /.col-lg-6" -->
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+
+                        </div>
+                            <div class="panel-body">
+                                <div class="form-group table-responsive">
+                                    <label for="InputCompany3">Varianten</label> <a data-toggle="modal" data-target="#newAttr" class="btn btn-sm btn-info create"> <i
+                                            class="fa fa-plus-circle"></i> Neues Attribut </a> | <a href="/admin/fixattr/{{ app.request.get('id') }}">Varianten reparieren</a>
+                                    <table class="table">
+                                        <tr>
+                                            <th>
+                                                Artikelnummer
+                                            </th>
+                                            <th>
+                                                Preis
+                                            </th>
+                                            {% for attrName in attrNames %}
+                                            <th colspan="2">
+                                                {{attrName.attributeName}} <a data-toggle="modal" data-target="#myModal" class="btn btn-sm btn-danger delete" id="{{attrName.id}}"> <i
+                                                        class="fa fa-minus-circle"></i> </a>
+                                            </th>
+                                            {% endfor %}
+                                        </tr>
+                                    {% for variant in form.variants %}
+                                        <tr>
+                                            <td>
+                                                {{ form_widget(variant.supplierArticleNumber, { 'attr': {'class': 'form-control', 'rows' : '4', 'style' : 'width: 100%;min-width: 100%; max-width: 100%;', 'placeholder' : 'Artikelnummer'} }) }}
+                                            </td>
+                                            <td>
+                                                {{ form_widget(variant.price, { 'attr': {'class': 'form-control', 'rows' : '4', 'style' : 'width: 100%;min-width: 100%; max-width: 100%;', 'placeholder' : 'Preis'} }) }}
+                                            </td> 
+                                                {% for variantvalue in variant.variantvalues %}
+                                                    <td>
+                                                        {{ form_widget(variantvalue.attributeValue, { 'attr': {'class': 'form-control', 'style' : 'width: 100px;min-width: 100%; max-width: 100%;', 'placeholder' : 'Attributwert'} }) }}
+                                                    </td>
+                                                    <td>
+                                                        {{ form_widget(variantvalue.attributeUnit, { 'attr': {'class': 'form-control', 'style' : 'width: 100%;min-width: 100%; max-width: 100%;', 'placeholder' : 'Einheit'} }) }}
+                                                    </td>
+                                                    {% endfor %}
+                                                {% endfor %}
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-xs-12 clearfix">
+                                {{form_widget(form.save, { 'attr': {'class':'btn btn-primary'}} ) }}
+                            </div>
+
+                        {{ form_end(form) }}
+                    </div>
+                        <!-- /.panel-body -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Attribut löschen</h4>
+                      </div>
+                      <div class="modal-body">
+                          <h2>Achtung!</h2>
+                        <p>Die Attribute werden unwiderruflich gelöscht! Damit werden alle beinhalteten Daten ebenfalls gelöscht!</p>
+                      </div>
+                      <div ng-cloak class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+                        <a id="submitDelete" href="#"><button type="button" class="btn btn-danger">Löschen</button></a>
+                      </div>
+                    </div><!-- /.modal-content -->
+                  </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+                <div class="modal fade" id="newAttr" tabindex="-1" role="dialog" aria-labelledby="newAttr" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Attribut hinzufügen</h4>
+                      </div>
+                      <div class="modal-body">
+                          <h2>Neues Attribut</h2>
+                        <p>Es wird ein neues Attribut für alle Varianten erstellt!</p>
+                        <form action="/admin/addattr/{{ app.request.get('id') }}" method="get">
+                            <select name="attrId" class="selectpicker" data-live-search="true">
+                                {% for attr in allAttrNames %}
+                                <option value="{{attr.id}}">{{attr.attributeName}}</option>
+                                {% endfor %}
+                            </select>
+                        </form>
+                      </div>
+                      <div ng-cloak class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+                        <a id="submitDelete" href="#"><button type="button" class="btn btn-info">Erstellen</button></a>
+                      </div>
+                    </div><!-- /.modal-content -->
+                  </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->          
+{% endblock %}
+
+{% block js %}
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.4/css/bootstrap-select.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.4/js/bootstrap-select.min.js"></script>
+<script type="text/javascript">
+        $(document).ready(function() {
+            $(".delete").click(function(e) {
+                var attrId = e.target.id;
+                var artId = {{ app.request.get('id') }};
+                $("#submitDelete").attr('href', "/admin/deleteattr/"+artId+"/"+attrId);
+           });
+        });
+</script>
+{% endblock %}

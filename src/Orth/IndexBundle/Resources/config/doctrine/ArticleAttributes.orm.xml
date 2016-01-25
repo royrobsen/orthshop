@@ -5,5 +5,9 @@
       <generator strategy="IDENTITY"/>
     </id>
     <field name="attributeName" type="text" column="attribute_name" nullable="false"/>
+        <one-to-many
+            field="attrValue"
+            target-entity="ArticleAttributeValues"
+            mapped-by="attrName" />
   </entity>
 </doctrine-mapping>

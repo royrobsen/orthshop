@@ -239,10 +239,12 @@ fos_elastica:
                                 properties:
                                     id: ~
                                     perm:
-                                        type: object
+                                        type: nested
                                         properties:
-                                            permStatus: ~
-                                            userRef: ~
+                                            permStatus:
+                                                 type: integer
+                                            userRef: 
+                                                type: integer
               persistence:
                   driver: orm
                   model: Orth\IndexBundle\Entity\Articles

@@ -1,0 +1,88 @@
+{% extends "adminbase.html.twig" %}
+{% block content %}
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Artikelliste</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+
+                        </div>
+                        <div class="panel-body">
+                            <form action="{{ app.request.getBaseUrl ~ app.request.getPathInfo }}" name="search2" method="get">
+                            <div class="form-group">
+                                <div class="input-group input-group-sm"> 
+                                    <div class="icon-addon addon-sm">
+                                        <input type="text" name="q" placeholder="Suchbegriff eingeben" class="form-control">
+                                        <label for="suche" class="glyphicon glyphicon-search" rel="tooltip" title="suche"></label>
+                                    </div>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">Suchen!</button>
+                                    </span>
+                                </div>
+                            </div>
+                            </form>
+                            <div class="table-responsive">
+                               <table class="table table-striped table-bordered table-hover" id="dataTables-article">
+                                   <thead>
+                                       <tr>
+                                           <th>ID</th>
+                                           <th>Kurzbezeichung</th>
+                                           <th>Funktionen</th>
+                                       </tr>
+                                       {% for article in articles %}
+                                       <tr>
+                                           <td>{{article.id}}</td>
+                                           <td>{{article.shortName}} <br /> <small>{{article.shortDescription}}</small></td>
+                                           <td><a href="/admin/article/{{article.id}}">Artikel bearbeiten</a></td>
+                                       </tr>
+                                       {% endfor %}
+                                   </thead>
+                               </table>
+                               {% if totalpages > 1 %}
+                                <div class="pagination pull-left no-margin-top">
+                                    <ul class="pagination no-margin-top">
+                                        <li><a href="/">«</a></li>
+                                        {% set pageIt = app.request.get('p') - 3 %}
+                                        {% set pageItBase = 1 %}
+                                        {% set maxPage = 5 %}
+                                        {% if totalpages < 5 %}
+                                            {% set maxPage = totalpages %}
+                                        {% endif %}
+                                        {% for i in range(1, maxPage) %} 
+                                        {% if app.request.get('p') <= 3%}
+                                            {% set pageItBase = i %}
+                                        <li><a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge(app.request.query.all)|merge({'p': pageItBase})) }}">{{pageItBase}}</a></li>
+                                        {% endif %}
+                                        {% if app.request.get('p') >= 4 and pageIt < totalpages%}
+                                            {% set pageIt = (pageIt + 1) %}
+                                        <li><a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge(app.request.query.all)|merge({'p': pageIt})) }}">{{pageIt}}</a></li>
+                                        {% endif %}
+                                        {% endfor %}
+                                        <li><a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge(app.request.query.all)|merge({'p': totalpages})) }}">»</a></li>
+                                    </ul>
+                                </div>
+                                <div class="pull-right pull-right col-sm-4 col-xs-12 no-padding text-right text-left-xs">
+                                    {% if app.request.get('p') is empty %}
+                                        {% set currPage = 1 %}
+                                    {% endif %}
+                                    {% if not app.request.get('p') is empty %}
+                                        {% set currPage = app.request.get('p') %}
+                                    {% endif %}
+                                    <p>Zeige Seite {{ currPage }} von {{totalpages}} Seiten</p>
+                                </div>
+                                {% endif %}        
+                           </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+{% endblock %}

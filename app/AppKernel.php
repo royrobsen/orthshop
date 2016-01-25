@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new Orth\IndexBundle\OrthIndexBundle(),
             new FOS\ElasticaBundle\FOSElasticaBundle(),
+            new Orth\AdminBundle\OrthAdminBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

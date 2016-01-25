@@ -1,0 +1,35 @@
+orth_admin_homepage:
+    path:     /admin
+    defaults: { _controller: OrthAdminBundle:Default:index }
+    
+orth_admin_customerlist:
+    path:     /admin/customers
+    defaults: { _controller: OrthAdminBundle:Customers:customerlist }
+    
+orth_admin_jsoncustomerlist:
+    path:     /admin/jsoncustomerlist
+    defaults: { _controller: OrthAdminBundle:Customers:jsoncustomerlist }
+    
+orth_admin_articlelist:
+    path:     /admin/articles
+    defaults: { _controller: OrthAdminBundle:Articles:articlelist }
+    
+orth_admin_jsoncarticlelist:
+    path:     /admin/jsonarticlelist
+    defaults: { _controller: OrthAdminBundle:Articles:jsonarticlelist }
+    
+orth_admin_article:
+    path:     /admin/article/{id}
+    defaults: { _controller: OrthAdminBundle:Articles:article }
+    
+orth_admin_fixattr:
+    path:     /admin/fixattr/{id}
+    defaults: { _controller: OrthAdminBundle:Articles:fixattr }
+    
+orth_admin_deleteattr:
+    path:     /admin/deleteattr/{artId}/{attrId}
+    defaults: { _controller: OrthAdminBundle:Articles:deleteattr }
+    
+orth_admin_addattr:
+    path:     /admin/addattr/{artId}
+    defaults: { _controller: OrthAdminBundle:Articles:addattr }

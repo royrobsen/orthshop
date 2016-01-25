@@ -136,4 +136,32 @@ class OrderPositions
     {
         return $this->id;
     }
+    /**
+     * @var \Orth\IndexBundle\Entity\Orders
+     */
+    private $orders;
+
+
+    /**
+     * Set orders
+     *
+     * @param \Orth\IndexBundle\Entity\Orders $orders
+     * @return OrderPositions
+     */
+    public function setOrders(\Orth\IndexBundle\Entity\Orders $orders = null)
+    {
+        $this->orders = $orders;
+
+        return $this;
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Orth\IndexBundle\Entity\Orders 
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
 }

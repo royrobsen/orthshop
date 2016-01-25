@@ -96,15 +96,7 @@
             </div>
             </form>
             <div class="w100 productFilter clearfix">
-
                 <div class="pull-right ">
-                    <div class="change-order pull-right">
-                        <select class="form-control" name="orderby">
-                            <option selected="selected">Sortierung</option>
-                            <option value="price">Preis aufsteigend</option>
-                            <option value="price-desc">Preis absteigend</option>
-                        </select>
-                    </div>
                     <div class="change-view pull-right"><a href="#" title="Grid" class="grid-view"> <i
                             class="fa fa-th-large"></i> </a> <a href="#" title="List" class="list-view "><i
                             class="fa fa-th-list"></i></a></div>
@@ -112,21 +104,29 @@
             </div>
             <!--/.productFilter-->
             <div class="row  categoryProduct xsResponse clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                {% if articles is empty %}
+                    <h3>Ihre Suche ergab leider keine Ergebnisse! Bitte versuchen Sie es mit einem anderen Suchbegriff.</h3>
+                {% endif %}
+                </div>
                 {% for article in articles %}
                 <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
                     <div class="product">
-                        <a id="{{article.id}}" class="add-fav tooltipHere">
-                            <i class="glyphicon glyphicon-heart"></i>
+                        {% if is_granted('ROLE_MODERATOR') %} 
+                        {% if cid is not empty %}    
+                        <a data-toggle="modal" data-target="#myModal" id="{{article.id}}" class="delete-fav tooltipHere">
+                            <i class="glyphicon glyphicon-trash"></i>
                         </a>
-
+                        {% endif %}    
+                        {% endif %}
                         <div class="image">
-                            <a href="/productedit?q={{article.articleNumber}}"><img src="/images/product/nw/{{article.images.0.picName}}" alt="img"
+                            <a href="/product?q={{article.articleNumber}}&c={{cid}}"><img src="/images/product/nw/{{article.images.0.picName}}" alt="img"
                                                                 class="img-responsive"></a>
 
                         </div>
                         <div class="description">
                             <div class="shortname">
-                                <h4><a href="/productedit?q={{article.articleNumber}}">{{article.shortName}}</a></h4>
+                                <h4><a href="/product?q={{article.articleNumber}}&c={{cid}}">{{article.shortName}}</a></h4>
                             </div>
                             <div class="grid-description">
                                 <p>{{article.shortDescription}} </p>
@@ -207,5 +207,27 @@
 <!-- /wrapper -->
 
 <div class="gap"></div>
-
+{% if is_granted('ROLE_MODERATOR') %}     
+{% if app.request.get('c') is defined %}
+             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Artikel aus Kategorie enfernen </h4>
+                      </div>
+                      <div class="modal-body">
+                          <h2>Artikel enfernen!</h2>
+                        <p>Der Artikel wird aus der derzeitigen Kategorie sofort entfernt!</p>
+                        <span id="test"></span><span id="cid">{{cid}}</span>
+                        <a href="" class="delete-customArticle" >Artikel entfernen</a>
+                      </div>
+                            <div ng-cloak class="modal-footer"> 
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+                            </div>
+                    </div><!-- /.modal-content -->
+                  </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+{% endif %}   
+{% endif %}
 {% endblock %}

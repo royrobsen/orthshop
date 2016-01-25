@@ -17,5 +17,13 @@
 
             <join-column name="var_ref" referenced-column-name="id" />
         </many-to-one>
+        <many-to-one
+            field="attrName"
+            target-entity="ArticleAttributes"
+            inversed-by="attrValue"
+            join-column="attributeName">
+
+            <join-column name="attribute_ref" referenced-column-name="id" />
+        </many-to-one>
   </entity>
 </doctrine-mapping>

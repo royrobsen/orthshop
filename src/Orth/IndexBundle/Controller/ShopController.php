@@ -53,6 +53,8 @@ class ShopController extends Controller
 
         $attachments = $em->getRepository('OrthIndexBundle:Attachments')->findBy(array('articleRef' => $article->getId()));
         
+        $breadcrums = $em->getRepository('OrthIndexBundle:Categories')->findBy(array('customerRef' => $user->getCustomerRef()));
+        
         $varTitle = [];
             $i = 0;
         
@@ -137,13 +139,45 @@ class ShopController extends Controller
         
             foreach ($variants as &$value) {
                 $customerData = $em->getRepository('OrthIndexBundle:Customerdata')->findOneBy(array('varRef' => $value['id'], 'userRef' => $user->getId(), 'customerRef' => $user->getCustomerRef()));
-                $value['customArtnr'] =  $customerData->getCustomArtnr();
-                if($customerData != NULL AND $customerData->getCustomPrice() != 0) {
-                    $value['price'] = $customerData->getCustomPrice();
-                }
+                if($customerData != NULL) {
+                    $value['customArtnr'] =  $customerData->getCustomArtnr();
+                    if($customerData->getCustomPrice() != 0) {
+                        $value['price'] = $customerData->getCustomPrice();
+                    }
+                }    
             }
-        }          
 
+            $custCat = $em->getRepository('OrthIndexBundle:Customcategory')->findBy(array('customerRef' => $user->getCustomerRef()));
+            $array = [];
+            foreach ($custCat as $cat) {
+                $array[] = array('id' => $cat->getId(), 'catName' => $cat->getCategoryName(), 'parentRef' => $cat->getParentRef(), 'anzahl' => 0);
+            }
+            
+            function buildTree( $ar, $pid = null ) {
+                $op = array();
+                foreach( $ar as $item ) {
+                    if( $item['parentRef'] == $pid ) {
+                        $op[$item['id']] = array(
+                            'id' => $item['id'],
+                            'catName' => $item['catName'],
+                            'parentId' => $item['parentRef'],
+                            'anzahl' => $item['anzahl']
+                        );
+                        // using recursion
+                        $children =  buildTree( $ar, $item['id'] );
+                        if( $children ) {
+                            $op[$item['id']]['children'] = $children;
+                        }
+                    }
+                }
+                return $op;
+            }
+
+            $custCategories = buildTree( $array);
+
+            return $this->render('OrthIndexBundle:Shop:product.html.twig', array('categories' => $custCategories,'article' => $article, 'variants' => $variants,'varTitle' => $varTitle, 'images' => $images, 'attachments' => $attachments));
+
+        }
         return $this->render('OrthIndexBundle:Shop:product.html.twig', array('article' => $article, 'variants' => $variants,'varTitle' => $varTitle, 'images' => $images, 'attachments' => $attachments), $response);
 
     }
@@ -250,28 +284,42 @@ class ShopController extends Controller
 
         $finder = $this->container->get('fos_elastica.finder.search.article');
         $boolQuery = new \Elastica\Query\BoolQuery();
-               
-        if ($request->query->get('c') != NULL) {
+                
+        if ($request->query->get('c') != NULL AND $request->query->get('q') == NULL ) {
             $catid = $request->query->get('c');
+            $categoryArray = [];
+            $rootCategories = $em->getRepository('OrthIndexBundle:Categories')->findBy(array('parentId' => $catid));
+            
+            foreach ($rootCategories as $childCategory ) {
+                $childCategories = $em->getRepository('OrthIndexBundle:Categories')->findBy(array('parentId' => $childCategory->getId()));
+                $categoryArray[] = $childCategory->getId();
+                foreach ($childCategories as $grandchildCategory ) {
+                    $categoryArray[] = $grandchildCategory->getId();
+                }
+            }
+   
+            $categoryQuery = new \Elastica\Query\Terms();
+            $categoryQuery->setTerms('catRef', $categoryArray);
+            $boolQuery->addMust($categoryQuery);
+            
+        } elseif ($request->query->get('c') != NULL ) {
+            $catid = $request->query->get('c');
+            
             $categoryQuery = new \Elastica\Query\Terms();
             $categoryQuery->setTerms('catRef', array($catid));
             $boolQuery->addMust($categoryQuery);
         }
-        /*
-        $fieldQuery = new \Elastica\Query\MultiMatch();
-        $fieldQuery->setFields(array('_all'));
-        $fieldQuery->setAnalyzer('custom_search_analyzer');
-        $fieldQuery->setOperator('AND');
-        $fieldQuery->setQuery($searchTerm);
-        $boolQuery->addMust($fieldQuery);
-                   */
-        $fieldQuery = new \Elastica\Query\Match();
-        $fieldQuery->setFieldQuery('allField', $searchTerm);
-        $fieldQuery->setFieldOperator('allField', 'AND');
-        $fieldQuery->setFieldMinimumShouldMatch('allField', '80%');
-        $fieldQuery->setFieldAnalyzer('allField', 'custom_search_analyzer');
-        $boolQuery->addMust($fieldQuery);
+        
+        if($request->query->get('q')) {
 
+            $fieldQuery = new \Elastica\Query\Match();
+            $fieldQuery->setFieldQuery('allField', $searchTerm);
+            $fieldQuery->setFieldOperator('allField', 'AND');
+            $fieldQuery->setFieldMinimumShouldMatch('allField', '80%');
+            $fieldQuery->setFieldAnalyzer('allField', 'custom_search_analyzer');
+            $boolQuery->addMust($fieldQuery);
+        } 
+        
         $query = new \Elastica\Query();
         $query->setQuery($boolQuery);
         $query->setSize(10000);

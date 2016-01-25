@@ -184,6 +184,10 @@ orth_shop_checkout_success:
 orth_customershop_addarticle:
     path:   /account/add
     defaults: { _controller: OrthIndexBundle:CustomerShop:addarticle } 
+ 
+orth_customershop_deletearticle:
+    path:   /account/delete
+    defaults: { _controller: OrthIndexBundle:CustomerShop:deletearticle }   
     
 orth_shop_productedit:
     path:   /productedit

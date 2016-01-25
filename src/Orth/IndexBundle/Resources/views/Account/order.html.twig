@@ -13,7 +13,7 @@
             <ul class="breadcrumb">
                 <li><a href="/shop">Home</a></li>
                 <li><a href="/account/my-account">Mein Konto</a></li>
-                <li class="active"> Bestellhistorie </li>
+                <li><a href="/account/order-history"> Bestellhistorie </a></li>
             </ul>
         </div>
     </div>
@@ -32,13 +32,21 @@
 
                     <div class="col-sm-12">
                         <div class=" statusTop">
-                            <p><strong>Status:</strong> Im Rückstand</p>
+                            <p><strong>Status:</strong> 
+                            {% if order.0.status == 0 %}
+                                Im Rückstand
+                            {% elseif order.0.status == 1 %}
+                                Geliefert
+                            {% elseif order.0.status == 2 %}
+                                Storniert
+                            {% endif %}
+                            </p>
 
-                            <p><strong>Bestelldatum:</strong> Dienstag, 21.10.2015</p>
+                            <p><strong>Bestelldatum:</strong> {{order.0.createdDate.date|date('d.m.Y')}}</p>
 
-                            <p><strong>Auftragsnummer:</strong> 56684 </p>
+                            <p><strong>Shop-Auftragsnummer:</strong> OS-400{{order.0.id}} </p>
                             
-                            <p><strong>Ihre Bestellnummer:</strong> CIA-5464644488 </p>
+                            <p><strong>Ihre Bestellnummer:</strong> {{order.0.customerOrderNumber}} </p>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -51,10 +59,14 @@
 
                             <div class="order-box-content">
                                 <div class="address">
-                                    <p><strong>Hellermann Tyton GmbH </strong></p>
+                                    <p><strong>{{ invAdr.0.companyName1 }} </strong><br/>
+                                        {{ invAdr.0.companyName2 }}
+                                        {{ invAdr.0.companyName3 }}<br/>
+                                        {{ invAdr.0.firstName }} {{ invAdr.0.lastName }} 
+                                    </p>
 
                                     <div class="adr">
-                                        Großer Moorweg 45<br>25436 Tornesch
+                                        {{ invAdr.0.street}}<br>{{ invAdr.0.zipcode}} {{ invAdr.0.city}}
                                     </div>
                                 </div>
                             </div>
@@ -75,12 +87,14 @@
 
 
                                 <div class="address">
-                                    <p><strong>Hellermann Tyton GmbH</strong></p>
+                                    <p><strong>{{ delAdr.0.companyName1 }} </strong><br/>
+                                        {{ delAdr.0.companyName2 }}
+                                        {{ delAdr.0.companyName3 }}<br/>
+                                        {{ delAdr.0.firstName }} {{ delAdr.0.lastName }} 
+                                    </p>
 
-                                    <p>z.Hd. Frau Wilhelm</p>
-                                    
                                     <div class="adr">
-                                        Großer Moorweg 45<br>25436 Tornesch
+                                        {{ delAdr.0.street}}<br>{{ delAdr.0.zipcode}} {{ delAdr.0.city}}
                                     </div>
                                 </div>
 
@@ -102,7 +116,13 @@
 
                             <div class="order-box-content">
                                 <div class="address">
-                                    <p>auf Rechnung</p>
+                                    <p> 
+                                    {% if order.0.paymentMethod == 0 %}
+                                        Rechnung
+                                    {% elseif order.0.paymentMethod == 1 %}
+                                        Vorkasse
+                                    {% endif %}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -120,7 +140,14 @@
 
                             <div class="order-box-content">
                                 <div class="address">
-                                    <p> per Auslieferung </p>
+                                    <p> 
+                                    {% if order.0.deliveryMethod == 0 %}
+                                        Anlieferung
+                                    {% elseif order.0.deliveryMethod == 1 %}
+                                        Abholung
+                                    {% endif %}
+                                    </p>
+                                </div>
                                 </div>
 
                             </div>
@@ -141,156 +168,32 @@
                                 <div class="table-responsive">
                                     <table class="order-details-cart">
                                         <tbody>
-                                        <tr class="cartProduct">
-                                            <td class="cartProductThumb" style="width:20%">
-                                                <div><a href="product-details.html"> <img alt="img"
-                                                                                          src="/images/product/3.jpg">
+                                        {% set gesamtpreis = 0 %}
+                                        {% for product in cart %}
+                                        <tr class="miniCartProduct {{product.varref}}">
+                                            <td style="width:20%"  rowspan="2" class="miniCartProductThumb">
+                                                <div><a href="/product?q={{product.artId}}"> <img src="/images/product/nw/{{product.image.0.picName}}" style="margin: 10px; max-height: 90px;" class="img-responsive" alt="img">
                                                 </a></div>
                                             </td>
-                                            <td style="width:40%">
+                                            <td style="width:80%; vertical-align: top;">
                                                 <div class="miniCartDescription">
-                                                    <h4><a href="product-details.html"> TSHOP Tshirt DO9 </a></h4>
-                                                    <span class="size"> 12 x 1.5 L </span>
-
-                                                    <div class="price"><span> $22 </span></div>
+                                                    <h4><a href="/product?q={{product.artId}}"> {{product.shortName}}</a></h4>
+                                                    <span class="size">{{product.articlenumber}}</span>
+                                                    <span class="size">{% for var in product.varData|reverse %} {% if var.attributeName is defined %}{{var.attributeName}}{% endif %}{% if var.attributeValue is defined %}{{var.attributeValue}} {{var.attributeUnit}} | {% endif %}{% endfor %}</span>
                                                 </div>
                                             </td>
-                                            <td class="" style="width:10%"><a> X 1 </a></td>
-                                            <td class="" style="width:15%"><span> $33 </span></td>
-
                                         </tr>
-                                        <tr class="cartProduct">
-                                            <td class="cartProductThumb" style="width:20%">
-                                                <div><a href="product-details.html"> <img alt="img"
-                                                                                          src="/images/product/2.jpg">
-                                                </a></div>
-                                            </td>
-                                            <td style="width:40%">
-                                                <div class="miniCartDescription">
-                                                    <h4><a href="product-details.html"> TShir TSHOP 09 </a></h4>
-                                                    <span class="size"> 12 x 1.5 L </span>
-
-                                                    <div class="price"><span> $15 </span></div>
-                                                </div>
-                                            </td>
-                                            <td class="" style="width:10%"><a> X 1 </a></td>
-                                            <td class="" style="width:15%"><span> $120 </span></td>
-
+                                        <tr class="tr-border miniCartAction {{product.varref}}">
+                                            <td style="width:80%"><a> <span>{{product.amount}} x {{product.price|number_format(2)}} € </span> <b class="pull-right" style="padding-right: 10px;"><span class="jSum2">{{(product.amount * product.price)|number_format(2)}}</span> €  </b></td>
                                         </tr>
-                                        <tr class="cartProduct">
-                                            <td class="cartProductThumb" style="width:20%">
-                                                <div><a href="product-details.html"> <img alt="img"
-                                                                                          src="/images/product/5.jpg">
-                                                </a></div>
-                                            </td>
-                                            <td style="width:40%">
-                                                <div class="miniCartDescription">
-                                                    <h4><a href="product-details.html"> Tshir 2014 </a></h4>
-                                                    <span class="size"> 12 x 1.5 L </span>
-
-                                                    <div class="price"><span> $30 </span></div>
-                                                </div>
-                                            </td>
-                                            <td class="" style="width:10%"><a> X 1 </a></td>
-                                            <td class="" style="width:15%"><span> $80 </span></td>
-
-                                        </tr>
-                                        <tr class="cartProduct">
-                                            <td class="cartProductThumb" style="width:20%">
-                                                <div><a href="product-details.html"> <img alt="img"
-                                                                                          src="/images/product/3.jpg">
-                                                </a></div>
-                                            </td>
-                                            <td style="width:40%">
-                                                <div class="miniCartDescription">
-                                                    <h4><a href="product-details.html"> TSHOP T shirt DO20 </a></h4>
-                                                    <span class="size"> 12 x 1.5 L </span>
-
-                                                    <div class="price"><span> $15 </span></div>
-                                                </div>
-                                            </td>
-                                            <td class="miniCartQuantity" style="width:10%"><a> X 1 </a></td>
-                                            <td class="miniCartSubtotal" style="width:15%"><span> $55 </span></td>
-
-                                        </tr>
-                                        <tr class="cartProduct">
-                                            <td class="cartProductThumb" style="width:20%">
-                                                <div><a href="product-details.html"> <img alt="img"
-                                                                                          src="/images/product/4.jpg">
-                                                </a></div>
-                                            </td>
-                                            <td style="width:40%">
-                                                <div class="miniCartDescription">
-                                                    <h4><a href="product-details.html"> T shirt Black </a></h4>
-                                                    <span class="size"> 12 x 1.5 L </span>
-
-                                                    <div class="price"><span> $44 </span></div>
-                                                </div>
-                                            </td>
-                                            <td class="" style="width:10%"><a> X 1 </a></td>
-                                            <td class="" style="width:15%"><span> $40 </span></td>
-
-                                        </tr>
-                                        <tr class="cartProduct">
-                                            <td class="cartProductThumb" style="width:20%">
-                                                <div><a href="product-details.html"> <img alt="img"
-                                                                                          src="/images/site/winter.jpg">
-                                                </a></div>
-                                            </td>
-                                            <td style="width:40%">
-                                                <div class="miniCartDescription">
-                                                    <h4><a href="product-details.html"> G Star T shirt </a></h4>
-                                                    <span class="size"> 12 x 1.5 L </span>
-
-                                                    <div class="price"><span> $80 </span></div>
-                                                </div>
-                                            </td>
-                                            <td class="" style="width:10%"><a> X 1 </a></td>
-                                            <td class="" style="width:15%"><span> $8.80 </span></td>
-
-                                        </tr>
-                                        <tr class="cartTotalTr blank">
-                                            <td class="" style="width:20%">
-                                                <div></div>
-                                            </td>
-                                            <td style="width:40%"></td>
-                                            <td class="" style="width:20%"></td>
-                                            <td class="" style="width:15%"><span>  </span></td>
-
-                                        </tr>
+                                        {% set gesamtpreis = gesamtpreis + (product.amount * product.price) %}
+                                        {% endfor %}
 
                                         <tr class="cartTotalTr">
-                                            <td class="" style="width:20%">
-                                                <div></div>
+                                            <td style="width:20%"></td>
+                                            <td style="width:80%">
+                                                <h3 class="text-right subtotal"> Gesamt: <span id="jTotal2">{{gesamtpreis|number_format(2, ',', '.')}}</span> € </h3>
                                             </td>
-                                            <td colspan="2" style="width:40%">Warenwert (ohne Ust)</td>
-                                            <td class="" style="width:15%"><span> 216,51 € </span></td>
-
-                                        </tr>
-                                        <tr class="cartTotalTr">
-                                            <td class="" style="width:20%">
-                                                <div></div>
-                                            </td>
-                                            <td colspan="2" style="width:40%">Porto (ohne Ust)</td>
-                                            <td class="" style="width:15%"><span> 5,50 €</span></td>
-
-                                        </tr>
-                                        <tr class="cartTotalTr">
-                                            <td class="" style="width:20%">
-                                                <div></div>
-                                            </td>
-                                            <td colspan="2" style="width:40%">Umsatzsteuer</td>
-                                            <td class="" style="width:15%"><span> 35,64 € </span></td>
-
-                                        </tr>
-                                        <tr class="cartTotalTr">
-                                            <td class="" style="width:20%">
-                                                <div></div>
-                                            </td>
-                                            <td style="width:40%"></td>
-                                            <td class="" style="width:20%">Summe (inkl. Ust)</td>
-                                            <td class="" style="width:15%"><span class="price"> 257,65 €  </span></td>
-
                                         </tr>
 
 
@@ -331,40 +234,4 @@
 
 <div class="gap"></div>
 
-{% endblock %}
-{% block js_bottom %}
-<script type="text/javascript" src="/assets/js/jquery/jquery-1.10.1.min.js"></script>
-<!-- include footable plugin -->
-<script src="/assets/js/footable.js" type="text/javascript"></script>
-<script src="/assets/js/footable.sortable.js" type="text/javascript"></script>
-<script type="text/javascript">
-    $(function () {
-        $('.footable').footable();
-    });
-</script> 
-
-<!-- include  parallax plugin -->
-<script type="text/javascript" src="/assets/js/jquery.parallax-1.1.js"></script>
-
-<!-- optionally include helper plugins -->
-<script type="text/javascript" src="/assets/js/helper-plugins/jquery.mousewheel.min.js"></script>
-
-<!-- include mCustomScrollbar plugin //Custom Scrollbar  -->
-
-<script type="text/javascript" src="/assets/js/jquery.mCustomScrollbar.js"></script>
-
-<!-- include checkRadio plugin //Custom check & Radio  -->
-<script type="text/javascript" src="/assets/js/ion-checkRadio/ion.checkRadio.min.js"></script>
-
-<!-- include grid.js // for equal Div height  -->
-<script src="/assets/js/grids.js"></script>
-
-<!-- include carousel slider plugin  -->
-<script src="/assets/js/owl.carousel.min.js"></script>
-
-<!-- jQuery minimalect // custom select   -->
-<script src="/assets/js/jquery.minimalect.min.js"></script>
-
-<!-- include touchspin.js // touch friendly input spinner component   -->
-<script src="/assets/js/bootstrap.touchspin.js"></script>
 {% endblock %}

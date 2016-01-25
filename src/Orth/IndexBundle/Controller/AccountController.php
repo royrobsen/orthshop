@@ -20,10 +20,67 @@ class AccountController extends Controller
         return $this->render('OrthIndexBundle:Account:myaccount.html.twig');
     } 
     public function orderhistoryAction() {
-        return $this->render('OrthIndexBundle:Account:orderhistory.html.twig');
+        
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        $query = $em->createQuery( "SELECT o, sum(op.posPrice * op.posAmount) as sumvalue FROM OrthIndexBundle:Orders o JOIN o.positions op WHERE o.customerRef = :customerRef GROUP BY o.id")
+                ->setParameter(':customerRef', $user->getCustomerRef());
+        
+        $orders = $query->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+
+        return $this->render('OrthIndexBundle:Account:orderhistory.html.twig', array('orders' => $orders));
     }  
-    public function orderAction() {
-        return $this->render('OrthIndexBundle:Account:order.html.twig');
+    public function orderAction($id) {
+        
+        $securityContext = $this->container->get('security.authorization_checker');
+
+        if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $query = $em->createQuery( "SELECT o,op FROM OrthIndexBundle:Orders o JOIN o.positions op WHERE o.customerRef = :customerRef AND o.id = :id")
+                    ->setParameter(':customerRef', $user->getCustomerRef())
+                    ->setParameter(':id', $id);
+
+            $order = $query->getResult();
+
+            $invoiceAddress = $em->getRepository('OrthIndexBundle:CustomersAddresses')->findBy(array('customerRef' => $user->getCustomerRef(), 'id' => $order[0]->getInvoiceAdrRef())); 
+            $shippingAddress = $em->getRepository('OrthIndexBundle:CustomersAddresses')->findBy(array('customerRef' => $user->getCustomerRef(), 'id' => $order[0]->getShippingAdrRef())); 
+
+                foreach ($order[0]->getPositions() as $item) {
+
+                    $em = $this->getDoctrine()->getManager();
+                    $product = $em->getRepository('OrthIndexBundle:ArticleSuppliers')->find($item->getVarRef());
+
+                    $repository = $this->getDoctrine()->getRepository('OrthIndexBundle:articleAttributeValues');
+
+                    $query = $repository->createQueryBuilder('aav')
+                        ->select('aa, aav')
+                        ->innerJoin('OrthIndexBundle:ArticleAttributes', 'aa', 'WITH', 'aav.attributeRef = aa.id')
+                        ->where('aav.varRef = :string')
+                        ->setParameter('string', $item->getVarRef())
+                        ->getQuery();
+
+                    $varData = $query->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+
+                    $price = $product->getPrice();
+
+                if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+                    $customerData = $em->getRepository('OrthIndexBundle:Customerdata')->findOneBy(array('varRef' => $item->getVarRef(), 'userRef' => $user->getId(), 'customerRef' => $user->getCustomerRef()));
+                    if($customerData != NULL AND $customerData->getCustomPrice() != 0) {
+                        $price = $customerData->getCustomPrice();
+                    }
+                }  
+
+                    $cartItems[] = array('shortName' => $product->getArticles()->getShortName(), 'artId' => $product->getArticles()->getId(), 'articlenumber' => $product->getSupplierArticleNumber(), 'amount' => $item->getPosAmount(), 'image' => $product->getArticles()->getImages(), 'varData' => $varData, 'price' => $price, 'varref' => $item->getVarRef());
+                }
+        
+        } else { exit; }
+        return $this->render('OrthIndexBundle:Account:order.html.twig', array('order' => $order, 'invAdr' => $invoiceAddress, 'delAdr' => $shippingAddress, 'cart' => $cartItems));
     }  
     public function configAction() {
         return $this->render('OrthIndexBundle:Account:config.html.twig');
@@ -322,45 +379,113 @@ class AccountController extends Controller
         $users = $em->getRepository('OrthIndexBundle:Users')->findOneBy(array('customerRef' => $user->getCustomerRef(), 'id' => $id));
                                             
         if ( $request->request->all()) {
-            dump($request->request->all());
+
             $formPost = $request->request->all();
-                
+  
             foreach ($formPost as $key => $value) {
                 
                    $userPerm = new UserPermissions();  
                    $userPerm = $em->getRepository('OrthIndexBundle:UserPermissions')->findOneBy(array('userRef' => $id, 'custcatRef' => $key));
-                
+
                    $custCat= $em->getRepository('OrthIndexBundle:Customcategory')->findOneBy(array('id' => $key));
     
                 if ( $userPerm == NULL ) {
                     
-                    $userPermInsert = new UserPermissions();
+                    $userPerm2 = new UserPermissions(); 
                     
-                    $userPermInsert->setCustcat($custCat);
-                    $userPermInsert->setUserRef($id);
-                    $userPermInsert->setPermStatus(1);
+                    $userPerm2->setCustcat($custCat);
+                    $userPerm2->setUserRef($id);
+                    $userPerm2->setPermStatus(1);
                     
-                    $em->persist($userPermInsert);
+                    $em->persist($userPerm2);
                     $em->flush();
                     
                 } else {
-                        
+                    
                     $userPerm->setCustcat($custCat);
                     $userPerm->setUserRef($id);
                     $userPerm->setPermStatus($value);
-                    
+
                     $em->persist($userPerm);
                     $em->flush();
 
+                    $articleCat = $userPerm->getCustcat();
+                    $articleCats1 = $em->getRepository('OrthIndexBundle:Customcategory')->findBy(array('parentRef' => $articleCat->getId()));
+                    
+                    foreach ($articleCats1 as $articleCat) {
+           
+                        $userPerm3 = $em->getRepository('OrthIndexBundle:UserPermissions')->findOneBy(array('userRef' => $id, 'custcatRef' => $articleCat->getId()));
+                        if ( $userPerm3 == NULL ) {
+
+                            $userPerm3 = new UserPermissions(); 
+
+                            $userPerm3->setCustcat($articleCat);
+                            $userPerm3->setUserRef($id);
+                            $userPerm3->setPermStatus($value);
+
+                            $em->persist($userPerm3);
+                            $em->flush();
+
+                        } else {
+                            $userPerm3->setCustcat($articleCat);
+                            $userPerm3->setUserRef($id);
+                            $userPerm3->setPermStatus($value);
+
+                            $em->persist($userPerm3);
+                            $em->flush();
+                        } 
+                            $customData = $userPerm3->getCustcat()->getCustomdata()->getValues();
+                            if ( $customData != NULL ) {
+                                $article = $customData[0]->getArticle();
+                                $this->container->get('fos_elastica.object_persister.search.article')->replaceOne($article);    
+                            } 
+                            
+                        $articleCats2 = $em->getRepository('OrthIndexBundle:Customcategory')->findBy(array('parentRef' => $articleCat->getId()));
+                        
+                        foreach ($articleCats2 as $articleCat) {
+
+                            $userPerm4 = $em->getRepository('OrthIndexBundle:UserPermissions')->findOneBy(array('userRef' => $id, 'custcatRef' => $articleCat->getId()));
+                            if ( $userPerm4 == NULL ) {
+                                
+                                $userPerm4 = new UserPermissions(); 
+
+                                $userPerm4->setCustcat($articleCat);
+                                $userPerm4->setUserRef($id);
+                                $userPerm4->setPermStatus($value);
+
+                                $em->persist($userPerm4);
+                                $em->flush();
+
+                            } else {
+                                $userPerm4->setCustcat($articleCat);
+                                $userPerm4->setUserRef($id);
+                                $userPerm4->setPermStatus($value);
+
+                                $em->persist($userPerm4);
+                                $em->flush();
+                            } 
+                            
+                            $customData = $userPerm4->getCustcat()->getCustomdata()->getValues();
+                            if ( $customData != NULL ) {
+
+                                $article = $customData[0]->getArticle();
+                                $this->container->get('fos_elastica.object_persister.search.article')->replaceOne($article);    
+                            } 
+                        }
+                    
+                    }
+                    
+                        
+
                 } 
-                  
+                    
             }
-                                 
+
             $this->get('session')->getFlashBag()->add('notice', 'Die Änderungen wurden erfolgreich gespeichert!');
             
         }
         
-                $categories = $em->getRepository('OrthIndexBundle:Customcategory')->findBy(array('customerRef' => $user->getCustomerRef()));
+        $categories = $em->getRepository('OrthIndexBundle:Customcategory')->findBy(array('customerRef' => $user->getCustomerRef(), 'parentRef' => NULL));
                 
         foreach ( $categories as $category ) {
             $userPermCat = new UserPermissions();  

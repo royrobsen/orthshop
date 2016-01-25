@@ -476,6 +476,29 @@ $('.add-fav').click(function (e) {
                 });
     return false; 
     });
+    
+$('.delete-fav').click(function (e) {
+    var varRef = $(this).attr('id');
+    $(".modal-body #test").text( varRef );
+});
+
+$('.delete-customArticle').click(function (e) {
+        var varRef = $(".modal-body #test").text();
+        var catId = $(".modal-body #cid").text();
+        $.ajax('/account/delete', {
+                    data: { 
+                          'varRef' :  varRef,
+                          'cid' :  catId
+                    },
+                    success: function(data) {
+                        alert('Artikel erfolgreich aus Kategorie entfernt!');
+                    },
+                    error: function() {
+                           alert('Fehler!');
+                    }
+                });
+    return false; 
+    });
 
     // scroll to certain anchor/div
 
@@ -493,7 +516,7 @@ $('.add-fav').click(function (e) {
     });
 
     $(function() { 
-      var theTable = $('table.adressList')
+      var theTable = $('table.list')
 
       $("#filter").keyup(function() {
         $.uiTableFilter( theTable, this.value );

@@ -405,4 +405,32 @@ class ArticleSuppliers
     {
         return $this->variantvalues;
     }
+    /**
+     * @var string
+     */
+    private $attributes;
+
+
+    /**
+     * Set attributes
+     *
+     * @param string $attributes
+     * @return ArticleSuppliers
+     */
+    public function setAttributes($attributes)
+    {
+        $this->attributes = $attributes;
+
+        return $this;
+    }
+
+    /**
+     * Get attributes
+     *
+     * @return string 
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
 }

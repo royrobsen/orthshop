@@ -1,0 +1,4 @@
+services:
+#    orth_admin.example:
+#        class: Orth\AdminBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

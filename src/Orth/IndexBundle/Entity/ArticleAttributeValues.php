@@ -192,4 +192,32 @@ class ArticleAttributeValues
     {
         return $this->variants;
     }
+    /**
+     * @var \Orth\IndexBundle\Entity\ArticleAttributes
+     */
+    private $attrName;
+
+
+    /**
+     * Set attrName
+     *
+     * @param \Orth\IndexBundle\Entity\ArticleAttributes $attrName
+     * @return ArticleAttributeValues
+     */
+    public function setAttrName(\Orth\IndexBundle\Entity\ArticleAttributes $attrName = null)
+    {
+        $this->attrName = $attrName;
+
+        return $this;
+    }
+
+    /**
+     * Get attrName
+     *
+     * @return \Orth\IndexBundle\Entity\ArticleAttributes 
+     */
+    public function getAttrName()
+    {
+        return $this->attrName;
+    }
 }

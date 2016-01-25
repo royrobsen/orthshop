@@ -19,49 +19,6 @@ use Symfony\Component\HttpFoundation\Cookie;
 class CustomerShopController extends Controller
 {  
     
-    public function bestellsystem2Action(Request $request) {
-        
-        $em = $this->getDoctrine()->getManager();
-         
-        $searchTerm = $request->query->get('q');
-        
-        $page = 0;
-        $pageOffset = 0;
-        
-        if ($request->query->get('p')) {
-            $page = $request->query->get('p');
-            $pageOffset = ($page - 1) * 12;
-        }
-        
-        $catId = $request->query->get('cid');
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-        $articles = [];
-        $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery( "SELECT cd FROM OrthIndexBundle:Customerdata cd GROUP BY cd.articleRef ORDER BY cd.customPrice ASC");
-        $variants = $query->getResult();
-        dump($variants);
-        //$variants = $em->getRepository('OrthIndexBundle:Customerdata')->findBy(array('userRef' => $user->getId(),'customerRef' => $user->getCustomerRef()));
-        foreach ( $variants as $variant) {
-            
-            $article = new Articles();
-
-            $article = $em->getRepository('OrthIndexBundle:Articles')->find($variant->getArticleRef());
-            if ($variant->getCustomPrice() == 0) {
-                $query = $em->createQuery( "SELECT asu FROM OrthIndexBundle:ArticleSuppliers asu WHERE asu.articleRef = :articleRef GROUP BY asu.articleRef ORDER BY asu.price ASC")
-                        ->setParameter('articleRef', $article->getId());
-                $result = $query->getResult();
-            $price = $result[0]->getPrice();
-            } else {
-                $price = $variant->getCustomPrice();
-            }
-            $articles[] = array('article' => $article, 'price' => $price);
-        }
-        $totalpages = 1;
-        dump($articles);
-        return $this->render('OrthIndexBundle:CustomShop:bestellsystem.html.twig', array('articles' => $articles, 'page' => $page, 'totalpages' => $totalpages));      
-
-        }   
-        
     public function bestellsystemAction(Request $request) {
         
         $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -77,21 +34,14 @@ class CustomerShopController extends Controller
         
         $finder = $this->container->get('fos_elastica.finder.search.article');
         $boolQuery = new \Elastica\Query\BoolQuery();
-               
+        $catid = "";       
         if ($request->query->get('c') != NULL) {
             $catid = $request->query->get('c');
         $categoryQuery = new \Elastica\Query\Terms();
         $categoryQuery->setTerms('customCatRef', array($catid));
         $boolQuery->addMust($categoryQuery);
         }
-        /*
-        $fieldQuery = new \Elastica\Query\MultiMatch();
-        $fieldQuery->setFields(array('_all'));
-        $fieldQuery->setAnalyzer('custom_search_analyzer');
-        $fieldQuery->setOperator('AND');
-        $fieldQuery->setQuery($searchTerm);
-        $boolQuery->addMust($fieldQuery);
-                   */
+
         if($request->query->get('q')) {
             
             $searchTerm = $request->query->get('q');
@@ -114,13 +64,21 @@ class CustomerShopController extends Controller
         $fieldQuery->setFieldQuery('customerRef',$user->getCustomerRef());
         $boolQuery->addMust($fieldQuery);
         
-        $fieldQuery = new \Elastica\Query\Match();
-        $fieldQuery->setFieldQuery('permStatus', 1);
+        
+        $fieldQuery = new \Elastica\Query\Nested();
+        $fieldQuery->setPath('custdata.custcat.perm');
+        $boolNested = new \Elastica\Query\BoolQuery();
+        $fieldNested = new \Elastica\Query\Match();
+        $fieldNested->setField('custdata.custcat.perm.permStatus', 1);
+        $boolNested->addMust($fieldNested);
+        $fieldNested = new \Elastica\Query\Match();
+        $fieldNested->setField('custdata.custcat.perm.userRef', $user->getId());
+        $boolNested->addMust($fieldNested);
+        $fieldQuery->setQuery($boolNested);
+
         $boolQuery->addMust($fieldQuery);
         
-        $fieldQuery = new \Elastica\Query\Match();
-        $fieldQuery->setFieldQuery('userRef', $user->getId());
-        $boolQuery->addMust($fieldQuery);
+
         
        
         $query = new \Elastica\Query();
@@ -131,55 +89,13 @@ class CustomerShopController extends Controller
         $query->setSize(12);
         $query->setFrom($pageOffset);        
         $articles = $finder->find($query);
-        
-//        $categories = [];
-//        foreach ($articleCatgeories as $articleCat) {
-//            $catCustData[] = $articleCat->getCustData();
-//            foreach ($articleCat->getCustData() as $articleCategory) {
-//                $categories[] = $articleCategory->getCustomCatRef();
-//                break 1;
-//        }
-//        }
-//
-//        $cats = array_count_values($categories);
-//        
-//        $array = [];
-//        foreach ( $cats as $key => $value ) {
-//            $cat1 = $em->getRepository('OrthIndexBundle:Customcategory')->findOneById($key); 
-//            if($cat1 != NULL) {
-//            $array[] = array('id' => $cat1->getId(), 'catName' => $cat1->getCategoryName(), 'parentRef' => $cat1->getParentRef(), 'anzahl' => $value);
-//            if($cat1->getParentRef() != NULL) {
-//                $check = true;
-//                while ($check) {
-//                    $cat2 = $em->getRepository('OrthIndexBundle:Customcategory')->findOneById($cat1->getParentRef()); 
-//                    $array[] = array('id' => $cat2->getId(), 'catName' => $cat2->getCategoryName(), 'parentRef' => $cat2->getParentRef(), 'anzahl' => $value);
-//                        if($cat2->getParentRef() == NULL) {
-//                            $check = false;
-//                        }
-//                        if($cat2->getParentRef() != NULL) {
-//                            $cat3 = $em->getRepository('OrthIndexBundle:Customcategory')->findOneById($cat2->getParentRef()); 
-//                            $array[] = array('id' => $cat3->getId(), 'catName' => $cat3->getCategoryName(), 'parentRef' => $cat3->getParentRef(), 'anzahl' => $value);
-//                            if($cat3->getParentRef() == NULL) {
-//                                $check = false;
-//                            }
-//                            if($cat3->getParentRef() != NULL) {
-//                                $cat4 = $em->getRepository('OrthIndexBundle:Customcategory')->findOneById($cat3->getParentRef()); 
-//                                $array[] = array('id' => $cat2->getId(), 'catName' => $cat4->getCategoryName(), 'parentRef' => $cat4->getParentRef(), 'anzahl' => $value);
-//                                if($cat4->getParentRef() == NULL) {
-//                                    $check = false;
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
+
         $custCat = $em->getRepository('OrthIndexBundle:Customcategory')->findBy(array('customerRef' => $user->getCustomerRef(), 'customerRef' => $user->getCustomerRef()));
         $array = [];
         foreach ($custCat as $cat) {
             if($cat->getParentRef() == NULL) {
             $visibleCat = $em->getRepository('OrthIndexBundle:UserPermissions')->findOneBy(array('custcatRef' => $cat->getId(), 'userRef' => $user->getID()));
-                if ( $visibleCat->getPermStatus() == 1 ) {
+                if ( $visibleCat != NULL AND $visibleCat->getPermStatus() == 1 ) {
                 $array[] = array('id' => $cat->getId(), 'catName' => $cat->getCategoryName(), 'parentRef' => $cat->getParentRef(), 'anzahl' => 0);
                 }
             } else {
@@ -222,7 +138,7 @@ class CustomerShopController extends Controller
                 
             }
         
-        return $this->render('OrthIndexBundle:CustomShop:bestellsystem.html.twig', array('articles' => $articles, 'page' => $page, 'totalpages' => $totalpages, 'categories' => $mainCat));
+        return $this->render('OrthIndexBundle:CustomShop:bestellsystem.html.twig', array('cid' => $catid, 'articles' => $articles, 'page' => $page, 'totalpages' => $totalpages, 'categories' => $mainCat));
         
         } 
         
@@ -274,9 +190,9 @@ class CustomerShopController extends Controller
         if($request->query->get('catref')) {
             $catref = $request->query->get('catref');
         }
-
+        $customArtnr = $request->query->get('customArtnr');
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        $customerData = new Customerdata();
+        
         $em = $this->getDoctrine()->getManager();
 
         $variants = $em->getRepository('OrthIndexBundle:ArticleSuppliers')->findBy(array('articleRef' => $id));
@@ -290,6 +206,7 @@ class CustomerShopController extends Controller
             } else {
                 $customerData->setCustomCatRef(1);  
             }
+            $customerData->setCustomArtnr($customArtnr);
             $customerData->setCustomPrice(0);
             $customerData->setCustomerRef($user->getCustomerRef());
             $customerData->setUserRef($user->getId());
@@ -303,13 +220,41 @@ class CustomerShopController extends Controller
         }
         
         $this->container->get('fos_elastica.object_persister.search.article')->replaceOne($article);
-        
-            
+         
         $response = array("code" => 100, "success" => true);
             
         return new Response(json_encode($response)); 
     }     
 
+    public function deletearticleAction(Request $request) {
+        
+        $id = $request->query->get('varRef');
+        if($request->query->get('cid')) {
+            $catref = $request->query->get('cid');
+        }
+
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $em = $this->getDoctrine()->getManager();
+        
+        $article = $em->getRepository('OrthIndexBundle:Articles')->findOneBy(array('id' => $id));
+        
+        $customerData = $em->getRepository('OrthIndexBundle:Customerdata')->findBy(array('article' => $article->getId(), 'customCatRef' => $catref));
+        dump($article);
+        foreach ($customerData as $varEntity) {
+            dump($varEntity);
+            $em->remove($varEntity);
+            $em->flush();
+           
+        }
+        
+        $this->container->get('fos_elastica.object_persister.search.article')->replaceOne($article);
+         
+        $response = array("code" => 100, "success" => true);
+            
+        return new Response(json_encode($response));  
+    }    
+    
         public function miniCartAction(Request $request) {
             $cart = NULL;
         if ($request->cookies->get('OrthCookie') != NULL ) {

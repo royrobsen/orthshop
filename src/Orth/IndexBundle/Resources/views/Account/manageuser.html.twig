@@ -26,25 +26,23 @@
                 {% for category in categories %}
                     <div class="col-xs-12 col-sm-6 col-lg-4">
                         <div class="form-group">
-                        <label class="col-md-4 control-label" for="radios">{{category.categoryName}}</label>
-
-                            <div class="col-md-12">
-                                 {% if category.checkedCat == 0 %}
-                                <label class="radio-inline" for="radios-0">
-                                    <input name="{{category.id}}" id="radios-0" value="0" required checked="checked"
-                                           type="radio">
-                                    Nicht sichtbar </label>
-                                <label class="radio-inline" for="radios-1">
-                                    <input name="{{category.id}}" id="radios-1" value="1" required type="radio">
-                                    Sichtbar </label>
-                               {% else %}  
-                                 <label class="radio-inline" for="radios-0">
-                                    <input name="{{category.id}}" id="radios-0" value="0" required type="radio">
-                                    Nicht sichtbar </label>
-                                <label class="radio-inline" for="radios-1">
-                                    <input name="{{category.id}}" id="radios-1" value="1" required checked="checked" type="radio">
-                                    Sichtbar </label>   
-                                    {% endif %}
+                            <label class="col-md-4 control-label" for="checkboxes">{{category.categoryName}}</label>               
+                            <div class="col-md-4">
+                                <div>
+                                    <label for="checkboxes-0">
+                                        {{category.checkedCat }}
+                                        {% if category.checkedCat == 0 %}
+                                        <input name="{{category.id}}" id="checkboxes" value="1"
+                                               type="checkbox">
+                                        {% else %}
+                                         <input name="{{category.id}}" style="display:none;" hidden="hidden" id="checkboxes" checked value="0"
+                                               type="checkbox">   
+                                        <input name="{{category.id}}" id="checkboxes" checked value="1"
+                                               type="checkbox"> 
+                                            
+                                        {% endif %}    
+                                        Sichtbar </label>
+                                </div>
                             </div>
                         </div>
                     </div>        

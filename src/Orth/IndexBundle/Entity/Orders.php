@@ -248,4 +248,77 @@ class Orders
     {
         return $this->createdDate;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $positions;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->positions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add positions
+     *
+     * @param \Orth\IndexBundle\Entity\OrderPositions $positions
+     * @return Orders
+     */
+    public function addPosition(\Orth\IndexBundle\Entity\OrderPositions $positions)
+    {
+        $this->positions[] = $positions;
+
+        return $this;
+    }
+
+    /**
+     * Remove positions
+     *
+     * @param \Orth\IndexBundle\Entity\OrderPositions $positions
+     */
+    public function removePosition(\Orth\IndexBundle\Entity\OrderPositions $positions)
+    {
+        $this->positions->removeElement($positions);
+    }
+
+    /**
+     * Get positions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPositions()
+    {
+        return $this->positions;
+    }
+    /**
+     * @var string
+     */
+    private $customerOrderNumber;
+
+
+    /**
+     * Set customerOrderNumber
+     *
+     * @param string $customerOrderNumber
+     * @return Orders
+     */
+    public function setCustomerOrderNumber($customerOrderNumber)
+    {
+        $this->customerOrderNumber = $customerOrderNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get customerOrderNumber
+     *
+     * @return string 
+     */
+    public function getCustomerOrderNumber()
+    {
+        return $this->customerOrderNumber;
+    }
 }

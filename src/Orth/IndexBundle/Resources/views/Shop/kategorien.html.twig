@@ -25,8 +25,12 @@
                     {% set anzahl = 0 %}
                     {% if category.children is defined %}
                     {% for subcategory in category.children %}
-                        {% set anzahl = anzahl + subcategory.anzahl %} 
-                    {% endfor %}
+                        {% if subcategory.children is defined %}
+                                        {% for sub2category in subcategory.children %}
+                                        {% set anzahl = anzahl + sub2category.anzahl %} 
+                                        {% endfor %}  
+                                    {% endif %}
+                    {% endfor %}    
                     {% endif %}
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -43,9 +47,9 @@
                                     {% if subcategory.children is defined %}
                                         {% for sub2category in subcategory.children %}
                                         {% set anzahl2 = anzahl2 + sub2category.anzahl %} 
-                                    {% endfor %}  
+                                        {% endfor %}  
                                     {% endif %}
-                                <li class="dropdown-tree open-tree active"><a class="dropdown-tree-a" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'q': app.request.get('q')})|merge({'c': subcategory.id})) }}"> <span
+                                <li class="dropdown-tree open-tree active"><a class="dropdown-tree-a"> <span
                                         class="badge pull-right">{{anzahl2}}</span> {{subcategory.catName}} </a>
                                     {% if subcategory.children is defined %}    
                                     <ul class="category-level-2 dropdown-menu-tree">
@@ -89,13 +93,6 @@
             <div class="w100 productFilter clearfix">
 
                 <div class="pull-right ">
-                    <div class="change-order pull-right">
-                        <select class="form-control" onchange="document.getElementById('search2').submit();" name="orderby">
-                            <option selected="selected">Sortierung</option>
-                            <option value="price">Preis aufsteigend</option>
-                            <option value="price-desc">Preis absteigend</option>
-                        </select>
-                    </div>
                     <div class="change-view pull-right"><a href="#" title="Grid" class="grid-view"> <i
                             class="fa fa-th-large"></i> </a> <a href="#" title="List" class="list-view "><i
                             class="fa fa-th-list"></i></a></div>
@@ -117,13 +114,13 @@
                         </a>
 
                         <div class="image">
-                            <a href="/productedit?q={{article.articleNumber}}"><img src="/images/product/nw/{{article.images.0.picName}}" alt="img"
+                            <a href="/product?q={{article.articleNumber}}"><img src="/images/product/nw/{{article.images.0.picName}}" alt="img"
                                                                 class="img-responsive"></a>
 
                         </div>
                         <div class="description">
                             <div class="shortname">
-                                <h4><a href="/productedit?q={{article.articleNumber}}">{{article.shortName}}</a></h4>
+                                <h4><a href="/product?q={{article.articleNumber}}">{{article.shortName}}</a></h4>
                             </div>
                             <div class="grid-description">
                                 <p>{{article.shortDescription}} </p>
@@ -133,8 +130,8 @@
                             </div>
                         </div>
                                 <div class="price"><span>ab {{article.showedPrice|number_format(2, ',', '.')}} € </span></div>    
-                        <div class="action-control"><a class="btn btn-primary"> <span class="add2cart"><i
-                                class="glyphicon glyphicon-shopping-cart"> </i> In den Korb </span> </a></div>
+                        <div class="action-control"><a href="/product?q={{article.articleNumber}}" class="btn btn-primary"> <span class="add2cart"><i
+                                class="glyphicon glyphicon-shopping-cart"> </i> Zum Artikel </span> </a></div>
                     </div>
                 </div>
                 <!--/.item-->

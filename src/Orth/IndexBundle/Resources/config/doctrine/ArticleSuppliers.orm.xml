@@ -15,6 +15,7 @@
     <field name="vpePackage" type="integer" column="vpe_package" nullable="false"/>
     <field name="vpePalette" type="integer" column="vpe_palette" nullable="false"/>
     <field name="supplierArticleNumber" type="text" column="supplier_article_number" nullable="false"/>
+    <field name="attributes" type="text" column="attributes" nullable="false"/>
     <many-to-one
             field="articles"
             target-entity="Articles"
@@ -26,7 +27,12 @@
     <one-to-many
             field="variantvalues"
             target-entity="ArticleAttributeValues"
-            mapped-by="variants" />
+            mapped-by="variants">            
+            <order-by>
+                <order-by-field name="attributeRef" direction="ASC" />
+            </order-by>
+    </one-to-many>
+    
   </entity>
 </doctrine-mapping>
 
