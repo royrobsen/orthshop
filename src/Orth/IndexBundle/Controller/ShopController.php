@@ -289,7 +289,7 @@ class ShopController extends Controller
                 
         if ($request->query->get('c') != NULL AND $request->query->get('q') == NULL ) {
             $catid = $request->query->get('c');
-            $categoryArray = [];
+            $categoryArray = [$request->query->get('c')];
             $rootCategories = $em->getRepository('OrthIndexBundle:Categories')->findBy(array('parentId' => $catid));
             
             foreach ($rootCategories as $childCategory ) {
@@ -299,7 +299,7 @@ class ShopController extends Controller
                     $categoryArray[] = $grandchildCategory->getId();
                 }
             }
-   
+            dump($categoryArray);
             $categoryQuery = new \Elastica\Query\Terms();
             $categoryQuery->setTerms('catRef', $categoryArray);
             $boolQuery->addMust($categoryQuery);
