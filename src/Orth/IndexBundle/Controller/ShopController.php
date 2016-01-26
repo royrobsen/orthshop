@@ -299,7 +299,7 @@ class ShopController extends Controller
                     $categoryArray[] = $grandchildCategory->getId();
                 }
             }
-            dump($categoryArray);
+   
             $categoryQuery = new \Elastica\Query\Terms();
             $categoryQuery->setTerms('catRef', $categoryArray);
             $boolQuery->addMust($categoryQuery);
