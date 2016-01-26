@@ -348,7 +348,7 @@ class ShopController extends Controller
         } else {
             foreach ($articles as $article) {
                 $variantData = $em->getRepository('OrthIndexBundle:ArticleSuppliers')->findOneBy(array('articleRef' => $article->getId()), array('price' => 'ASC'));
-                dump($variantData);
+        
                 $article->setShowedPrice($variantData->getPrice());
             }
         }    
