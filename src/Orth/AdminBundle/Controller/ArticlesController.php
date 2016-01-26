@@ -31,29 +31,27 @@ class ArticlesController extends Controller
         
         $finder = $this->container->get('fos_elastica.finder.search.article');
         $boolQuery = new \Elastica\Query\BoolQuery();
-               
-            
+        $articles = "";  
+        $totalpages = 0;
+        if($request->query->get('q') != NULL )  {  
             $searchTerm = $request->query->get('q');
-        
+         
             $fieldQuery = new \Elastica\Query\Match();
             $fieldQuery->setFieldQuery('allField', $searchTerm);
             $fieldQuery->setFieldOperator('allField', 'AND');
             $fieldQuery->setFieldMinimumShouldMatch('allField', '80%');
             $fieldQuery->setFieldAnalyzer('allField', 'custom_search_analyzer');
             $boolQuery->addMust($fieldQuery);
-            
-
-
-
-        $query = new \Elastica\Query();
-        $query->setQuery($boolQuery);
-        $query->setSize(10000);
-        $articleCatgeories = $finder->find($query);
-        $totalpages = ceil(count($finder->find($query))/12);
-        $query->setSize(12);
-        $query->setFrom($pageOffset);        
-        $articles = $finder->find($query);
-        
+  
+            $query = new \Elastica\Query();
+            $query->setQuery($boolQuery);
+            $query->setSize(10000);
+            $articleCatgeories = $finder->find($query);
+            $totalpages = ceil(count($finder->find($query))/12);
+            $query->setSize(12);
+            $query->setFrom($pageOffset);        
+            $articles = $finder->find($query);
+        } 
         return $this->render('OrthAdminBundle:Articles:articlelist.html.twig', array('totalpages' => $totalpages, 'articles' => $articles));
     }
 
