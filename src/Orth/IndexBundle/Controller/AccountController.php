@@ -187,7 +187,7 @@ class AccountController extends Controller
       $authenticationUtils = $this->get('security.authentication_utils');
       
       $form->handleRequest($request);
-      dump($form->getErrors());
+
       if ($form->isValid()) {
           
           $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -293,7 +293,7 @@ class AccountController extends Controller
             $em->flush();
             $this->get('session')->getFlashBag()->add('notice', 'Kategorie wurde erfolgreich hinzugefügt!');
             
-            return $this->redirectToRoute('orth_customershop_bestellsystem');
+            return $this->redirectToRoute('orth_account_config_categories');
         }
         
         return $this->render('OrthIndexBundle:Account:addcategory.html.twig', array('form' => $form->createView()));

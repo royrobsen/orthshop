@@ -224,7 +224,7 @@ class CustomerShopController extends Controller
          
         $response = array("code" => 100, "success" => true);
             
-        return $this->redirect($this->generateUrl('CanopyAbcBundle_crud_success'));
+        return $this->redirectToRoute('orth_customershop_bestellsystem');
     }     
 
     public function deletearticleAction(Request $request) {
