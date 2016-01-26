@@ -491,7 +491,8 @@ $('.delete-customArticle').click(function (e) {
                           'cid' :  catId
                     },
                     success: function(data) {
-                        alert('Artikel erfolgreich aus Kategorie entfernt!');
+                        alert('Artikel erfolgreich aus dieser Kategorie entfernt. Die Seite wird neu geladen!');
+                         location.reload();
                     },
                     error: function() {
                            alert('Fehler!');

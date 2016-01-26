@@ -37,6 +37,7 @@
                             <div class="thumbnail equalheight"><a title="Bestellsystem" href="/account/bestellsystem"><i
                                     class="fa fa-cart-arrow-down"></i> Bestellsystem </a></div>
                         </li>
+                        {% if is_granted('ROLE_MODERATOR') %}
                         <li class="col-lg-2 col-md-2 col-sm-3 col-xs-4  text-center ">
                             <div class="thumbnail equalheight"><a title="Meine Benutzer" href="/account/my-user"><i
                                     class="fa fa-user"></i> Meine Benutzer</a></div>
@@ -45,6 +46,7 @@
                             <div class="thumbnail equalheight"><a title="Konfiguration" href="/account/config"><i
                                     class="fa fa-folder-open"></i> Konfiguration</a></div>
                         </li>
+                        {% endif %} 
                     </ul>
                     <div class="clear clearfix"></div>
                 </div>

@@ -268,7 +268,8 @@ class AccountController extends Controller
         $user = $this->get('security.token_storage')->getToken()->getUser();
         
         $category = new Customcategory(); 
-
+        $userPerm = new UserPermissions(); 
+        
         $form = $this->createForm(new CustomcategoryType(), $category);
         $form->remove('parentRef');
         $form->remove('userRef');
@@ -277,15 +278,22 @@ class AccountController extends Controller
         $form->handleRequest($request);
         
         if ($form->isValid()) {
+            
             $category->setCustomerRef($user->getCustomerRef());
             $category->setUserRef($user->getId());
             $category->setParentRef($id);
+            
+            $userPerm->setUserRef($user->getId());
+            $userPerm->setCustcat($category);
+            $userPerm->setPermStatus(1);
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($category);
+            $em->persist($userPerm);
             $em->flush();
             $this->get('session')->getFlashBag()->add('notice', 'Kategorie wurde erfolgreich hinzugefügt!');
             
-            return $this->redirectToRoute('orth_account_config_categories');
+            return $this->redirectToRoute('orth_customershop_bestellsystem');
         }
         
         return $this->render('OrthIndexBundle:Account:addcategory.html.twig', array('form' => $form->createView()));

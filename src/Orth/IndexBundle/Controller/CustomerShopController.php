@@ -38,7 +38,7 @@ class CustomerShopController extends Controller
         if ($request->query->get('c') != NULL) {
             $catid = $request->query->get('c');
         $categoryQuery = new \Elastica\Query\Terms();
-        $categoryQuery->setTerms('customCatRef', array($catid));
+        $categoryQuery->setTerms('id', array($catid));
         $boolQuery->addMust($categoryQuery);
         }
 
@@ -197,6 +197,7 @@ class CustomerShopController extends Controller
 
         $variants = $em->getRepository('OrthIndexBundle:ArticleSuppliers')->findBy(array('articleRef' => $id));
         $article = $em->getRepository('OrthIndexBundle:Articles')->findOneById($id);
+        
         foreach ($variants as $variant) {
 
             $customerData = new Customerdata();
@@ -223,7 +224,7 @@ class CustomerShopController extends Controller
          
         $response = array("code" => 100, "success" => true);
             
-        return new Response(json_encode($response)); 
+        return $this->redirect($this->generateUrl('CanopyAbcBundle_crud_success'));
     }     
 
     public function deletearticleAction(Request $request) {
