@@ -92,9 +92,9 @@ class AccountController extends Controller
         $addresses = new CustomersAddresses();      
         
         $em = $this->getDoctrine()->getManager();
-        $addresses = $em->getRepository('OrthIndexBundle:CustomersAddresses')->findBy(array('customerRef' => '1', 'primaryAddress' => '0', 'defaultDeliveryAddress' => '0'));
-        $invoiceAddress = $em->getRepository('OrthIndexBundle:CustomersAddresses')->findBy(array('customerRef' => '1', 'primaryAddress' => '1'));
-        $deliveryAddress = $em->getRepository('OrthIndexBundle:CustomersAddresses')->findBy(array('customerRef' => '1', 'defaultDeliveryAddress' => '1'));
+        $addresses = $em->getRepository('OrthIndexBundle:CustomersAddresses')->findBy(array('customerRef' => $user->getCustomerRef(), 'primaryAddress' => '0', 'defaultDeliveryAddress' => '0'));
+        $invoiceAddress = $em->getRepository('OrthIndexBundle:CustomersAddresses')->findBy(array('customerRef' => $user->getCustomerRef(), 'primaryAddress' => '1'));
+        $deliveryAddress = $em->getRepository('OrthIndexBundle:CustomersAddresses')->findBy(array('customerRef' => $user->getCustomerRef(), 'defaultDeliveryAddress' => '1'));
                   
         return $this->render('OrthIndexBundle:Account:myaddress.html.twig', array('addresses' => $addresses, 'invoiceAddress' => $invoiceAddress, 'deliveryAddress' => $deliveryAddress));
     } 
