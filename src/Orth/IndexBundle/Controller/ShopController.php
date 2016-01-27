@@ -42,7 +42,7 @@ class ShopController extends Controller
         $article = new Articles();      
         
         $em = $this->getDoctrine()->getManager();
-        $article = $em->getRepository('OrthIndexBundle:Articles')->findOneBy(array('articleNumber' => $string));
+        $article = $em->getRepository('OrthIndexBundle:Articles')->findOneBy(array('id' => $string));
         
         //$variants = $article->getVariants()->getValues();
         

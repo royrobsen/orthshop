@@ -406,9 +406,9 @@ $(document).ready(function () {
 
     // For stylish input check box 
 
-    $(function () {
-        $("input[type='radio'], input[type='checkbox']").ionCheckRadio();
-    });
+//    $(function () {
+//        $("input[type='radio'], input[type='checkbox']").ionCheckRadio();
+//    });
 
 
     // customs select by minimalect

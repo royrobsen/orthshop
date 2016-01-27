@@ -8,7 +8,9 @@
         <div class="breadcrumbDiv col-lg-12">
             <ul class="breadcrumb">
                 <li><a href="/">Home</a></li>
+                {% if grandparent is not empty %}
                 <li><a href="/shop/suche?c={{grandparent.id}}">{{grandparent.categoryName}}</a></li>
+                {% endif %}
                 <li><a href="/shop/suche?c={{parent.id}}">{{parent.categoryName}}</a></li>
                 <li class="active"><a href="/shop/suche?c={{curCat.id}}">{{curCat.categoryName}}</a></li>
             </ul>

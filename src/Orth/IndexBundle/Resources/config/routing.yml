@@ -133,6 +133,10 @@ orth_account_config_addcategory:
     path:   /account/config/categories/add-category
     defaults: { _controller: OrthIndexBundle:Account:addcategory }
 
+orth_account_config_deletecategory:
+    path:   /account/config/categories/delete-category/{id}
+    defaults: { _controller: OrthIndexBundle:Account:deletecategory }
+
 orth_account_config_category:
     path:   /account/config/category/{id}
     defaults: { _controller: OrthIndexBundle:Account:category }

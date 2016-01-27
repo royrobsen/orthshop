@@ -506,4 +506,74 @@ class AccountController extends Controller
         return $this->render('OrthIndexBundle:Account:manageuser.html.twig', array('categories' => $categories, 'users' => $users));
     }  
     
+    public function deletecategoryAction($id, Request $request) {
+        
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        
+        $category = new Customcategory(); 
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        $arrayToRefresh = [];
+        
+        $category = $em->getRepository('OrthIndexBundle:Customcategory')->findOneBy(array('customerRef' => $user->getCustomerRef(), 'id' => $id));
+        if($category != NULL) {
+            $arrayToRefresh[] = $id;
+        }
+        $subcategory = $em->getRepository('OrthIndexBundle:Customcategory')->findBy(array('customerRef' => $user->getCustomerRef(), 'parentRef' => $id));
+        
+        if($subcategory != NULL) {
+            foreach ($subcategory as $sub1) {
+                $arrayToRefresh[] = $sub1->getId();
+
+                $subcategory2 = $em->getRepository('OrthIndexBundle:Customcategory')->findBy(array('customerRef' => $user->getCustomerRef(), 'parentRef' => $sub1->getId()));
+            
+                if($subcategory2 != NULL) {
+                    foreach ($subcategory2 as $sub2) {
+                        $arrayToRefresh[] = $sub2->getId();
+
+                    }         
+                }
+            }
+        } 
+        $articlesToRefresh = [];
+        foreach ($arrayToRefresh as $catIds) {
+            
+            $customdataArray = $em->getRepository('OrthIndexBundle:Customerdata')->findBy(array('customCatRef' => $catIds));
+            
+            if($customdataArray != NULL) {
+                foreach($customdataArray as $cdata) {
+                    
+                    $articlesToRefresh[] = $cdata->getArticle();
+                    
+                    $em->remove($cdata);
+                    $em->flush();
+                }
+            }
+        }
+        if($articlesToRefresh != NULL) {
+            foreach ($articlesToRefresh as $data) {
+                $this->container->get('fos_elastica.object_persister.search.article')->replaceOne($data); 
+            }
+            
+        }
+        if(isset($subcategory) AND $subcategory != NULL) {
+            foreach ($subcategory as $subRem) {
+                $em->remove($subRem);
+            }
+        }
+        if(isset($subcategory2) AND $subcategory2 != NULL) {
+            foreach ($subcategory2 as $subRem2) {
+                $em->remove($subRem2);
+            }
+        }
+        
+        $em->remove($category);
+        $em->flush();
+        $this->get('session')->getFlashBag()->add('notice', 'Kategorie wurde erfolgreich gelöscht!');
+        
+        return $this->redirectToRoute('orth_account_config_categories');
+        
+    } 
+    
 }
