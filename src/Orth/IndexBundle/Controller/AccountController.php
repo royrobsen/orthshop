@@ -109,7 +109,7 @@ class AccountController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $addresses->setCustomerRef($user->getId());
+            $addresses->setCustomerRef($user->getCustomerRef());
             $addresses->setPrimaryAddress(0);
             $addresses->setDefaultDeliveryAddress(0);
             $em = $this->getDoctrine()->getManager();
