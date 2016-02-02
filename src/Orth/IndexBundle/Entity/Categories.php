@@ -80,4 +80,77 @@ class Categories
     {
         return $this->parentId;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $children;
+
+    /**
+     * @var \Orth\IndexBundle\Entity\Categories
+     */
+    private $parent;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add children
+     *
+     * @param \Orth\IndexBundle\Entity\Categories $children
+     * @return Categories
+     */
+    public function addChild(\Orth\IndexBundle\Entity\Categories $children)
+    {
+        $this->children[] = $children;
+
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param \Orth\IndexBundle\Entity\Categories $children
+     */
+    public function removeChild(\Orth\IndexBundle\Entity\Categories $children)
+    {
+        $this->children->removeElement($children);
+    }
+
+    /**
+     * Get children
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \Orth\IndexBundle\Entity\Categories $parent
+     * @return Categories
+     */
+    public function setParent(\Orth\IndexBundle\Entity\Categories $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \Orth\IndexBundle\Entity\Categories 
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
 }

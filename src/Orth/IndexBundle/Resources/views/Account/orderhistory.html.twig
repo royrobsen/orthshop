@@ -27,6 +27,7 @@
                 </div>
 
                 <div class="col-xs-12 col-sm-12">
+                    {% if orders is not empty %}
                     <form id="filter-form"><input name="filter" class="form-control" id="filter" value="" maxlength="30" size="30" type="text"></form>
                     <table class="table list">
                         <thead>
@@ -57,6 +58,9 @@
                         {% endfor %}   
                         </tbody>
                     </table>
+                    {% else %}
+                    Sie haben noch keine Bestellhistorie!
+                    {% endif %}
                 </div>
 
                 <div class="col-lg-12 clearfix">

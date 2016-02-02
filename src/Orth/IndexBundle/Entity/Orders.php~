@@ -293,4 +293,32 @@ class Orders
     {
         return $this->positions;
     }
+    /**
+     * @var string
+     */
+    private $customerOrderNumber;
+
+
+    /**
+     * Set customerOrderNumber
+     *
+     * @param string $customerOrderNumber
+     * @return Orders
+     */
+    public function setCustomerOrderNumber($customerOrderNumber)
+    {
+        $this->customerOrderNumber = $customerOrderNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get customerOrderNumber
+     *
+     * @return string 
+     */
+    public function getCustomerOrderNumber()
+    {
+        return $this->customerOrderNumber;
+    }
 }

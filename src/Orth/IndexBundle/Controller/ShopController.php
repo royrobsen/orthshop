@@ -324,7 +324,7 @@ class ShopController extends Controller
         
         $query = new \Elastica\Query();
         $query->setQuery($boolQuery);
-        $query->setSize(10000);
+        $query->setSize(1000);
         $articleCatgeories = $finder->find($query);
         $totalpages = ceil(count($finder->find($query))/12);
         $query->setSize(12);
@@ -358,38 +358,39 @@ class ShopController extends Controller
         }
 
         $cats = array_count_values($categories);
-   
-        $array = [];
-        foreach ( $cats as $key => $value ) {
-            $cat1 = $em->getRepository('OrthIndexBundle:Categories')->findOneById($key); 
-            if($cat1 != NULL) {
-            $array[] = array('id' => $cat1->getId(), 'catName' => $cat1->getCategoryName(), 'parentId' => $cat1->getParentId(), 'anzahl' => $value);
-            if($cat1->getParentId() != NULL) {
-                $check = true;
-                while ($check) {
-                    $cat2 = $em->getRepository('OrthIndexBundle:Categories')->findOneById($cat1->getParentId()); 
-                    $array[] = array('id' => $cat2->getId(), 'catName' => $cat2->getCategoryName(), 'parentId' => $cat2->getParentId(), 'anzahl' => $value);
-                        if($cat2->getParentId() == NULL) {
-                            $check = false;
-                        }
-                        if($cat2->getParentId() != NULL) {
-                            $cat3 = $em->getRepository('OrthIndexBundle:Categories')->findOneById($cat2->getParentId()); 
-                            $array[] = array('id' => $cat3->getId(), 'catName' => $cat3->getCategoryName(), 'parentId' => $cat3->getParentId(), 'anzahl' => $value);
-                            if($cat3->getParentId() == NULL) {
-                                $check = false;
-                            }
-                            if($cat3->getParentId() != NULL) {
-                                $cat4 = $em->getRepository('OrthIndexBundle:Categories')->findOneById($cat3->getParentId()); 
-                                $array[] = array('id' => $cat2->getId(), 'catName' => $cat4->getCategoryName(), 'parentId' => $cat4->getParentId(), 'anzahl' => $value);
-                                if($cat4->getParentId() == NULL) {
-                                    $check = false;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        $testCat = $cats;
+        
+//        $array = [];
+//        foreach ( $cats as $key => $value ) {
+//            $cat1 = $em->getRepository('OrthIndexBundle:Categories')->findOneById($key); 
+//            if($cat1 != NULL) {
+//            $array[] = array('id' => $cat1->getId(), 'catName' => $cat1->getCategoryName(), 'parentId' => $cat1->getParentId(), 'anzahl' => $value);
+//            if($cat1->getParentId() != NULL) {
+//                $check = true;
+//                while ($check) {
+//                    $cat2 = $em->getRepository('OrthIndexBundle:Categories')->findOneById($cat1->getParentId()); 
+//                    $array[] = array('id' => $cat2->getId(), 'catName' => $cat2->getCategoryName(), 'parentId' => $cat2->getParentId(), 'anzahl' => $value);
+//                        if($cat2->getParentId() == NULL) {
+//                            $check = false;
+//                        }
+//                        if($cat2->getParentId() != NULL) {
+//                            $cat3 = $em->getRepository('OrthIndexBundle:Categories')->findOneById($cat2->getParentId()); 
+//                            $array[] = array('id' => $cat3->getId(), 'catName' => $cat3->getCategoryName(), 'parentId' => $cat3->getParentId(), 'anzahl' => $value);
+//                            if($cat3->getParentId() == NULL) {
+//                                $check = false;
+//                            }
+//                            if($cat3->getParentId() != NULL) {
+//                                $cat4 = $em->getRepository('OrthIndexBundle:Categories')->findOneById($cat3->getParentId()); 
+//                                $array[] = array('id' => $cat2->getId(), 'catName' => $cat4->getCategoryName(), 'parentId' => $cat4->getParentId(), 'anzahl' => $value);
+//                                if($cat4->getParentId() == NULL) {
+//                                    $check = false;
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
 
         function buildTree( $ar, $pid = null ) {
             $op = array();
@@ -411,11 +412,27 @@ class ShopController extends Controller
             return $op;
         }
 
-        $mainCat = buildTree( $array );
+        //$mainCat = buildTree( $array );
+        
+        $test = [];
+        foreach ($testCat as $key=>$value) {
 
+            $em = $this->getDoctrine()->getManager();
+
+            $query = $em->createQuery('SELECT c, c1, c2 FROM OrthIndexBundle:Categories c LEFT JOIN c.parent c1 LEFT JOIN c1.parent c2 WHERE c.id = :id')->setParameter('id', $key)->getResult();
+
+            $test[] = array('id' => $query[0]->getId(), 'parentId' => $query[0]->getParentId(),'catName' => $query[0]->getCategoryName(), 'anzahl' => $value);
+            if($query[0]->getParent() != NULL) {
+                $test[] = array('id' => $query[0]->getParent()->getId(), 'parentId' => $query[0]->getParent()->getParentId(),'catName' => $query[0]->getParent()->getCategoryName(), 'anzahl' => 0);
+            }
+            if($query[0]->getParent()->getParent() != NULL) {
+                $test[] = array('id' => $query[0]->getParent()->getParent()->getId(), 'parentId' => $query[0]->getParent()->getParent()->getParentId(),'catName' => $query[0]->getParent()->getParent()->getCategoryName(), 'anzahl' => 0);
+            }
+        }
+        $mainCat = buildTree( array_unique($test, SORT_REGULAR) );
+        //dump(array_unique($test, SORT_REGULAR));
         return $this->render('OrthIndexBundle:Shop:kategorien.html.twig', array('articles' => $articles, 'page' => $page, 'totalpages' => $totalpages, 'categories' => $mainCat));
         
-
      }   
         
     public function catsucheAction($catid, Request $request) {

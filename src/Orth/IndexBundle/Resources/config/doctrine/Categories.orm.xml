@@ -6,5 +6,7 @@
     </id>
     <field name="categoryName" type="text" column="category_name" nullable="false"/>
     <field name="parentId" type="text" column="parent_id" nullable="false"/>
+        <one-to-many field="children" target-entity="Categories" mapped-by="parent" />
+        <many-to-one field="parent" target-entity="Categories" inversed-by="children" />
   </entity>
 </doctrine-mapping>
