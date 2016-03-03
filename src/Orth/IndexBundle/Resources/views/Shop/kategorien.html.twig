@@ -7,8 +7,21 @@
     <div class="row">
         <div class="breadcrumbDiv col-lg-12">
             <ul class="breadcrumb">
-                <li><a href="index.html">Home</a></li>
-                <li class="active">Suche</li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/shop">Shop</a></li>
+                {% for category in categoryPath %}
+                <li><a href="/shop/suche?c={{category.id}}">{{category.catName}}</a></li>
+                {% if category.children is defined %}
+                {% for childcategory in category.children %}
+                <li><a href="/shop/suche?c={{childcategory.id}}">{{childcategory.catName}}</a></li>   
+                {% if childcategory.children is defined %}
+                {% for grandchildcategory in childcategory.children %}
+                <li><a href="/shop/suche?c={{grandchildcategory.id}}">{{grandchildcategory.catName}}</a></li>        
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
             </ul>
         </div>
     </div>
@@ -109,14 +122,8 @@
                 {% for article in articles %}
                 <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
                     <div class="product">
-                        <a id="{{article.id}}" class="add-fav tooltipHere">
-                            <i class="glyphicon glyphicon-heart"></i>
-                        </a>
-
                         <div class="image">
-                            <a href="/product?q={{article.id}}"><img src="/images/product/nw/{{article.images.0.picName}}" alt="img"
-                                                                class="img-responsive"></a>
-
+                            <a href="/product?q={{article.id}}"><img src="/images/product/nw/{{article.images.0.picName}}" alt="img" class="img-responsive"></a>
                         </div>
                         <div class="description">
                             <div class="shortname">
@@ -129,8 +136,8 @@
                                 <p> {{article.longDescription}}  </p>
                             </div>
                         </div>
-                                <div class="price"><span>ab {{article.showedPrice|number_format(2, ',', '.')}} € </span></div>    
-                        <div class="action-control"><a href="/product?q={{article.articleNumber}}" class="btn btn-primary"> <span class="add2cart"><i
+                                <div class="price"><span>{% if article.priceDiff == true %}ab{% endif %} {{article.showedPrice|number_format(2, ',', '.')}} € </span></div>    
+                        <div class="action-control"><a href="/product?q={{article.id}}" class="btn btn-primary"> <span class="add2cart"><i
                                 class="glyphicon glyphicon-shopping-cart"> </i> Zum Artikel </span> </a></div>
                     </div>
                 </div>

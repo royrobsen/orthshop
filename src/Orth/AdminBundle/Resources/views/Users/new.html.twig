@@ -1,0 +1,78 @@
+{% extends "adminbase.html.twig" %}
+{% block content %}
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Benutzer erstellen</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                          {{ form_start(form) }}
+                          {{ form_errors(form) }}
+                            {{form_widget(form.save, { 'attr': {'class':'btn btn-primary'}} ) }}
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label for="firstName">Vorname</label>
+                                        {{ form_widget(form.firstName, { 'attr': {'class': 'form-control', 'placeholder' : 'Vorname'} }) }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="lastName">Nachname</label>
+                                        {{ form_widget(form.lastName, { 'attr': {'class': 'form-control', 'placeholder' : 'Nachname'} }) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label for="email">E-Mail</label>
+                                        {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'placeholder' : 'E-Mail'} }) }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="userGroup">Benutzergruppe</label>
+                                        {{ form_widget(form.userGroup, { 'attr': {'class': 'form-control', 'placeholder' : 'Benutzergruppe'} }) }}
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>
+                                    {{ form_end(form) }}
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+             </div>
+            <!-- /.row -->
+{% endblock %}
+{% block js %}
+<script src="/assets/js/uiTableFilter.js"></script>
+<script>
+    $(function() { 
+      var theTable = $('table.list')
+
+      $("#filter").keyup(function() {
+        $.uiTableFilter( theTable, this.value );
+      })
+
+      $('#filter-form').submit(function(){
+        theTable.find("tbody > tr:visible > td:eq(1)").mousedown();
+        return false;
+      }).focus(); //Give focus to input field
+      
+      var theTable2 = $('table.list2')
+
+      $("#filter2").keyup(function() {
+        $.uiTableFilter( theTable2, this.value );
+      })
+
+      $('#filter-form2').submit(function(){
+        theTable2.find("tbody > tr:visible > td:eq(1)").mousedown();
+        return false;
+      }).focus(); //Give focus to input field
+    }); 
+</script>
+{% endblock %}

@@ -16,7 +16,7 @@
             inversed-by="images"
             join-column="pic_name">
 
-            <join-column name="article_ref" referenced-column-name="id" />
+            <join-column name="article_ref" on-delete="CASCADE" referenced-column-name="id" />
         </many-to-one>
   </entity>
 </doctrine-mapping>

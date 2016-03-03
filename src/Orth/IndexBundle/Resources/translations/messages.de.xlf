@@ -10,6 +10,10 @@
                 <source>Invalid credentials.</source>
                 <target>E-Mailadresse oder Passwort sind falsch.</target>
             </trans-unit>
+            <trans-unit id="3">
+                <source>Account is disabled.</source>
+                <target>Ihr Konto ist deaktiviert.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

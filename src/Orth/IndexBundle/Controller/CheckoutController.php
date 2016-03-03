@@ -26,7 +26,21 @@ class CheckoutController extends Controller
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $securityContext = $this->container->get('security.authorization_checker');
         
-        $addresses = new CustomersAddresses();      
+        $addresses = new CustomersAddresses(); 
+
+        $form = $this->createForm(new AddressType(), $addresses);
+        
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $addresses->setCustomer($user->getCustomer());
+            $addresses->setPrimaryAddress(0);
+            $addresses->setDefaultDeliveryAddress(0);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($addresses);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('notice', 'Adresse wurde erfolgreich hinzugefügt und kann jetzt ausgewählt werden!');
+        }    
         
         $em = $this->getDoctrine()->getManager();
         $addresses = $em->getRepository('OrthIndexBundle:CustomersAddresses')->findBy(array('customerRef' => $user->getCustomerRef(), 'primaryAddress' => '0', 'defaultDeliveryAddress' => '0'));
@@ -47,10 +61,16 @@ class CheckoutController extends Controller
             
             $cartSum = $cartSum + ($price * $item->getAmount());
         }
+                       
         
-        $freight = 5.50;
+        $customer = $em->getRepository('OrthIndexBundle:Customers')->findOneBy(array('id' => $user->getCustomerRef()));
+        if( $customer->getDeliveryTerm() == 2 ) {
+            $freight = 0;
+        } else {
+            $freight = 5.50;
+        }
         
-        return $this->render('OrthIndexBundle:Checkout:checkout.html.twig', array('addresses' => $addresses, 'invoiceAddress' => $invoiceAddress, 'cartSum' => $cartSum, 'freight' => $freight));
+        return $this->render('OrthIndexBundle:Checkout:checkout.html.twig', array('form' => $form->createView(), 'addresses' => $addresses, 'invoiceAddress' => $invoiceAddress, 'cartSum' => $cartSum, 'freight' => $freight));
     } 
     
     public function step2Action(Request $request) {
@@ -69,7 +89,21 @@ class CheckoutController extends Controller
         // check if invoiceAdress in get-Request match a user owned adress
         if($checkInvoiceId != NULL) {
 
-        $addresses = new CustomersAddresses();      
+        $addresses = new CustomersAddresses(); 
+
+        $form = $this->createForm(new AddressType(), $addresses);
+        
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $addresses->setCustomer($user->getCustomer());
+            $addresses->setPrimaryAddress(0);
+            $addresses->setDefaultDeliveryAddress(0);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($addresses);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('notice', 'Adresse wurde erfolgreich hinzugefügt und kann jetzt ausgewählt werden!');
+        }       
         
         $em = $this->getDoctrine()->getManager();
         $addresses = $em->getRepository('OrthIndexBundle:CustomersAddresses')->findBy(array('customerRef' => $user->getCustomerRef(), 'primaryAddress' => '0', 'defaultDeliveryAddress' => '0'));
@@ -90,9 +124,14 @@ class CheckoutController extends Controller
             
             $cartSum = $cartSum + ($price * $item->getAmount());
         }
-        $freight = 5.50;
+        $customer = $em->getRepository('OrthIndexBundle:Customers')->findOneBy(array('id' => $user->getCustomerRef()));
+        if( $customer->getDeliveryTerm() == 2 ) {
+            $freight = 0;
+        } else {
+            $freight = 5.50;
+        }
         
-        return $this->render('OrthIndexBundle:Checkout:step2.html.twig', array('addresses' => $addresses, 'deliveryAddress' => $deliveryAddress, 'cartSum' => $cartSum, 'freight' => $freight));
+        return $this->render('OrthIndexBundle:Checkout:step2.html.twig', array('form' => $form->createView(), 'addresses' => $addresses, 'deliveryAddress' => $deliveryAddress, 'cartSum' => $cartSum, 'freight' => $freight));
         
         }
         // if id of invoiceAdress is not owned by users force exit!
@@ -138,10 +177,15 @@ class CheckoutController extends Controller
             
             $cartSum = $cartSum + ($price * $item->getAmount());
         }
+        $customer = $em->getRepository('OrthIndexBundle:Customers')->findOneBy(array('id' => $user->getCustomerRef()));
+        if( $customer->getDeliveryTerm() == 2 ) {
+            $freight = 0;
+        } else {
+            $freight = 5.50;
+        }
         
-        $freight = 5.50;
         
-        return $this->render('OrthIndexBundle:Checkout:step3.html.twig', array('cartSum' => $cartSum, 'freight' => $freight));
+        return $this->render('OrthIndexBundle:Checkout:step3.html.twig', array('cartSum' => $cartSum, 'freight' => $freight, 'customer' => $customer));
         }
         exit;
         
@@ -182,7 +226,12 @@ class CheckoutController extends Controller
             $cartSum = $cartSum + ($price * $item->getAmount());
         }
         
-        $freight = 5.50;
+        $customer = $em->getRepository('OrthIndexBundle:Customers')->findOneBy(array('id' => $user->getCustomerRef()));
+        if( $customer->getDeliveryTerm() == 2 OR $deliveryKind ==  1) {
+            $freight = 0;
+        } else {
+            $freight = 5.50;
+        }
         
             return $this->render('OrthIndexBundle:Checkout:step4.html.twig', array('cartSum' => $cartSum, 'freight' => $freight));
         }
@@ -288,7 +337,12 @@ class CheckoutController extends Controller
             $cartSum = $cartSum + ($price * $item->getAmount());
         }
         
-        $freight = 5.50;
+        $customer = $em->getRepository('OrthIndexBundle:Customers')->findOneBy(array('id' => $user->getCustomerRef()));
+        if( $customer->getDeliveryTerm() == 2  OR $deliveryKind ==  1) {
+            $freight = 0;
+        } else {
+            $freight = 5.50;
+        }
 
             return $this->render('OrthIndexBundle:Checkout:step5.html.twig', array('cart' => $cartItems, 'cartSum' => $cartSum, 'freight' => $freight));
             
@@ -300,7 +354,7 @@ class CheckoutController extends Controller
     public function cart2OrderAction(Request $request) {
         
         $cartItems = [];
-        $freight = 5.50;
+
         
         $order = new Orders();
         
@@ -313,7 +367,16 @@ class CheckoutController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         
+        $customer = $em->getRepository('OrthIndexBundle:Customers')->findOneBy(array('id' => $user->getCustomerRef()));
+        if( $customer->getDeliveryTerm() == 2  OR $deliveryKind ==  1) {
+            $freight = 0;
+        } else {
+            $freight = 5.50;
+        }
+        
         $shoppingCart = $em->getRepository('OrthIndexBundle:ShoppingCart')->findBy(array('userRef' => $user->getId()));
+        $invoiceAdr = $em->getRepository('OrthIndexBundle:CustomersAddresses')->findBy(array('id' => $invoiceId));
+        $deliveryAdr = $em->getRepository('OrthIndexBundle:CustomersAddresses')->findBy(array('id' => $deliveryId));
         
         $order->setStatus(0);
         $order->setCustomerOrderNumber(0);
@@ -348,11 +411,11 @@ class CheckoutController extends Controller
             
             $cartItems[] = array('shortName' => $product->getArticles()->getShortName(), 'articlenumber' => $product->getSupplierArticleNumber(), 'amount' => $item->getAmount(), 'image' => $product->getArticles()->getImages(), 'varData' => $varData, 'price' => $product->getPrice(), 'varref' => $item->getVarRef());
 
-            $em->persist($orderPositions);
-            $em->flush();
-            
-            $em->remove($item);
-            $em->flush();
+//            $em->persist($orderPositions);
+//            $em->flush();
+//            
+//            $em->remove($item);
+//            $em->flush();
             
         }
         
@@ -367,7 +430,7 @@ class CheckoutController extends Controller
         ->setBody(
             $this->renderView(
                 'OrthIndexBundle:Mail:orderSuccessMail.html.twig',
-                array('cartItems' => $cartItems, 'freight' => $freight),
+                array('cartItems' => $cartItems, 'freight' => $freight, 'delKind' => $deliveryKind),
             'text/html'
             )
         )
@@ -375,7 +438,6 @@ class CheckoutController extends Controller
         $this->get('mailer')->send($message);
         
         return $this->render('OrthIndexBundle:Checkout:checkoutSuccess.html.twig');
-
     }
     
     

@@ -25,6 +25,7 @@ class ShopController extends Controller
 
     public function productAction(Request $request) {
         
+        $submitted = false;
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $securityContext = $this->container->get('security.authorization_checker');
         $response = new Response();
@@ -44,6 +45,7 @@ class ShopController extends Controller
         $em = $this->getDoctrine()->getManager();
         $article = $em->getRepository('OrthIndexBundle:Articles')->findOneBy(array('id' => $string));
         
+        $checkPriceDiff = $em->getRepository('OrthIndexBundle:ArticleSuppliers')->checkPriceDifferences($article, $user);
         //$variants = $article->getVariants()->getValues();
         
         $query = $em->createQuery( "SELECT av, asv FROM OrthIndexBundle:ArticleSuppliers av JOIN av.variantvalues asv WHERE av.articleRef = :articleid")
@@ -68,7 +70,7 @@ class ShopController extends Controller
         
         $images = $article->getImages()->getValues();
 
-        if ( $productsToCart = $request->request->all() != NULL ) {
+        if ( $request->request->all() != NULL ) {
             
             $productsToCart = $request->request->all();
             $completeCart = array();
@@ -79,6 +81,7 @@ class ShopController extends Controller
 
                     
                     if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+                        
                         $dbCart =  new ShoppingCart();
                         $dbCart = $em->getRepository('OrthIndexBundle:ShoppingCart')->findOneBy(array('userRef' => $user->getId(), 'varRef' => $key));
 
@@ -134,19 +137,14 @@ class ShopController extends Controller
                     } 
                     } 
             } 
-
+            $submitted = true;
         }
                 
         if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
         
             foreach ($variants as &$value) {
-                $customerData = $em->getRepository('OrthIndexBundle:Customerdata')->findOneBy(array('varRef' => $value['id'], 'userRef' => $user->getId(), 'customerRef' => $user->getCustomerRef()));
-                if($customerData != NULL) {
-                    $value['customArtnr'] =  $customerData->getCustomArtnr();
-                    if($customerData->getCustomPrice() != 0) {
-                        $value['price'] = $customerData->getCustomPrice();
-                    }
-                }    
+                $price = $em->getRepository('OrthIndexBundle:ArticleSuppliers')->getCustomPrice($value, $user);
+                $value['price'] = $price;
             }
 
             $custCat = $em->getRepository('OrthIndexBundle:Customcategory')->findBy(array('customerRef' => $user->getCustomerRef()));
@@ -177,10 +175,10 @@ class ShopController extends Controller
 
             $custCategories = buildTree( $array);
 
-            return $this->render('OrthIndexBundle:Shop:product.html.twig', array('curCat' => $curCat, 'parent' => $parentCat, 'grandparent' => $grandparentCat,'categories' => $custCategories,'article' => $article, 'variants' => $variants,'varTitle' => $varTitle, 'images' => $images, 'attachments' => $attachments));
+            return $this->render('OrthIndexBundle:Shop:product.html.twig', array('priceDiff' => $checkPriceDiff,'curCat' => $curCat, 'parent' => $parentCat, 'grandparent' => $grandparentCat,'categories' => $custCategories,'article' => $article, 'variants' => $variants,'varTitle' => $varTitle, 'images' => $images, 'submitted' => $submitted,'attachments' => $attachments));
 
         }
-        return $this->render('OrthIndexBundle:Shop:product.html.twig', array('curCat' => $curCat, 'parent' => $parentCat, 'grandparent' => $grandparentCat,'article' => $article, 'variants' => $variants,'varTitle' => $varTitle, 'images' => $images, 'attachments' => $attachments), $response);
+        return $this->render('OrthIndexBundle:Shop:product.html.twig', array('priceDiff' => $checkPriceDiff,'curCat' => $curCat, 'parent' => $parentCat, 'grandparent' => $grandparentCat,'article' => $article, 'variants' => $variants,'varTitle' => $varTitle, 'images' => $images,'submitted' => $submitted, 'attachments' => $attachments), $response);
 
     }
     
@@ -265,17 +263,12 @@ class ShopController extends Controller
 
     }
     
-    public function sucheAction(Request $request) {
+    public function sucheAction(Request $request, $page = 0, $pageOffset = 0, $categories = []) {
         
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $securityContext = $this->container->get('security.authorization_checker');
         
         $em = $this->getDoctrine()->getManager();
-         
-        $searchTerm = $request->query->get('q');
-
-        $page = 0;
-        $pageOffset = 0;
         
         if ($request->query->get('p')) {
             $page = $request->query->get('p');
@@ -283,76 +276,32 @@ class ShopController extends Controller
         }
         
         $catId = $request->query->get('cid');
-
-        $finder = $this->container->get('fos_elastica.finder.search.article');
-        $boolQuery = new \Elastica\Query\BoolQuery();
                 
-        if ($request->query->get('c') != NULL AND $request->query->get('q') == NULL ) {
-            $catid = $request->query->get('c');
-            $categoryArray = [$request->query->get('c')];
-            $rootCategories = $em->getRepository('OrthIndexBundle:Categories')->findBy(array('parentId' => $catid));
-            
-            foreach ($rootCategories as $childCategory ) {
-                $childCategories = $em->getRepository('OrthIndexBundle:Categories')->findBy(array('parentId' => $childCategory->getId()));
-                $categoryArray[] = $childCategory->getId();
-                foreach ($childCategories as $grandchildCategory ) {
-                    $categoryArray[] = $grandchildCategory->getId();
-                }
-            }
-   
-            $categoryQuery = new \Elastica\Query\Terms();
-            $categoryQuery->setTerms('catRef', $categoryArray);
-            $boolQuery->addMust($categoryQuery);
-            
-        } elseif ($request->query->get('c') != NULL ) {
-            $catid = $request->query->get('c');
-            
-            $categoryQuery = new \Elastica\Query\Terms();
-            $categoryQuery->setTerms('catRef', array($catid));
-            $boolQuery->addMust($categoryQuery);
-        }
-        
-        if($request->query->get('q')) {
+        $category = $request->query->get('c');
+        $searchTerm = $request->query->get('q');
 
-            $fieldQuery = new \Elastica\Query\Match();
-            $fieldQuery->setFieldQuery('allField', $searchTerm);
-            $fieldQuery->setFieldOperator('allField', 'AND');
-            $fieldQuery->setFieldMinimumShouldMatch('allField', '80%');
-            $fieldQuery->setFieldAnalyzer('allField', 'custom_search_analyzer');
-            $boolQuery->addMust($fieldQuery);
-        } 
+        $categoryPath = $em->getRepository('OrthIndexBundle:Categories')->getCategoryPath($category);
         
-        $query = new \Elastica\Query();
-        $query->setQuery($boolQuery);
-        $query->setSize(1000);
+        $finder = $this->container->get('fos_elastica.finder.search.article');
+        $query =  $em->getRepository('OrthIndexBundle:Articles')->getArticleQuery($user, $searchTerm, $page, $pageOffset, $category, $finder);
+
+        $boolQuery = new \Elastica\Query\BoolQuery();
+        $articles = $finder->find($query);
+        $query->setSize(100);
         $articleCatgeories = $finder->find($query);
         $totalpages = ceil(count($finder->find($query))/12);
-        $query->setSize(12);
-        $query->setFrom($pageOffset);        
-        $articles = $finder->find($query);
 
-        if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
- 
-            foreach ($articles as $article) {
-
-                $customerData = $em->getRepository('OrthIndexBundle:Customerdata')->findOneBy(array('article' => $article->getId(), 'userRef' => $user->getId(), 'customerRef' => $user->getCustomerRef()), array('customPrice' => 'ASC'));
-                if($customerData != NULL AND $customerData->getCustomPrice() != 0) {
-                    $article->setShowedPrice($customerData->getCustomPrice());
-                } else {
-                     $variantData = $em->getRepository('OrthIndexBundle:ArticleSuppliers')->findOneBy(array('articleRef' => $article->getId()), array('price' => 'ASC'));
-                     $article->setShowedPrice($variantData->getPrice());
-                }
-                
-            }
+        foreach ($articles as $article) {
+            // returns actual price for each article e.g. normalprice, priceset price or customer price
+            $price = $em->getRepository('OrthIndexBundle:ArticleSuppliers')->getSingleCustomPrice($article, $user);
+            // returns true or false ( true if there are price differences )
+            $checkPriceDiff = $em->getRepository('OrthIndexBundle:ArticleSuppliers')->checkPriceDifferences($article, $user);
             
-        } else {
-            foreach ($articles as $article) {
-                $variantData = $em->getRepository('OrthIndexBundle:ArticleSuppliers')->findOneBy(array('articleRef' => $article->getId()), array('price' => 'ASC'));
-                $article->setShowedPrice($variantData->getPrice());
-            }
-        }    
+            $article->setShowedPrice($price);
+            $article->setPriceDiff($checkPriceDiff);
 
-        $categories = [];
+        }
+       
         foreach ($articleCatgeories as $articleCategory) {
             $categories[] = $articleCategory->getCatRef();
         }
@@ -360,38 +309,6 @@ class ShopController extends Controller
         $cats = array_count_values($categories);
         $testCat = $cats;
         
-//        $array = [];
-//        foreach ( $cats as $key => $value ) {
-//            $cat1 = $em->getRepository('OrthIndexBundle:Categories')->findOneById($key); 
-//            if($cat1 != NULL) {
-//            $array[] = array('id' => $cat1->getId(), 'catName' => $cat1->getCategoryName(), 'parentId' => $cat1->getParentId(), 'anzahl' => $value);
-//            if($cat1->getParentId() != NULL) {
-//                $check = true;
-//                while ($check) {
-//                    $cat2 = $em->getRepository('OrthIndexBundle:Categories')->findOneById($cat1->getParentId()); 
-//                    $array[] = array('id' => $cat2->getId(), 'catName' => $cat2->getCategoryName(), 'parentId' => $cat2->getParentId(), 'anzahl' => $value);
-//                        if($cat2->getParentId() == NULL) {
-//                            $check = false;
-//                        }
-//                        if($cat2->getParentId() != NULL) {
-//                            $cat3 = $em->getRepository('OrthIndexBundle:Categories')->findOneById($cat2->getParentId()); 
-//                            $array[] = array('id' => $cat3->getId(), 'catName' => $cat3->getCategoryName(), 'parentId' => $cat3->getParentId(), 'anzahl' => $value);
-//                            if($cat3->getParentId() == NULL) {
-//                                $check = false;
-//                            }
-//                            if($cat3->getParentId() != NULL) {
-//                                $cat4 = $em->getRepository('OrthIndexBundle:Categories')->findOneById($cat3->getParentId()); 
-//                                $array[] = array('id' => $cat2->getId(), 'catName' => $cat4->getCategoryName(), 'parentId' => $cat4->getParentId(), 'anzahl' => $value);
-//                                if($cat4->getParentId() == NULL) {
-//                                    $check = false;
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-
         function buildTree( $ar, $pid = null ) {
             $op = array();
             foreach( $ar as $item ) {
@@ -411,8 +328,6 @@ class ShopController extends Controller
             }
             return $op;
         }
-
-        //$mainCat = buildTree( $array );
         
         $test = [];
         foreach ($testCat as $key=>$value) {
@@ -424,14 +339,14 @@ class ShopController extends Controller
             $test[] = array('id' => $query[0]->getId(), 'parentId' => $query[0]->getParentId(),'catName' => $query[0]->getCategoryName(), 'anzahl' => $value);
             if($query[0]->getParent() != NULL) {
                 $test[] = array('id' => $query[0]->getParent()->getId(), 'parentId' => $query[0]->getParent()->getParentId(),'catName' => $query[0]->getParent()->getCategoryName(), 'anzahl' => 0);
-            }
+            
             if($query[0]->getParent()->getParent() != NULL) {
                 $test[] = array('id' => $query[0]->getParent()->getParent()->getId(), 'parentId' => $query[0]->getParent()->getParent()->getParentId(),'catName' => $query[0]->getParent()->getParent()->getCategoryName(), 'anzahl' => 0);
-            }
+            }}
         }
         $mainCat = buildTree( array_unique($test, SORT_REGULAR) );
-        //dump(array_unique($test, SORT_REGULAR));
-        return $this->render('OrthIndexBundle:Shop:kategorien.html.twig', array('articles' => $articles, 'page' => $page, 'totalpages' => $totalpages, 'categories' => $mainCat));
+  
+        return $this->render('OrthIndexBundle:Shop:kategorien.html.twig', array('categoryPath' => $categoryPath, 'articles' => $articles, 'page' => $page, 'totalpages' => $totalpages, 'categories' => $mainCat));
         
      }   
         
@@ -490,65 +405,26 @@ class ShopController extends Controller
         
     }     
 
-        public function miniCartAction(Request $request) {
-            $cart = NULL;
-          $user = $this->get('security.token_storage')->getToken()->getUser();
-            
-                    $securityContext = $this->container->get('security.authorization_checker');
+    public function miniCartAction(Request $request, $cart = NULL, $cartItems = []) {
+                    
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $shoppingCart = $em->getRepository('OrthIndexBundle:ShoppingCart');
+
         if ($request->cookies->get('OrthCookie') != NULL ) {
-            $cookieValue = $request->cookies->get('OrthCookie');
-        
             
-            $em = $this->getDoctrine()->getManager();  
-                              
-                    if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-                        
-                        $updateCarts = $em->getRepository('OrthIndexBundle:ShoppingCart')->findBy(array('sessionId' => $cookieValue));
-                        
-                        if ($updateCarts != NULL) {
-                            foreach ($updateCarts as $updateCart) {
-                                $updateCart->setUserRef($user->getId());
-                                $updateCart->setCustomerRef($user->getCustomerRef());
-
-                                $em->persist($updateCart);
-                                $em->flush();
-                            }
-                        }
-                        
-                        $cart = $em->getRepository('OrthIndexBundle:ShoppingCart')->findBy(array('userRef' => $user->getId()));
-                        
-                    } else {
-                        $cart = $em->getRepository('OrthIndexBundle:ShoppingCart')->findBy(array('sessionId' => $cookieValue));
-                    }
+            $cookieValue = $request->cookies->get('OrthCookie');
+            $cart = $shoppingCart->getCartItems($user, $cookieValue);
+            
         }
-            $cartItems = [];
-            if ( $cart != NULL ) {
 
-                foreach ($cart as $item) {
-                    $em = $this->getDoctrine()->getManager();
-                    $product = $em->getRepository('OrthIndexBundle:ArticleSuppliers')->find($item->getVarRef());
-                    //$varData = $em->getRepository('OrthIndexBundle:articleAttributeValues')->findBy(array('varRef' => $item->getVarRef())); 
-                    
-                    $repository = $this->getDoctrine()->getRepository('OrthIndexBundle:ArticleAttributeValues');
-                
-                    $query = $repository->createQueryBuilder('aav')
-                        ->select('aa, aav')
-                        ->innerJoin('OrthIndexBundle:ArticleAttributes', 'aa', 'WITH', 'aav.attributeRef = aa.id')
-                        ->where('aav.varRef = :string')
-                        ->setParameter('string', $item->getVarRef())
-                        ->getQuery();
-                    $varData = $orders = $query->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
-                    $price = $product->getPrice();
-                    if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-                        $customerData = $em->getRepository('OrthIndexBundle:Customerdata')->findOneBy(array('varRef' => $item->getVarRef(), 'userRef' => $user->getId(), 'customerRef' => $user->getCustomerRef()));
-                        if($customerData != NULL AND $customerData->getCustomPrice() != 0) {
-                            $price = $customerData->getCustomPrice();
-                        }
-                    }  
-                    
-                    $cartItems[] = array('shortName' => $product->getArticles()->getShortName(), 'articlenumber' => $product->getSupplierArticleNumber(), 'amount' => $item->getAmount(), 'image' => $product->getArticles()->getImages(), 'varData' => $varData, 'price' => $price, 'varref' => $item->getVarRef());
-                }
-            }
+        if ( $cart != NULL ) {
+
+            $cartItems = $shoppingCart->buildCart($cart, $user);
+
+        }
 
         return $this->render('OrthIndexBundle:Shop:minicart.html.twig', array('cart' => $cartItems));
         
@@ -556,91 +432,58 @@ class ShopController extends Controller
     
     public function removeitemAction(Request $request) {
         
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $securityContext = $this->container->get('security.authorization_checker');
+        $em = $this->getDoctrine()->getManager();
+        
+        $request = $this->container->get('request'); 
+        $varRef = $request->query->get('varRef');
+        
         if ($request->cookies->get('OrthCookie') != NULL ) {
-            
-            $request = $this->container->get('request'); 
-            $varRef = $request->query->get('varRef');
-            
+                        
             $cookieValue = $request->cookies->get('OrthCookie');
             
-            $em = $this->getDoctrine()->getManager();
-
             $item = $em->getRepository('OrthIndexBundle:ShoppingCart')->findOneBy(array('sessionId' => $cookieValue, 'varRef' => $varRef));
             
+        } elseif ($request->cookies->get('OrthCookie') == NULL AND $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            $item = $em->getRepository('OrthIndexBundle:ShoppingCart')->findOneBy(array('userRef' => $user->getId(), 'varRef' => $varRef));
+        }
+       
             if($item == NULL){
-                $user = $this->get('security.token_storage')->getToken()->getUser();
-                $item = $em->getRepository('OrthIndexBundle:ShoppingCart')->findOneBy(array('userRef' => $user->getId(), 'varRef' => $varRef));
-            }
-            
+                    $user = $this->get('security.token_storage')->getToken()->getUser();
+                    $item = $em->getRepository('OrthIndexBundle:ShoppingCart')->findOneBy(array('userRef' => $user->getId(), 'varRef' => $varRef));
+                }
+
             $em->remove($item);
             $em->flush();
             
             $response = array("code" => 100, "success" => true);
             
             return new Response(json_encode($response)); 
-            
-        }
     }
     
-        public function shoppingCartAction(Request $request) {
-            $cart = NULL;
+        public function shoppingCartAction(Request $request, $cart = NULL, $cartItems = []) {
             
             $user = $this->get('security.token_storage')->getToken()->getUser();
+
+            $em = $this->getDoctrine()->getManager();
             
-        $securityContext = $this->container->get('security.authorization_checker');
-        if ($request->cookies->get('OrthCookie') != NULL ) {
-            $cookieValue = $request->cookies->get('OrthCookie');
+            $shoppingCart = $em->getRepository('OrthIndexBundle:ShoppingCart');
+            
+            if ($request->cookies->get('OrthCookie') != NULL ) {
+                $cookieValue = $request->cookies->get('OrthCookie');
+                $cart = $shoppingCart->getCartItems($user, $cookieValue);
+            }
+            
+            if ($request->request->get('article') != NULL) {
+                $updateItems = $request->request->get('article');
+                $shoppingCart->updateCart($user, $cookieValue, $updateItems);
+            }
         
-            
-            $em = $this->getDoctrine()->getManager();  
-                                
-                    if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-                        
-                        $updateCarts = $em->getRepository('OrthIndexBundle:ShoppingCart')->findBy(array('sessionId' => $cookieValue));
-                        
-                        if ($updateCarts != NULL) {
-                            foreach ($updateCarts as $updateCart) {
-                                $updateCart->setUserRef($user->getId());
-                                $updateCart->setCustomerRef($user->getCustomerRef());
-
-                                $em->persist($updateCart);
-                                $em->flush();
-                            }
-                        }
-                        
-                        $cart = $em->getRepository('OrthIndexBundle:ShoppingCart')->findBy(array('userRef' => $user->getId()));
-                        
-                    } else {
-                        $cart = $em->getRepository('OrthIndexBundle:ShoppingCart')->findBy(array('sessionId' => $cookieValue));
-                    }
-        }
-            $cartItems = [];
             if ( $cart != NULL ) {
-
-                foreach ($cart as $item) {
-                    $em = $this->getDoctrine()->getManager();
-                    $product = $em->getRepository('OrthIndexBundle:ArticleSuppliers')->find($item->getVarRef());
-                    //$varData = $em->getRepository('OrthIndexBundle:articleAttributeValues')->findBy(array('varRef' => $item->getVarRef())); 
-                    
-                    $repository = $this->getDoctrine()->getRepository('OrthIndexBundle:articleAttributeValues');
                 
-                    $query = $repository->createQueryBuilder('aav')
-                        ->select('aa, aav')
-                        ->innerJoin('OrthIndexBundle:ArticleAttributes', 'aa', 'WITH', 'aav.attributeRef = aa.id')
-                        ->where('aav.varRef = :string')
-                        ->setParameter('string', $item->getVarRef())
-                        ->getQuery();
-                    $varData = $orders = $query->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
-                    $price = $product->getPrice();
-                if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-                    $customerData = $em->getRepository('OrthIndexBundle:Customerdata')->findOneBy(array('varRef' => $item->getVarRef(), 'userRef' => $user->getId(), 'customerRef' => $user->getCustomerRef()));
-                    if($customerData != NULL AND $customerData->getCustomPrice() != 0) {
-                        $price = $customerData->getCustomPrice();
-                    }
-                }  
-                    
-                    $cartItems[] = array('shortName' => $product->getArticles()->getShortName(), 'articlenumber' => $product->getSupplierArticleNumber(), 'amount' => $item->getAmount(), 'image' => $product->getArticles()->getImages(), 'varData' => $varData, 'price' => $price, 'varref' => $item->getVarRef());
-                }
+                $cartItems = $shoppingCart->buildCart($cart, $user);
+               
             }
 
         return $this->render('OrthIndexBundle:Shop:cart.html.twig', array('cart' => $cartItems));

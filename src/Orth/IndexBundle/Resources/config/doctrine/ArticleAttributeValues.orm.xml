@@ -4,7 +4,7 @@
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="attributeRef" type="integer" column="attribute_ref" nullable="false"/>
+    <field name="attributeRef" type="integer" column="attribute_ref" nullable="true"/>
     <field name="attributeValue" type="text" column="attribute_value" nullable="false"/>
     <field name="attributeUnit" type="text" column="attribute_unit" nullable="false"/>
     <field name="sorting" type="integer" column="sorting" nullable="false"/>
@@ -15,7 +15,7 @@
             inversed-by="variantvalues"
             join-column="attribute_value">
 
-            <join-column name="var_ref" referenced-column-name="id" />
+            <join-column name="var_ref" on-delete="CASCADE" referenced-column-name="id" />
         </many-to-one>
         <many-to-one
             field="attrName"

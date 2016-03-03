@@ -94,6 +94,14 @@ orth_security_logincheck:
     path:   /login_check
     defaults: { _controller: OrthIndexBundle:Security:login_check }
     
+orth_security_passwortvergessen:
+    path:   /passwort-vergessen
+    defaults: { _controller: OrthIndexBundle:Security:passwortvergessen }
+    
+orth_security_passwortreset:
+    path:   /passwort-zuruecksetzen/{token}
+    defaults: { _controller: OrthIndexBundle:Security:passwortreset }
+    
 logout:
     path: /logout
     
@@ -196,3 +204,16 @@ orth_customershop_deletearticle:
 orth_shop_productedit:
     path:   /productedit
     defaults: { _controller: OrthIndexBundle:Shop:productEdit } 
+    
+orth_account_signup:
+    path:   /signup
+    defaults: { _controller: OrthIndexBundle:Account:signup } 
+        
+orth_account_register:
+    path:   /registrierung/{token}
+    defaults: { _controller: OrthIndexBundle:Account:register } 
+    
+orth_oci:
+    path:   /oci
+    defaults: { _controller: OrthIndexBundle:Oci:search } 
+    

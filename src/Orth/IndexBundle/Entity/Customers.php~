@@ -3,6 +3,8 @@
 namespace Orth\IndexBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Customers
@@ -304,4 +306,190 @@ class Customers
     {
         return $this->id;
     }
+    /**
+     * @var integer
+     */
+    private $invoiceTerm;
+
+    /**
+     * @var integer
+     */
+    private $deliveryTerm;
+
+
+    /**
+     * Set invoiceTerm
+     *
+     * @param integer $invoiceTerm
+     * @return Customers
+     */
+    public function setInvoiceTerm($invoiceTerm)
+    {
+        $this->invoiceTerm = $invoiceTerm;
+
+        return $this;
+    }
+
+    /**
+     * Get invoiceTerm
+     *
+     * @return integer 
+     */
+    public function getInvoiceTerm()
+    {
+        return $this->invoiceTerm;
+    }
+
+    /**
+     * Set deliveryTerm
+     *
+     * @param integer $deliveryTerm
+     * @return Customers
+     */
+    public function setDeliveryTerm($deliveryTerm)
+    {
+        $this->deliveryTerm = $deliveryTerm;
+
+        return $this;
+    }
+
+    /**
+     * Get deliveryTerm
+     *
+     * @return integer 
+     */
+    public function getDeliveryTerm()
+    {
+        return $this->deliveryTerm;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $customeraddress;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->customeraddress = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add customeraddress
+     *
+     * @param \Orth\IndexBundle\Entity\CustomersAddresses $customeraddress
+     * @return Customers
+     */
+    public function addCustomeraddress(\Orth\IndexBundle\Entity\CustomersAddresses $customeraddress)
+    {
+        $this->customeraddress[] = $customeraddress;
+
+        return $this;
+    }
+
+    /**
+     * Remove customeraddress
+     *
+     * @param \Orth\IndexBundle\Entity\CustomersAddresses $customeraddress
+     */
+    public function removeCustomeraddress(\Orth\IndexBundle\Entity\CustomersAddresses $customeraddress)
+    {
+        $this->customeraddress->removeElement($customeraddress);
+    }
+
+    /**
+     * Get customeraddress
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCustomeraddress()
+    {
+        return $this->customeraddress;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $user;
+
+
+    /**
+     * Add user
+     *
+     * @param \Orth\IndexBundle\Entity\Users $user
+     * @return Customers
+     */
+    public function addUser(\Orth\IndexBundle\Entity\Users $user)
+    {
+        $this->user[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \Orth\IndexBundle\Entity\Users $user
+     */
+    public function removeUser(\Orth\IndexBundle\Entity\Users $user)
+    {
+        $this->user->removeElement($user);
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+    
+        /**
+     * @Assert\Length(
+     *     min = 6,
+     *     minMessage = "Das Passwort muss mindestens 6 Zeichen haben"
+     * )
+     */
+     public $newPassword;
+     
+     /**
+     * Get newPassword
+     *
+     * @return integer 
+     */
+    public function getNewPassword()
+    {
+        return $this->newPassword;
+    }
+    
+    /**
+     * @var text
+     */
+    private $country;
+    
+    /**
+     * Set country
+     *
+     * @param integer $country
+     * @return Customers
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return integer 
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+    
 }

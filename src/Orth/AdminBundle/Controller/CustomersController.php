@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Orth\IndexBundle\Entity\Customers;
 
+use Orth\AdminBundle\Form\Type\CustomerType;
+
 class CustomersController extends Controller
 {
     public function customerlistAction()
@@ -41,4 +43,59 @@ class CustomersController extends Controller
         return $response;
         
     }
+    
+    public function customerAction($id, Request $request)
+    {
+        
+        $em = $this->getDoctrine()->getManager();
+                 
+        $customer = new Customers();
+        
+        $customer = $em->getRepository('OrthIndexBundle:Customers')->findOneBy(array('id' => $id));
+            
+        $users = $customer->getUser();
+        
+        $form = $this->createForm(new CustomerType(), $customer);
+        
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $em->persist($customer);
+            $em->flush();
+            
+            $this->get('session')->getFlashBag()->add('success', 'Der Kunde wurde erfolgreich gespeichert!');
+            
+        }
+        
+        return $this->render('OrthAdminBundle:Customers:customer.html.twig', array('form' => $form->createView(), 'customer' => $customer, 'users' => $users));
+        
+    }
+    
+    public function newAction(Request $request)
+    {
+        
+        $em = $this->getDoctrine()->getManager();
+                 
+        $customer = new Customers();
+                
+        $form = $this->createForm(new CustomerType(), $customer);
+        
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $em->persist($customer);
+            $em->flush();
+            
+            $this->get('session')->getFlashBag()->add('success', 'Der Kunde wurde erfolgreich gespeichert!');
+            
+            return $this->redirectToRoute('orth_admin_newuser', array('id' => $customer->getId()), 301);
+            
+        }
+        
+        return $this->render('OrthAdminBundle:Customers:new.html.twig', array('form' => $form->createView()));
+        
+    }
+    
 }

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <body>
+<form action="" method="post" target="_top">  
+<input type="hidden" name="~caller" value="CTLG" >  
+{% for article in articles %}
+<!-- Item {{loop.index}} -->  
+<input  name="NEW_ITEM­DESCRIPTION[{{loop.index}}]" value="">  
+<input  name="NEW_ITEM­QUANTITY[{{loop.index}}]" value="1">  
+<input  name="NEW_ITEM­UNIT[{{loop.index}}]" value="EA">  
+<input  name="NEW_ITEM­PRICE[{{loop.index}}]" value="250">  
+<input  name="NEW_ITEM­PRICEUNIT[{{loop.index}}]" value="1">  
+<input type="hidden" name="NEW_ITEM­CURRENCY[{{loop.index}}]" value="EUR">  
+<input type="hidden" name="NEW_ITEM­LEADTIME[{{loop.index}}]" value="10">  
+<input type="hidden" name="NEW_ITEM­VENDORMAT[{{loop.index}}]" value="5433334">  
+<input type="hidden" name="NEW_ITEM­MANUFACTCODE[{{loop.index}}]" value="AN1">  
+<input type="hidden" name="NEW_ITEM­EXT_QUOTE_ID[{{loop.index}}]" value="">  
+<input type="hidden" name="NEW_ITEM­EXT_PRODUCT_ID[{{loop.index}}]" value="">  
+<input type="hidden" name="NEW_ITEM­EXT_SCHEMA_TYPE[{{loop.index}}]" value="UNSPSC">  
+<input type="hidden" name="NEW_ITEM­SERVICE[{{loop.index}}]" value="X" >  
+<input type="hidden" name="NEW_ITEM­EXT_CATEGORY_ID[{{loop.index}}]" value="43100100">  
+<input type="hidden" name="NEW_ITEM­MATGROUP[{{loop.index}}]" value="43100103">  
+<input type="hidden" name="NEW_ITEM­PARENT_ID[{{loop.index}}]" value="">  
+<input type="hidden" name="NEW_ITEM­ITEM_TYPE[{{loop.index}}]" value="">  
+{% endfor %}
+<center>  
+<input type="submit" value="Transfer shopping cart" id="submit1" name="submit1">  
+<br > 
+   </body>
+</html>
+ 

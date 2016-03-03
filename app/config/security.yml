@@ -48,3 +48,4 @@ security:
     access_control:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/account, roles: [ROLE_USER, ROLE_BCUSTOMER, ROLE_MODERATOR, ROLE_ADMIN] }
+        - { path: ^/admin, roles: [ROLE_ADMIN] }

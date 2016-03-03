@@ -1,0 +1,82 @@
+{% extends "adminbase.html.twig" %}
+{% block content %}
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Artikel</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+
+                        </div>
+                        <div class="panel-body">
+                        {{ form_start(form) }}
+                        {{ form_errors(form) }}	                    
+                            <div class="col-xs-12 col-sm-12">
+
+                                <div class="form-group">
+                                    <label for="InputCompany">Artikelname</label>
+                                    {{ form_widget(form.shortName, { 'attr': {'class': 'form-control', 'placeholder' : 'Artikelname'} }) }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="InputCompany2">Kurzbeschreibung</label>
+                                    {{ form_widget(form.shortDescription, { 'attr': {'class': 'form-control', 'placeholder' : 'Kurzbeschreibung'} }) }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="InputCompany3">Artikeltext</label>
+                                    {{ form_widget(form.longDescription, { 'attr': {'class': 'form-control', 'rows' : '4', 'style' : 'width: 100%;min-width: 100%; max-width: 100%;', 'placeholder' : 'Artikeltext'} }) }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="InputCompany3">Kategorie</label>
+                                    {{ form_widget(form.category, { 'attr': {'class': 'form-control select2-category', 'rows' : '4',}  }) }}       
+                                </div>
+                                <div class="form-group">
+                                    <label for="InputCompany3">Attribute</label>
+                                    {{ form_widget(form.attrName, { 'attr': {'class': 'form-control select2-attrName', 'rows' : '4'}  }) }}      
+                                </div>
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    <!-- /.panel panel-default -->
+                </div>
+                <!-- /.col-lg-6" -->
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-lg-6">
+                                {{ form_widget(form.attachment) }}
+                            </div>
+                            <div class="col-lg-12 col-sm-12 col-xs-12">
+                                <br/>
+                            {{form_widget(form.save, { 'attr': {'class':'btn btn-primary'}} ) }}
+                            </div>
+                        </div>
+                            <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.panel panel-default -->
+            </div>
+            <!-- /.row -->
+            {{ form_rest(form) }}
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block js %}
+<!-- Latest compiled and minified CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $(".select2-attrName").select2();
+  $(".select2-category").select2();
+});
+</script>
+{% endblock %}

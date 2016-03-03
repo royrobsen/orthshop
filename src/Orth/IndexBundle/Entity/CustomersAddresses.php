@@ -417,4 +417,32 @@ class CustomersAddresses
     {
         return $this->id;
     }
+    /**
+     * @var \Orth\IndexBundle\Entity\Customers
+     */
+    private $customer;
+
+
+    /**
+     * Set customer
+     *
+     * @param \Orth\IndexBundle\Entity\Customers $customer
+     * @return CustomersAddresses
+     */
+    public function setCustomer(\Orth\IndexBundle\Entity\Customers $customer = null)
+    {
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+    /**
+     * Get customer
+     *
+     * @return \Orth\IndexBundle\Entity\Customers 
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
+    }
 }

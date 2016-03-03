@@ -7,8 +7,8 @@
     <div class="row">
         <div class="breadcrumbDiv col-lg-12">
             <ul class="breadcrumb">
-                <li><a href="index.html">Home</a></li>
-                <li class="active"><a href="category.html">Kasse</a></li>
+                <li><a href="/">Home</a></li>
+                <li class="active"><a href="/account/checkout">Kasse</a></li>
             </ul>
         </div>
     </div>
@@ -37,24 +37,29 @@
 
                                 <p>Bitte wählen Sie die gewünschte Lieferadresse für diese Bestellung aus.</p>
                                 <hr>
+                                {% for flashMessage in app.session.flashbag.get('notice') %}
+                                <div class="alert alert-success">
+                                    {{ flashMessage }}
+                                </div>
+                                {% endfor %}
                             </div>
-                            <form action="/account/checkout/step3" method="get" name="frmSurvey">
                             <div class="col-xs-12 col-sm-12">
                                 <div class="deliveryAdress">
                                     <div class="panel-group" id="accordion">
+                                        <form action="/account/checkout/step3" id="delFrm" method="get" name="frmSurvey">
                                         <div class="panel panel-default">
                                             <div class="panel-heading panel-heading-custom">
                                                 <h4 class="panel-title"><a class="standardDeliveryAdress" data-toggle="collapse"
                                                                            data-parent="#accordion" href="#collapseOne">
-                                                    <span class="numberCircuil">Option 1</span> <strong> Standardlieferanschrift</strong> </a></h4>
+                                                    <span class="numberCircuil"></span> <strong> Standardlieferanschrift</strong> </a></h4>
                                             </div>
                                             <div id="collapseOne" class="panel-collapse collapse in">
                                                 <div class="panel-body">
                                                     <table>
                                                         <tr>
-                                                            <td><label class="radio">
+                                                            <td style="padding-right: 10px;">
                                                                     <input type="radio" name="del" id="{{deliveryAddress.0.id}}"
-                                                                           value="{{deliveryAddress.0.id}}" checked> </label><td>
+                                                                           value="{{deliveryAddress.0.id}}" checked><td>
                                                             <td>
                                                                 <ul>
                                                                     <li><span class="address-name"> <strong>{{ deliveryAddress.0.companyName1 }} {{ deliveryAddress.0.companyName2 }} {{ deliveryAddress.0.companyName3 }}</strong></span></li>
@@ -66,18 +71,19 @@
                                                     </table>
                                                 </div>
                                             </div>
-                                        </div>                        
+                                        </div>  
+                                       {% if addresses is not empty%}                         
                                         <div class="panel panel-default">
                                             <div class="panel-heading panel-heading-custom">
                                                 <h4 class="panel-title"><a data-toggle="collapse"
                                                                            data-parent="#accordion" href="#collapseTwo">
-                                                    <span class="numberCircuil">Option 2</span><strong> Abweichende Lieferanschrift</strong>
+                                                    <span class="numberCircuil"></span><strong> Abweichende Lieferanschrift</strong>
                                                 </a></h4>
                                             </div>
                                             <div id="collapseTwo" class="panel-collapse collapse">
                                                 <div class="panel-body">
                                                     <label>Adresse suchen: </label><div id="filter-form"><input id="filter" value="" maxlength="90" size="90" class="form-control" type="text"></div>
-                                                        <table class="table adressList">
+                                                        <table class="table list">
                                                             <tr>
                                                                 <th><i class="fa fa-check"></i></th>
                                                                 <th>Titel</th>
@@ -87,9 +93,9 @@
                                                             </tr>  
                                                         {% for address in addresses %} 
                                                             <tr>
-                                                                <td><label class="radio">
+                                                                <td style="padding-right: 10px;">
                                                                     <input type="radio" name="del" id="{{address.id}}"
-                                                                           value="{{address.id}}"> </label></td>
+                                                                           value="{{address.id}}"></td>
                                                                 <td>{{ address.addressTitle }}</td>
                                                                 <td>{{ address.companyName1 }} {{ address.companyName2 }} {{ address.companyName3 }}</td>
                                                                 <td>{{ address.street }} {{ address.street2 }}</td>
@@ -100,6 +106,81 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        {% endif %}            
+                                        <input hidden="hidden" name="inv" value="{{ app.request.get("inv") }}"/>            
+                                        </form>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading panel-heading-custom">
+                                                <h4 class="panel-title"><a data-toggle="collapse"
+                                                                           data-parent="#accordion" href="#collapseThree">
+                                                    <span class="numberCircuil"></span><strong> Neue Anschrift erstellen</strong>
+                                                </a></h4>
+                                            </div>
+                                            <div id="collapseThree" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                {{ form_start(form) }}
+                                                {{ form_errors(form) }}	                    
+                                                    <div class="col-xs-12 col-sm-6">
+                                                        <div class="form-group required">
+                                                            <label for="InputName">Vorname <sup>*</sup> </label>
+                                                            {{ form_widget(form.firstName, { 'attr': {'class': 'form-control', 'placeholder' : 'Vorname'} }) }}
+                                                        </div>
+                                                        <div class="form-group required">
+                                                            <label for="InputLastName">Nachname <sup>*</sup> </label>
+                                                            {{ form_widget(form.lastName, { 'attr': {'class': 'form-control', 'placeholder' : 'Nachname'} }) }}
+                                                        </div>
+                                                        <div class="form-group required">
+                                                            <label for="InputAddress">Adresse <sup>*</sup> </label>
+                                                            {{ form_widget(form.street, { 'attr': {'class': 'form-control', 'placeholder' : 'Adresse'} }) }}
+                                                        </div>
+                                                        <div class="form-group required">
+                                                            <label for="InputCity">Stadt <sup>*</sup> </label>
+                                                            {{ form_widget(form.city, { 'attr': {'class': 'form-control', 'placeholder' : 'Stadt'} }) }}
+                                                        </div>
+                                                        <div class="form-group required">
+                                                            <label for="InputZip">Postleitzahl <sup>*</sup> </label>
+                                                            {{ form_widget(form.zipcode, { 'attr': {'class': 'form-control', 'placeholder' : 'Postleitzahl'} }) }}
+                                                        </div>
+                                                        <div class="form-group required">
+                                                            <label for="InputCountry">Land <sup>*</sup> </label>
+                                                            {{ form_widget(form.country, { 'attr': {'class': 'form-control'} }) }}
+                                                        </div>
+
+
+                                                    </div>
+
+
+                                                    <div class="col-xs-12 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="InputCompany">Firma</label>
+                                                            {{ form_widget(form.companyName1, { 'attr': {'class': 'form-control', 'placeholder' : 'Firma'} }) }}
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="InputCompany2">Firma (Zeile 2)</label>
+                                                            {{ form_widget(form.companyName2, { 'attr': {'class': 'form-control', 'placeholder' : 'Firma 2'} }) }}
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="InputCompany3">Firma (Zeile 3)</label>
+                                                            {{ form_widget(form.companyName3, { 'attr': {'class': 'form-control', 'placeholder' : 'Firma 3'} }) }}
+                                                        </div>
+                                                        <div class="form-group required">
+                                                            <label for="addressAlias">Vergeben Sie hier einen Adresstitel (z.B. "Lieferadresse")<sup>*</sup></label>
+
+                                                            {{ form_widget(form.addressTitle, { 'attr': {'class': 'form-control', 'placeholder' : 'Adresstitel'} }) }}
+
+                                                        </div>
+
+
+                                                    </div>
+
+                                                    <div class="col-lg-12 col-xs-12 clearfix">
+                                                        {{form_widget(form.save, { 'attr': {'class':'btn btn-primary'}} ) }}
+                                                    </div>
+
+                                                {{ form_end(form) }}
+                                                </div>
+                                            </div>
+                                        </div>             
                                     </div>
                                 </div>
                             </div>
@@ -109,13 +190,11 @@
                         <div class="box-footer">
                             <div class="pull-left"><a class="btn btn-default" href="{{ path('orth_shop_checkout', app.request.get('_route_params')|merge(app.request.query.all)) }}"> <i
                                     class="fa fa-arrow-left"></i> &nbsp; Zurück zur Rechnungsadresse </a></div>
-                            <div class="pull-right"><button class="btn btn-primary btn-small " type="submit">
+                            <div class="pull-right"><button class="btn btn-primary btn-small " form="delFrm" type="submit">
                                 Lieferadresse &nbsp; <i class="fa fa-arrow-circle-right"></i> </button></div>
                         </div>
                     </div>
                     <!--/ cartFooter -->
-                    <input hidden="hidden" name="inv" value="{{ app.request.get("inv") }}"/>
-                    </form>
                 </div>
             </div>
             <!--/row end-->
@@ -126,23 +205,23 @@
                     <tbody>
                     <tr>
                         <td>Positionen (netto)</td>
-                        <td class="price"><span id="jTotal3">{{cartSum|number_format(2)}}</span></td>
+                        <td class="price"><span id="jTotal3">{{cartSum|number_format(2, ',', '.')}}</span></td>
                     </tr>
                     <tr style="">
                         <td>Fracht</td>
-                        <td class="price"><span class="success">{{freight|number_format(2)}} €</span></td>
+                        <td class="price"><span class="success">{{freight|number_format(2, ',', '.')}} €</span></td>
                     </tr>
                     <tr class="cart-total-price ">
                         <td>Gesamt (exkl. MwSt)</td>
-                        <td class="price">{{(cartSum+freight)|number_format(2)}} €</td>
+                        <td class="price">{{(cartSum+freight)|number_format(2, ',', '.')}} €</td>
                     </tr>
                     <tr>
                         <td>MwSt. 19%</td>
-                        <td class="price" id="total-tax">{{((cartSum+freight)/100*19)|number_format(2)}} €</td>
+                        <td class="price" id="total-tax">{{((cartSum+freight)/100*19)|number_format(2, ',', '.')}} €</td>
                     </tr>
                     <tr>
                         <td>Gesamt inkl. MwSt.</td>
-                        <td class=" site-color" id="total-price">{{((cartSum+freight)*1.19)|number_format(2)}} €</td>
+                        <td class=" site-color" id="total-price">{{((cartSum+freight)*1.19)|number_format(2, ',', '.')}} €</td>
                     </tr>
                     </tbody>
                     <tbody>

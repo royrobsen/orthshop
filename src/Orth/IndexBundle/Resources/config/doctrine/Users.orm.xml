@@ -10,5 +10,18 @@
     <field name="userGroup" type="integer" column="user_group" nullable="false"/>
     <field name="email" type="text" column="email" nullable="false"/>
     <field name="passkey" type="text" column="passkey" nullable="false"/>
+    <field name="active" type="integer" column="active" nullable="false"/>
+        <many-to-one
+            field="customer"
+            target-entity="Customers"
+            inversed-by="user"
+            join-column="customerRef">
+
+            <join-column name="customer_ref" referenced-column-name="id" />
+        </many-to-one>
+        <one-to-many
+            field="token"
+            target-entity="Tokens"
+            mapped-by="user" />
   </entity>
 </doctrine-mapping>

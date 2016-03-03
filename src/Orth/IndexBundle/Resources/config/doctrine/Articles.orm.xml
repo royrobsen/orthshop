@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Orth\IndexBundle\Entity\Articles" table="articles">
+  <entity name="Orth\IndexBundle\Entity\Articles" repository-class="Orth\IndexBundle\Entity\ArticleRepository" table="articles">
     <unique-constraints>
       <unique-constraint name="id" columns="id"/>
     </unique-constraints>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="articleNumber" type="text" column="article_number" nullable="false"/>
     <field name="shortName" type="text" column="short_name" nullable="false"/>
     <field name="shortDescription" type="text" column="short_description" nullable="false"/>
     <field name="longDescription" type="text" column="long_description" nullable="false"/>
@@ -17,18 +16,28 @@
         <one-to-many
             field="images"
             target-entity="ArticleImages"
-            mapped-by="articles" />
-            <one-to-many
+            mapped-by="articles" 
+            />
+        <one-to-many
             field="variants"
             target-entity="ArticleSuppliers"
-            mapped-by="articles">
+            mapped-by="articles"
+            >
             <order-by>
-                <order-by-field name="supplierArticleNumber" direction="ASC" />
+                <order-by-field name="supplierArticleNumber"  direction="ASC" />
             </order-by>
-            </one-to-many>
-            <one-to-many
+        </one-to-many>
+        <one-to-many
             field="custdata"
             target-entity="Customerdata"
             mapped-by="article" /> 
+        <many-to-one
+            field="category"
+            target-entity="Categories"
+            inversed-by="article"
+            join-column="cat_ref">
+
+            <join-column name="cat_ref" referenced-column-name="id" />
+        </many-to-one>    
   </entity>
 </doctrine-mapping>

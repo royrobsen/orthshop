@@ -4,11 +4,16 @@ namespace Orth\IndexBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+
+use Orth\IndexBundle\Entity\Customers;
 use Orth\IndexBundle\Entity\CustomersAddresses;
 use Orth\IndexBundle\Entity\Customcategory;
 use Orth\IndexBundle\Entity\Users;
 use Orth\IndexBundle\Entity\UserPermissions;
+use Orth\IndexBundle\Entity\Tokens;
+
 use Orth\IndexBundle\Form\Type\AddressType;
+use Orth\IndexBundle\Form\Type\CustomerType;
 use Orth\IndexBundle\Form\Type\UserType;
 use Orth\IndexBundle\Form\Type\PasswordType;
 use Orth\IndexBundle\Form\Type\CustomcategoryType;
@@ -175,9 +180,13 @@ class AccountController extends Controller
         
         return $this->render('OrthIndexBundle:Account:personalinfo.html.twig', array('form' => $form->createView()));
     } 
+    
     public function wishlistAction() {
+        
         return $this->render('OrthIndexBundle:Account:wishlist.html.twig');
+        
     } 
+    
     public function changePasswordAction(Request $request) {
         
       $changePasswordModel = new ChangePassword();
@@ -197,7 +206,7 @@ class AccountController extends Controller
           
           $salt = '$2a$12$uWepESKverBsrLAuOPY';
           $newPw = $form->getData();
-          dump($newPw);
+
           $password = $encoder->encodePassword($newPw->getNewPassword(), $salt);
           $user->setPasskey($password);
           
@@ -575,5 +584,144 @@ class AccountController extends Controller
         return $this->redirectToRoute('orth_account_config_categories');
         
     } 
+    
+    public function signupAction(Request $request) {
+        
+        $customer = new Customers();
+        
+        $em = $this->getDoctrine()->getManager();
+                             
+        $form = $this->createForm(new CustomerType(), $customer);
+
+        $form->handleRequest($request);
+        
+        if ($form->isValid()) {
+            
+            $em = $this->getDoctrine()->getManager();
+            
+            $formData = $form->getData();
+            
+            $checkMail = $em->getRepository('OrthIndexBundle:Users')->findOneBy(array('email' => $formData->getEmail()));
+            if($checkMail == NULL ) {
+                
+                $user = new Users(); 
+                $customerAddress = new CustomersAddresses();
+                $token = new Tokens(); 
+                
+                $customer->setOrgapegNumber(0);
+                $customer->setInvoiceTerm(0);
+                $customer->setDeliveryTerm(0);
+
+                $customerAddress->setAddressTitle('Standardadresse');
+                $customerAddress->setCity($formData->getCity());
+                $customerAddress->setCompanyName1($formData->getCompanyName1());
+                $customerAddress->setCompanyName2($formData->getCompanyName2());
+                $customerAddress->setCompanyName3($formData->getCompanyName3());
+                $customerAddress->setCountry(1);
+                $customerAddress->setCustomerRef($customer);
+                $customerAddress->setCustomer($customer);
+                $customerAddress->setDefaultDeliveryAddress(1);
+                $customerAddress->setPrimaryAddress(1);
+                $customerAddress->setFirstName($formData->getFirstName());
+                $customerAddress->setLastName($formData->getLastName());
+                $customerAddress->setStreet($formData->getStreet());
+                $customerAddress->setStreet2('');
+                $customerAddress->setZipcode($formData->getZipcode());
+
+                function generateRandomString($length = 10) {
+                    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                    $charactersLength = strlen($characters);
+                    $randomString = '';
+                    for ($i = 0; $i < $length; $i++) {
+                        $randomString .= $characters[rand(0, $charactersLength - 1)];
+                    }
+                    return $randomString;
+                }
+
+                $encoderFactory = $this->get('security.encoder_factory');
+                $encoder = $encoderFactory->getEncoder($user);
+
+                $salt = '$2a$12$uWepESKverBsrLAuOPY';
+
+                $passkeyHash = $encoder->encodePassword($formData->getNewPassword(), $salt);
+
+                $user->setEmail($formData->getEmail());
+                $user->setFirstName($formData->getFirstName());
+                $user->setLastName($formData->getLastName());
+                $user->setUserGroup(2);
+                $user->setPasskey($passkeyHash);
+                $user->setCustomer($customer);
+                $user->setCustomerRef($customer);
+                
+                $datetime = new \DateTime('tomorrow');
+                $datetime->format('Y-m-d H:i:s');
+                
+                $token->setToken(md5(uniqid()));
+                $token->setExpDate($datetime);
+                $token->setUser($user);
+                
+                $em->persist($customer);
+                $em->persist($customerAddress);
+                $em->persist($user);
+                $em->persist($token);
+                $em->flush();
+                
+                $message = \Swift_Message::newInstance()
+                    ->setSubject('Registrierung im OrthShop')
+                    ->setFrom('no-reply@ute-orth.de')
+                    ->setTo($formData->getEmail())
+                    ->setContentType("text/html")
+                    ->setBody(
+                        $this->renderView(
+                            'OrthIndexBundle:Mail:registrationMail.html.twig',
+                            array('user' => $user, 'token' => $token),
+                        'text/html'
+                        )
+                    )
+                    ;
+                    $this->get('mailer')->send($message);
+                    
+                $this->get('session')->getFlashBag()->add('notice', 'Vielen Dank für Ihre Registrierung. Wir haben Ihnen eine E-Mail zur Bestätigung geschickt!');
+
+                return $this->redirect($this->generateUrl('orth_index_account'));
+                
+            } else {
+                
+                $this->get('session')->getFlashBag()->add('warning', 'Die E-Mailadresse existiert bereits! Bitte verwenden Sie eine andere E-Mailadresse oder melden Sie sich an.');
+
+            }   
+        }
+        
+        return $this->render('OrthIndexBundle:Index:signup.html.twig', array('form' => $form->createView()));
+        
+    }
+    
+    public function registerAction($token) {
+            
+        $em = $this->getDoctrine()->getManager();
+        
+        $checkToken = $em->getRepository('OrthIndexBundle:Tokens')->findOneBy(array('token' => $token));
+        
+        if( $checkToken != NULL AND $checkToken->getExpDate() > new \DateTime()) {
+        
+            $user = new Users(); 
+            
+            $user = $em->getRepository('OrthIndexBundle:Users')->findOneBy(array('id' => $checkToken->getUserRef()));
+            $user->setActive(true);
+            
+            $em->remove($checkToken);
+            $em->persist($user);
+            $em->flush();
+            
+            $this->get('session')->getFlashBag()->add('notice', 'Registrierung erfolgreich! Sie können sich nun anmelden.');
+
+        } else {
+            
+            $this->get('session')->getFlashBag()->add('alert', 'Link nicht mehr gültig! Bitte fordern Sie ein neues Passwort an!');
+
+        }
+        
+        return $this->redirect($this->generateUrl('orth_index_account'));
+    }
     
 }

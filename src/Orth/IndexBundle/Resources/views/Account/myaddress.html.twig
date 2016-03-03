@@ -41,13 +41,13 @@
                             <div class="panel-body">
                                 <ul>
                                     <li><span class="address-name"> <strong>{{ invoiceAddress.0.companyName1 }} {{ invoiceAddress.0.companyName2 }} {{ invoiceAddress.0.companyName3 }}</strong></span></li>
+                                    <li><span class="address-name"> <strong>{{ invoiceAddress.0.firstName }} {{ invoiceAddress.0.lastName }} </strong></span></li>
                                     <li><span class="address-line1"> {{ invoiceAddress.0.street }} {{ invoiceAddress.0.street2 }}</span></li>
                                     <li><span class="address-line2"> {{ invoiceAddress.0.zipcode }}, {{ invoiceAddress.0.city }} </span></li>
                                 </ul>
                             </div>
                             <div class="panel-footer panel-footer-address"><a href="/account/edit-address/{{invoiceAddress.0.id}}" class="btn btn-sm btn-success"> <i
-                                    class="fa fa-edit"> </i> Bearbeiten </a> <a data-toggle="modal" data-target="#myModal" class="btn btn-sm btn-danger delete" id="{{invoiceAddress.0.id}}"> <i
-                                    class="fa fa-minus-circle"></i> Löschen </a></div>
+                                    class="fa fa-edit"> </i> Bearbeiten </a></div>
                         </div>
                     </div>
 
@@ -59,13 +59,13 @@
                             <div class="panel-body">
                                 <ul>
                                     <li><span class="address-name"> <strong>{{ deliveryAddress.0.companyName1 }} {{ deliveryAddress.0.companyName2 }} {{ deliveryAddress.0.companyName3 }}</strong></span></li>
+                                    <li><span class="address-line1"> {{ deliveryAddress.0.firstName }} {{ deliveryAddress.0.lastName }}</span></li>
                                     <li><span class="address-line1"> {{ deliveryAddress.0.street }} {{ deliveryAddress.0.street2 }}</span></li>
                                     <li><span class="address-line2"> {{ deliveryAddress.0.zipcode }}, {{ deliveryAddress.0.city }} </span></li>
                                 </ul>
                             </div>
                             <div class="panel-footer panel-footer-address"><a href="/account/edit-address/{{deliveryAddress.0.id}}" class="btn btn-sm btn-success"> <i
-                                    class="fa fa-edit"> </i> Bearbeiten </a> <a data-toggle="modal" data-target="#myModal" class="btn btn-sm btn-danger delete" id="{{deliveryAddress.0.id}}"> <i
-                                    class="fa fa-minus-circle"></i> Löschen </a></div>
+                                    class="fa fa-edit"> </i> Bearbeiten </a> </div>
                         </div>
                     </div>
                     <div class="col-lg-12">
@@ -80,14 +80,17 @@
                         <tr>
                             <th>Titel</th>
                             <th>Firma</th>
+                            <th>Name</th>
                             <th>Straße</th>
                             <th>Plz/Ort</th>
                             <th>Funktionen</th>
-                        </tr>  
+                        </tr>
+                        <tbody>
                     {% for address in addresses %} 
                         <tr>
                             <td>{{ address.addressTitle }}</td>
                             <td>{{ address.companyName1 }} {{ address.companyName2 }} {{ address.companyName3 }}</td>
+                            <td>{{ address.firstName }} {{ address.lastName }}</td>
                             <td>{{ address.street }} {{ address.street2 }}</td>
                             <td>{{ address.zipcode }}, {{ address.city }}</td>
                             <td><a href="/account/edit-address/{{address.id}}" class="btn btn-sm btn-success"> <i
@@ -95,7 +98,8 @@
                                     class="fa fa-minus-circle"></i> Löschen </a></td>
                         </tr>
                     {% endfor %}
-                            </tr></tbody></table>
+                        </tbody>
+                    </table>
                 </div>
                 <!--/.w100-->
 

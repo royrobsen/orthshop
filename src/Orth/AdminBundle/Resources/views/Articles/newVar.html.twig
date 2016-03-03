@@ -1,0 +1,149 @@
+{% extends "adminbase.html.twig" %}
+{% block content %}
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Artikelvarianten</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <div class="row">
+                <form name="varForm" action="/admin/new-articlevar" method="post">
+                <input class="form-control" type="hidden" value="{{artId}}" name="artId"/>
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Artikelstamm
+                        </div>
+                        <div class="panel-body">
+                            <h4>Kurzbezeichnung</h4>
+                            <p>{{article.shortName}}</p>
+                            <h4>Kurzbeschreibung</h4>
+                            <p>{{article.shortDescription}}</p>
+                            <h4>Langbeschreibung</h4>
+                            <p>{{article.longDescription}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Artikelstamm
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="priceunit">Preiseinheit</label>
+                                    <input class="form-control" name="priceunit"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="amountunit">Mengeneinheit</label>
+                                    <input class="form-control" name="amountunit"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="minorder">Mindestabnahme</label>
+                                    <input class="form-control" name="minorder"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="vpe">VPE</label>
+                                    <input class="form-control" name="vpe"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="vpepackage">VPE Paket</label>
+                                    <input class="form-control" name="vpepackage"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="vpepalette">VPE Palette</label>
+                                    <input class="form-control" name="vpepalette"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+
+                        </div>
+                            <div class="panel-body">
+                                <div class="form-group table-responsive">
+                                    <label for="InputCompany3">Varianten</label> <a style="cursor: pointer;" id="add">Variante hinzufügen</a>
+                                    <table id="items" class="table">
+                                        <tr>
+                                            <th>
+                                                Artikelnummer
+                                            </th>
+                                            <th>
+                                                Preis
+                                            </th>
+                                            {% for attrName in attrNames %}
+                                            <th>
+                                                {{attrName.attributeName}}
+                                                <input class="form-control" type="hidden" value="{{attrName.id}}" name="attr[{{loop.index - 1}}]"/>
+                                            </th>
+                                            <th>
+                                                Einheit
+                                            </th>
+                                            {% endfor %}
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input class="form-control" name="data1[0][]"/>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="data1[0][]"/>
+                                            </td> 
+                                            {% for attrName in attrNames %}
+                                            <td>    
+                                                <input class="form-control" name="data1[0][data2][]"/>
+                                            </td>     
+                                            <td>     
+                                                <input class="form-control" name="data1[0][data2][]"/>
+                                            </td>    
+                                            {% endfor %}
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-xs-12 clearfix">
+                                <button type="submit">Test</button>
+                            </div>               
+                    </div>
+                        <!-- /.panel-body -->
+                </div>
+            </form>          
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+{% endblock %}
+
+{% block js %}
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.4/css/bootstrap-select.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.4/js/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+		$(document).ready(function($) {
+                    var i = 1;
+            		//when the Add Filed button is clicked
+		$("#add").click(function (e) {
+			//Append a new row of code to the "#items" div
+                        
+			$("#items").append('<tr class="items"><td><input class="form-control" name="data1['+i+'][]"/></td><td><input class="form-control" name="data1['+i+'][]"/>{% for attrName in attrNames %}<td><input class="form-control" name="data1['+i+'][data2][]"/></td><td><input class="form-control" name="data1['+i+'][data2][]"/></td>{% endfor %}<a style="cursor: pointer;" class="delete">Delete</a></td></tr>');
+                        i = i + 1;
+});
+
+	$("body").on("click", ".delete", function (e) {
+		$(this).parent().parent("tr").remove();
+	});			$(".scroll").click(function(event){		
+				event.preventDefault();
+				$('html,body').animate({scrollTop:$(this.hash).offset().top},1200);
+			});
+            
+		});
+	</script>
+{% endblock %}

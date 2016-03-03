@@ -1,0 +1,71 @@
+{% extends "adminbase.html.twig" %}
+{% block content %}
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Hauptkategorien</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <div class="row">
+                <!-- /.col-lg--6 -->
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a href="/admin/newroot-category">Neue Hauptkategorie</a>
+                        </div>
+                        <div class="panel-body">
+                               <form id="filter-form"><label>Kategorie suchen: </label><input name="filter" class="form-control" id="filter" value="" maxlength="30" size="30" type="text"></form>  
+                               <table class="table list">
+                                   <thead>
+                                       <tr>
+                                           <th>ID</th>
+                                           <th>Kategorie</th>
+                                           <th>Funktionen</th>
+                                       </tr>
+                                   </thead>
+                                    <tbody>
+                                       {% for category in categories %}
+                                       <tr>
+                                           <td>{{category.id}}</td>
+                                           <td>{{category.categoryName}}</td>
+                                           <td><a href="/admin/rootcategory/{{category.id}}">Kategorie bearbeiten</a></td>
+                                       </tr>
+                                       {% endfor %}
+                                    </tbody>
+                               </table>     
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+            </div>
+            <!-- /.row -->
+{% endblock %}
+{% block js %}
+<script src="/assets/js/uiTableFilter.js"></script>
+<script>
+    $(function() { 
+      var theTable = $('table.list')
+
+      $("#filter").keyup(function() {
+        $.uiTableFilter( theTable, this.value );
+      })
+
+      $('#filter-form').submit(function(){
+        theTable.find("tbody > tr:visible > td:eq(1)").mousedown();
+        return false;
+      }).focus(); //Give focus to input field
+      
+      var theTable2 = $('table.list2')
+
+      $("#filter2").keyup(function() {
+        $.uiTableFilter( theTable2, this.value );
+      })
+
+      $('#filter-form2').submit(function(){
+        theTable2.find("tbody > tr:visible > td:eq(1)").mousedown();
+        return false;
+      }).focus(); //Give focus to input field
+    }); 
+</script>
+{% endblock %}

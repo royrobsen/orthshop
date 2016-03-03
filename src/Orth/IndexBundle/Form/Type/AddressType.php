@@ -13,11 +13,11 @@ class AddressType extends AbstractType
         $countryArray = array('1' => 'Deutschland', '2' => 'Österreich', '3' => 'Schweiz');
         
         $builder->add('companyName1', 'text', 
-                    array('label' => false))
+                    array('label' => false, 'required' => false))
                 ->add('companyName2', 'text', 
-                    array('label' => false))
+                    array('label' => false, 'required' => false))
                 ->add('companyName3', 'text', 
-                    array('label' => false))
+                    array('label' => false, 'required' => false))
                 ->add('firstName', 'text', 
                     array('label' => false))
                 ->add('lastName', 'text', 
@@ -34,8 +34,7 @@ class AddressType extends AbstractType
                     array('label' => false))
                 ->add('firstName', 'text', 
                     array('label' => false))
-                ->add('country', 'choice', array('choices' =>$countryArray,
-                'data' => 1))
+                ->add('country', 'choice', array('choices' =>$countryArray))
                 ->add('save', 'submit', array('label' => 'Adresse speichern'));
         
     }
@@ -47,6 +46,6 @@ class AddressType extends AbstractType
     }
     public function getName()
     {
-        return 'customerAddresses';
+        return 'customersAddresses';
     }
 }

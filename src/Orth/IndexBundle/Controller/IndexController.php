@@ -17,8 +17,11 @@ class IndexController extends Controller
         return $this->render('OrthIndexBundle:Index:index.html.twig');
         
     }
-         
-    public function searchAction(Request $request) {
+    public function mailSuccessAction()
+    {
+        return $this->render('OrthIndexBundle:Mail:orderSuccessMail.html.twig');
+        
+    }    public function searchAction(Request $request) {
         
         $products = new Products();
         

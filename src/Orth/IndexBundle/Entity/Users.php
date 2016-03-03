@@ -3,12 +3,14 @@
 namespace Orth\IndexBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Users
  */
-class Users implements UserInterface, \Serializable
+class Users implements AdvancedUserInterface, \Serializable
 {
     /**
      * @var integer
@@ -44,7 +46,11 @@ class Users implements UserInterface, \Serializable
      * @var integer
      */
     private $id;
-
+    
+    /**
+     * @var integer
+     */
+    private $active;
 
     /**
      * Set customerRef
@@ -194,11 +200,13 @@ class Users implements UserInterface, \Serializable
         return $this->passkey;
     }
 
+    
         /**
      * Constructor
      */
     public function __construct()
     {
+        $this->active = false;
         $this->article = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
@@ -263,5 +271,134 @@ class Users implements UserInterface, \Serializable
             // see section on salt below
             // $this->salt
         ) = unserialize($serialized);
+    }
+    
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->active;
+    }
+    
+    
+    /**
+     * @var \Orth\IndexBundle\Entity\Customers
+     */
+    private $customer;
+
+
+    /**
+     * Set customer
+     *
+     * @param \Orth\IndexBundle\Entity\Customers $customer
+     * @return Users
+     */
+    public function setCustomer(\Orth\IndexBundle\Entity\Customers $customer = null)
+    {
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+    /**
+     * Get customer
+     *
+     * @return \Orth\IndexBundle\Entity\Customers 
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $token;
+
+
+    /**
+     * Add token
+     *
+     * @param \Orth\IndexBundle\Entity\Tokens $token
+     * @return Users
+     */
+    public function addToken(\Orth\IndexBundle\Entity\Tokens $token)
+    {
+        $this->token[] = $token;
+
+        return $this;
+    }
+
+    /**
+     * Remove token
+     *
+     * @param \Orth\IndexBundle\Entity\Tokens $token
+     */
+    public function removeToken(\Orth\IndexBundle\Entity\Tokens $token)
+    {
+        $this->token->removeElement($token);
+    }
+
+    /**
+     * Get token
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * Set active
+     *
+     * @param integer $active
+     * @return Users
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return integer 
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+    
+        /**
+     * @Assert\Length(
+     *     min = 6,
+     *     minMessage = "Das Passwort muss mindestens 6 Zeichen haben"
+     * )
+     */
+     public $newPassword;
+     
+     /**
+     * Get newPassword
+     *
+     * @return integer 
+     */
+    public function getNewPassword()
+    {
+        return $this->newPassword;
     }
 }

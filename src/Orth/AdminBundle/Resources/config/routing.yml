@@ -1,15 +1,7 @@
 orth_admin_homepage:
     path:     /admin
     defaults: { _controller: OrthAdminBundle:Default:index }
-    
-orth_admin_customerlist:
-    path:     /admin/customers
-    defaults: { _controller: OrthAdminBundle:Customers:customerlist }
-    
-orth_admin_jsoncustomerlist:
-    path:     /admin/jsoncustomerlist
-    defaults: { _controller: OrthAdminBundle:Customers:jsoncustomerlist }
-    
+       
 orth_admin_articlelist:
     path:     /admin/articles
     defaults: { _controller: OrthAdminBundle:Articles:articlelist }
@@ -17,6 +9,18 @@ orth_admin_articlelist:
 orth_admin_jsoncarticlelist:
     path:     /admin/jsonarticlelist
     defaults: { _controller: OrthAdminBundle:Articles:jsonarticlelist }
+    
+orth_admin_articlenew:
+    path:     /admin/new-article
+    defaults: { _controller: OrthAdminBundle:Articles:new }
+    
+orth_admin_articledelete:
+    path:     /admin/deletearticle/{id}
+    defaults: { _controller: OrthAdminBundle:Articles:deleteArticle }    
+    
+orth_admin_newarticlevar:
+    path:     /admin/new-articlevar
+    defaults: { _controller: OrthAdminBundle:Articles:newarticlevar }    
     
 orth_admin_article:
     path:     /admin/article/{id}
@@ -33,3 +37,91 @@ orth_admin_deleteattr:
 orth_admin_addattr:
     path:     /admin/addattr/{artId}
     defaults: { _controller: OrthAdminBundle:Articles:addattr }
+    
+orth_admin_deleteimg:
+    path:     /admin/deleteimg/{artId}/{imgId}
+    defaults: { _controller: OrthAdminBundle:Articles:deleteimg }
+    
+orth_admin_categories:
+    path:     /admin/categories
+    defaults: { _controller: OrthAdminBundle:Categories:categories }
+    
+orth_admin_grandchildcategory:
+    path:     /admin/grandchildcategory/{id}
+    defaults: { _controller: OrthAdminBundle:Categories:grandchild }
+    
+orth_admin_rootcategory:
+    path:     /admin/rootcategory/{id}
+    defaults: { _controller: OrthAdminBundle:Categories:root }
+    
+orth_admin_childcategory:
+    path:     /admin/childcategory/{id}
+    defaults: { _controller: OrthAdminBundle:Categories:child }
+    
+orth_admin_categorydelete:
+    path:     /admin/deletecategory/{id}
+    defaults: { _controller: OrthAdminBundle:Categories:deletecategory }
+    
+orth_admin_categorynewroot:
+    path:     /admin/newroot-category
+    defaults: { _controller: OrthAdminBundle:Categories:newroot }
+    
+orth_admin_categorynewchild:
+    path:     /admin/newchild-category/{parent}
+    defaults: { _controller: OrthAdminBundle:Categories:newchild }    
+
+orth_admin_moveToCategory:
+    path:     /admin/moveToCategory
+    defaults: { _controller: OrthAdminBundle:Categories:moveToCategory }    
+    
+orth_admin_attributelist:
+    path:     /admin/attributes
+    defaults: { _controller: OrthAdminBundle:Attributes:attributelist }
+    
+orth_admin_jsonattributelist:
+    path:     /admin/jsonattributelist
+    defaults: { _controller: OrthAdminBundle:Attributes:jsonattributelist }
+    
+orth_admin_newattribute:
+    path:     /admin/new-attribute
+    defaults: { _controller: OrthAdminBundle:Attributes:new }
+    
+orth_admin_deleteattribute:
+    path:     /admin/deleteattribute/{id}
+    defaults: { _controller: OrthAdminBundle:Attributes:delete }
+    
+orth_admin_attribute:
+    path:     /admin/attribute/{id}
+    defaults: { _controller: OrthAdminBundle:Attributes:attribute }
+    
+orth_admin_customerlist:
+    path:     /admin/customers
+    defaults: { _controller: OrthAdminBundle:Customers:customerlist }
+    
+orth_admin_jsoncustomerlist:
+    path:     /admin/jsoncustomerlist
+    defaults: { _controller: OrthAdminBundle:Customers:jsoncustomerlist }
+    
+orth_admin_customer:
+    path:     /admin/customer/{id}
+    defaults: { _controller: OrthAdminBundle:Customers:customer } 
+    
+orth_admin_newcustomer:
+    path:     /admin/new-customer
+    defaults: { _controller: OrthAdminBundle:Customers:new }
+    
+orth_admin_newuser:
+    path:     /admin/new-user/{id}
+    defaults: { _controller: OrthAdminBundle:Users:new }
+    
+orth_admin_user:
+    path:     /admin/user/{id}
+    defaults: { _controller: OrthAdminBundle:Users:user }
+    
+orth_admin_deactivateuser:
+    path:     /admin/deactivate-user/{id}
+    defaults: { _controller: OrthAdminBundle:Users:deactivate }
+    
+orth_admin_activateuser:
+    path:     /admin/activate-user/{id}
+    defaults: { _controller: OrthAdminBundle:Users:activate }

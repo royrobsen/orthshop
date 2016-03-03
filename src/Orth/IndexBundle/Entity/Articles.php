@@ -19,12 +19,18 @@ class Articles
     /**
      * @var string
      */
-    private $articleNumber;
-
+    
+    private $priceDiff; 
+    
     /**
      * @var string
      */
     private $shortName;
+    
+    /**
+     * @var string
+     */
+    private $shortName1;
 
     /**
      * @var string
@@ -56,30 +62,6 @@ class Articles
      */
     private $id;
 
-
-    /**
-     * Set articleNumber
-     *
-     * @param string $articleNumber
-     * @return Articles
-     */
-    public function setArticleNumber($articleNumber)
-    {
-        $this->articleNumber = $articleNumber;
-
-        return $this;
-    }
-
-    /**
-     * Get articleNumber
-     *
-     * @return string 
-     */
-    public function getArticleNumber()
-    {
-        return $this->articleNumber;
-    }
-
     /**
      * Set shortName
      *
@@ -99,6 +81,29 @@ class Articles
      * @return string 
      */
     public function getShortName()
+    {
+        return $this->shortName;
+    }
+    
+    /**
+     * Set shortName1
+     *
+     * @param string $shortName
+     * @return Articles
+     */
+    public function setShortName1($shortName)
+    {
+        $this->shortName = $shortName;
+
+        return $this;
+    }
+
+    /**
+     * Get shortName1
+     *
+     * @return string 
+     */
+    public function getShortName1()
     {
         return $this->shortName;
     }
@@ -422,4 +427,76 @@ class Articles
         return $this->showedPrice;
     }
     
+    private $attachment;
+    
+    /**
+     * Set attachment
+     */
+    public function setAttachment($attachment = null) 
+    {
+        $this->attachment = $attachment;
+        
+        return $this;
+    }
+    
+    /**
+     * Get attachment
+     */
+            
+    public function getAttachment()
+    {
+        return $this->attachment;
+    }
+    
+    /**
+     * @var \Orth\IndexBundle\Entity\Categories
+     */
+    private $category;
+
+
+    /**
+     * Set category
+     *
+     * @param \Orth\IndexBundle\Entity\Categories $category
+     * @return Articles
+     */
+    public function setCategory(\Orth\IndexBundle\Entity\Categories $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \Orth\IndexBundle\Entity\Categories 
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+    
+    /**
+     * Set priceDiff
+     *
+     * @param string $priceDiff
+     * @return Articles
+     */
+    public function setPriceDiff($priceDiff)
+    {
+        $this->priceDiff = $priceDiff;
+
+        return $this;
+    }
+
+    /**
+     * Get priceDiff
+     *
+     * @return string 
+     */
+    public function getPriceDiff()
+    {
+        return $this->priceDiff;
+    }
 }

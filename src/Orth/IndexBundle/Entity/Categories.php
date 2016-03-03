@@ -153,4 +153,69 @@ class Categories
     {
         return $this->parent;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $article;
+
+
+    /**
+     * Add article
+     *
+     * @param \Orth\IndexBundle\Entity\Articles $article
+     * @return Categories
+     */
+    public function addArticle(\Orth\IndexBundle\Entity\Articles $article)
+    {
+        $this->article[] = $article;
+
+        return $this;
+    }
+
+    /**
+     * Remove article
+     *
+     * @param \Orth\IndexBundle\Entity\Articles $article
+     */
+    public function removeArticle(\Orth\IndexBundle\Entity\Articles $article)
+    {
+        $this->article->removeElement($article);
+    }
+
+    /**
+     * Get article
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getArticle()
+    {
+        return $this->article;
+    }
+    
+    public function getParentName() { 
+        if ($this->getParent() AND $this->getParent()->getParent()) {
+            $parentName = $this->getParent()->getParent()->getCategoryName() . " -> " . $this->getParent()->getCategoryName();
+        } 
+        elseif ($this->getParent() AND !$this->getParent()->getParent()) { 
+            $parentName = $this->getParent()->getCategoryName();
+        }
+        else {
+            $parentName = null;
+        }
+        //$parentName = $this->getParent() ? $this->getParent()->getCategoryName() : null;      
+        
+        return $parentName;
+    }
+   
+    
+    public function getCatForArticleName() {
+        if ($this->getParent()) {
+            $parentName = $this->getParent()->getCategoryName();
+        } else {
+            $parentName = null;
+        }
+        //$parentName = $this->getParent() ? $this->getParent()->getCategoryName() : null;      
+        
+        return $parentName;
+    }
 }

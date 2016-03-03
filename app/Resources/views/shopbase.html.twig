@@ -46,63 +46,6 @@
 
 <body>
 
-<!-- Modal Signup start -->
-<div class="modal signUpContent fade" id="ModalSignup" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
-                <h3 class="modal-title-site text-center"> REGISTRIEREN </h3>
-            </div>
-            <div class="modal-body">
-                <div class="form-group reg-username">
-                    <div>
-                        <input name="login" class="form-control input" size="20" placeholder="Vollständiger Name"
-                               type="text">
-                    </div>
-                </div>
-                <div class="form-group reg-email">
-                    <div>
-                        <input name="reg" class="form-control input" size="20" placeholder="Emailadresse" type="text">
-                    </div>
-                </div>
-                <div class="form-group reg-password">
-                    <div>
-                        <input name="password" class="form-control input" size="20" placeholder="Passwort"
-                               type="password">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div>
-                        <div class="checkbox login-remember">
-                            <label>
-                                <input name="rememberme" id="rememberme" value="forever" checked="checked"
-                                       type="checkbox">
-                                Merken </label>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        <input name="submit" class="btn  btn-block btn-lg btn-primary" value="REGISTRIEREN" type="submit">
-                    </div>
-                </div>
-                <!--userForm-->
-
-            </div>
-            <div class="modal-footer">
-                <p class="text-center"> Schon Kunde? <a data-toggle="modal" data-dismiss="modal" href="#ModalLogin">
-                    Einloggen </a></p>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-
-    </div>
-    <!-- /.modal-dialog -->
-
-</div>
-<!-- /.ModalSignup End -->
-
 <!-- Fixed navbar start -->
 <div class="navbar navbar-tshop navbar-fixed-top megamenu" role="navigation">
     <div class="navbar-top">
@@ -113,7 +56,7 @@
                         <ul class="userMenu ">
                             <li><a href="#"> <span class="hidden-xs">Fragen?</span><i
                                     class="glyphicon glyphicon-info-sign hide visible-xs "></i> </a></li>
-                            <li class="phone-number"><a href="callto:+49415287870"> <span> <i
+                            <li class="phone-number"><a href="#"> <span> <i
                                     class="glyphicon glyphicon-phone-alt "></i></span> <span class="hidden-xs"
                                                                                              style="margin-left:5px"> +49 4152 87 87 0 </span>
                             </a></li>
@@ -132,7 +75,7 @@
                                    {% endif %}         
                                 <i class="glyphicon glyphicon-log-in hide visible-xs "></i> </a></li>
                                 {% if not is_granted('ROLE_USER') %} 
-                            <li class="hidden-xs"><a href="#" data-toggle="modal" data-target="#ModalSignup"> Neuer Kunde </a></li>
+                            <li class="hidden-xs"><a href="/signup"> Neuer Kunde </a></li>
                                 {% endif %}  
                         </ul>
                     </div>
@@ -176,7 +119,7 @@
                                 <li><a href="/berufsbekleidung"> Berufsbekleidung </a></li>
                                 <li><a href="/emblemservice"> Emblemservice </a></li>
                                 <li><a href="/hygieneartikel"> Hygieneartikel </a></li>
-                                <li><a href="/werkzeugtechnik"> Werkzeugtechik </a></li>
+                                <li><a href="/werkzeugtechnik"> Werkzeugtechnik </a></li>
                             </ul>
                         </li>
                     </ul>
@@ -338,18 +281,18 @@
                 <div class="swiper-slide slide-2x">
                     <div class="box-slider-content">
                         <div class="box-text">
-                            <a class="btn btn-stroke-light"> ÜBER UNS</a></div>
+                            <a href="/ueber-uns" class="btn btn-stroke-light"> ÜBER UNS</a></div>
                         <div class="box-content-overly">
                             <!-- Delete this div if you dont want overly effect -->
                         </div>
-                        <a href="#" class="box-img"> <img src="/images/slider/img01.jpg" alt="img"></a></div>
+                        <a href="#" class="box-img"> <img src="/images/slider/orth1.jpg" alt="img"></a></div>
                 </div>
                 <div class="swiper-slide slide-2x">
                     <div class="slider-box-top">
                         <div class="box-slider-content">
                             <div class="box-text-table">
                                 <div class="box-text-cell">
-                                    <h1 class="bolder-style light" style="font-size: 40px;"><a href="#">EMBLEMSERVICE</a></h1>
+                                    <h1 class="bolder-style light" style="font-size: 40px;"><a href="/emblemservice">EMBLEMSERVICE</a></h1>
                                     <span class="bolder-sub"> <a href="/emblemservice"> WIR BESTICKEN, BEFLOCKEN UND PATCHEN </a> </span></div>
                             </div>
                             <div class="box-content-overly">
@@ -361,8 +304,8 @@
                         <div class="box-slider-content">
                             <div class="box-text-table">
                                 <div class="box-text-cell">
-                                    <h1 class="bolder-style light" style="font-size: 40px;"><a href="#">Werkzeugtechnik</a></h1>
-                                    <span class="bolder-sub"> <a href="#"> Ihr Parter im C-Teile Management </a> </span></div>
+                                    <h1 class="bolder-style light" style="font-size: 40px;"><a href="/werkzeugtechnik">Werkzeugtechnik</a></h1>
+                                    <span class="bolder-sub"> <a href="/werkzeugtechnik"> IHR PARTNER IM C-TEILE MANAGEMENT </a> </span></div>
                             </div>
                             <div class="box-content-overly">
                                 <!-- Delete this div if you dont want overly effect -->
@@ -373,12 +316,15 @@
                 </div>
                 <div class="swiper-slide slide-2x">
                     <div class="box-slider-content">
-                        <div class="box-text bottom-align">
-                            <h2>Berufsbekleidung</h2>
-                            <a href="/berufsbekleidung" class="btn btn-stroke-light"> Jetzt ansehen</a></div>
-                        <a href="/berufsbekleidung" class="box-img"> <img src="/images/slider/box/berufsbekleidung.jpg" alt="img"></a>
-
-                        <div class="box-content-overly"><a href="/berufsbekleidung" class="box-blank-url"> </a></div>
+                            <div class="box-text bottom-align">
+                                <div class="box-text-cell">
+                                    <h1 class="bolder-style light" style="font-size: 40px;"><a href="/berufsbekleidung">BERUFSBEKLEIDUNG</a></h1>
+                                    <span class="bolder-sub"> <a href="/berufsbekleidung"> WIR STATTEN SIE AUS </a> </span></div>
+                            </div>
+                            <div class="box-content-overly">
+                                <!-- Delete this div if you dont want overly effect -->
+                            </div>
+                            <a href="#" class="box-img"> <img src="/images/slider/box/berufsbekleidung.jpg" alt="img"></a>
                     </div>
                 </div>
                 <div class="swiper-slide slide-2x">
@@ -386,25 +332,25 @@
                         <div class="box-slider-content">
                             <div class="box-text-table">
                                 <div class="box-text-cell">
-                                    <h1 class="bolder-style light" style="font-size: 40px;"><a href="#">ARBEITSSCHUTZ</a></h1>
-                                    <span class="bolder-sub"> <a href="/arbeitsschutz"> Wir rüsten sie aus </a> </span></div>
+                                    <h1 class="bolder-style light" style="font-size: 40px;"><a href="/arbeitsschutz">ARBEITSSCHUTZ</a></h1>
+                                    <span class="bolder-sub"> <a href="/arbeitsschutz"> WIR RÜSTEN SIE AUS </a> </span></div>
                             </div>
                             <div class="box-content-overly">
                                 <!-- Delete this div if you dont want overly effect -->
                             </div>
-                            <a href="/arbeitsschutz" class="box-img"> <img src="/images/slider/img02.jpg" alt="img"></a></div>
+                            <a href="/arbeitsschutz" class="box-img"> <img src="/images/slider/arbeitsschutz.jpg" alt="img"></a></div>
                     </div>
                     <div class="slider-box-bottom">
                         <div class="box-slider-content">
                             <div class="box-text-table">
                                 <div class="box-text-cell">
-                                    <h1 class="bolder-style light" style="font-size: 40px;"><a href="#">Hygiene</a></h1>
-                                    <span class="bolder-sub"> <a href="#"> Professionelle Reinigungsmittel </a> </span></div>
+                                    <h1 class="bolder-style light" style="font-size: 40px;"><a href="/hygieneartikel">Hygiene</a></h1>
+                                    <span class="bolder-sub"> <a href="/hygieneartikel"> PROFESSIONELLE REINIGUNSMITTEL </a> </span></div>
                             </div>
                             <div class="box-content-overly">
                                 <!-- Delete this div if you dont want overly effect -->
                             </div>
-                            <a href="/hygieneartikel" class="box-img"> <img src="/images/slider/img03.jpg" alt="img"> </a>
+                            <a href="/hygieneartikel" class="box-img"> <img src="/images/slider/hygiene.jpg" alt="img"> </a>
                         </div>
                     </div>
                 </div>
@@ -605,8 +551,6 @@
         <div class="row ">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="parallax-content clearfix">
-                    <h1 class="parallaxPrce"> 200 € </h1>
-
                     <h2 class="uppercase">Lieferung Frei Haus ab einem Warenwert von 200 €*</h2>
 
                     <h3> *gültig nur für paketdienstfähige Bestellungen </h3>
@@ -659,20 +603,16 @@
                         <li><a href="/impressum"> Impressum </a></li>
                         <li><a href="/widerruf"> Widerruf </a></li>
                         <li><a href="/agb"> AGB </a></li>
-                        <li><a href="/versandkosten"> Versandkosten </a></li>
                         <li><a href="/datenschutz"> Datenschutz </a></li>
                     </ul>
                 </div>
                 <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
                     <h3> Mein Konto </h3>
                     <ul>
-                        <li><a href="/account"> Konto Login </a></li>
+                        <li><a href="/login"> Konto Login </a></li>
                         <li><a href="/account/my-account"> Mein Konto </a></li>
                         <li><a href="/account/my-address"> Meine Adressen </a></li>
-                        <li><a href="/account/wishlist"> Wunschliste</a></li>
-                        <li><a href="/account/b2b"> Bestellsystem</a></li>
                         <li><a href="/account/cart"> Warenkorb </a></li>
-                        <li><a href="/account/order-status"> Bestellstatus </a></li>
                     </ul>
                 </div>
 

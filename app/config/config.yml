@@ -144,7 +144,7 @@ fos_elastica:
               mappings:
                     allField:
                         properties:
-                            shortName: 
+                            shortName:
                             shortDescription:
                             longDescription:
                             variants: 
@@ -165,7 +165,7 @@ fos_elastica:
                         analyzer: custom_search_analyzer    
                     allcustField:
                         properties:
-                            shortName: 
+                            shortName:
                             shortDescription:
                             longDescription:
                             variants: 
@@ -184,13 +184,14 @@ fos_elastica:
                         analyzer: custom_analyzer
                         analyzer: my_analyzer
                         analyzer: custom_search_analyzer    
-                    shortName: 
+                    shortName:
                         analyzer: custom_analyzer
                         analyzer: my_analyzer
                         analyzer: custom_search_analyzer
                         type: string
                         copyTo: [allField, allcustField]
                     shortDescription:
+                        boost: 2
                         analyzer: custom_analyzer
                         analyzer: my_analyzer
                         analyzer: custom_search_analyzer

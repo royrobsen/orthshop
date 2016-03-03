@@ -1,0 +1,86 @@
+<?php
+
+namespace Orth\IndexBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Orth\IndexBundle\Entity\Articles;
+use Orth\IndexBundle\Entity\Attachments;
+use Orth\IndexBundle\Entity\ShoppingCart;
+use Orth\IndexBundle\Entity\ArticleImages;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Orth\IndexBundle\Form\Type\SearchType;
+use Symfony\Component\HttpFoundation\Session\Session;
+
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Cookie;
+
+class OciController extends Controller
+{
+    
+    public function searchAction(Request $request) {
+        
+        $em = $this->getDoctrine()->getManager();
+         
+        $searchTerm = $request->query->get('q');
+
+        $page = 0;
+        $pageOffset = 0;
+        
+        if ($request->query->get('p')) {
+            $page = $request->query->get('p');
+            $pageOffset = ($page - 1) * 12;
+        }
+        
+        $catId = $request->query->get('cid');
+
+        $finder = $this->container->get('fos_elastica.finder.search.article');
+        $boolQuery = new \Elastica\Query\BoolQuery();
+                
+        if ($request->query->get('c') != NULL AND $request->query->get('q') == NULL ) {
+            $catid = $request->query->get('c');
+            $categoryArray = [$request->query->get('c')];
+            $rootCategories = $em->getRepository('OrthIndexBundle:Categories')->findBy(array('parentId' => $catid));
+            
+            foreach ($rootCategories as $childCategory ) {
+                $childCategories = $em->getRepository('OrthIndexBundle:Categories')->findBy(array('parentId' => $childCategory->getId()));
+                $categoryArray[] = $childCategory->getId();
+                foreach ($childCategories as $grandchildCategory ) {
+                    $categoryArray[] = $grandchildCategory->getId();
+                }
+            }
+   
+            $categoryQuery = new \Elastica\Query\Terms();
+            $categoryQuery->setTerms('catRef', $categoryArray);
+            $boolQuery->addMust($categoryQuery);
+            
+        } elseif ($request->query->get('c') != NULL ) {
+            $catid = $request->query->get('c');
+            
+            $categoryQuery = new \Elastica\Query\Terms();
+            $categoryQuery->setTerms('catRef', array($catid));
+            $boolQuery->addMust($categoryQuery);
+        }
+        
+        if($request->query->get('q')) {
+
+            $fieldQuery = new \Elastica\Query\Match();
+            $fieldQuery->setFieldQuery('allField', $searchTerm);
+            $fieldQuery->setFieldOperator('allField', 'AND');
+            $fieldQuery->setFieldMinimumShouldMatch('allField', '80%');
+            $fieldQuery->setFieldAnalyzer('allField', 'custom_search_analyzer');
+            $boolQuery->addMust($fieldQuery);
+        } 
+        
+        $query = new \Elastica\Query();
+        $query->setQuery($boolQuery);
+        $totalpages = ceil(count($finder->find($query))/12);
+        $query->setSize(10000);
+        $query->setFrom($pageOffset);        
+        $articles = $finder->find($query);
+
+        return $this->render('OrthIndexBundle:Oci:ocioutput.html.twig', array('articles' => $articles, 'page' => $page, 'totalpages' => $totalpages));
+        
+     }   
+    
+}

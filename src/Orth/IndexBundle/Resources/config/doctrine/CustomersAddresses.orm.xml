@@ -6,9 +6,9 @@
     </id>
     <field name="customerRef" type="integer" column="customer_ref" nullable="false"/>
     <field name="primaryAddress" type="boolean" column="primary_address" nullable="false"/>
-    <field name="companyName1" type="text" column="company_name1" nullable="false"/>
-    <field name="companyName2" type="text" column="company_name2" nullable="false"/>
-    <field name="companyName3" type="text" column="company_name3" nullable="false"/>
+    <field name="companyName1" type="text" column="company_name1" nullable="true"/>
+    <field name="companyName2" type="text" column="company_name2" nullable="true"/>
+    <field name="companyName3" type="text" column="company_name3" nullable="true"/>
     <field name="firstName" type="text" column="first_name" nullable="false"/>
     <field name="lastName" type="text" column="last_name" nullable="false"/>
     <field name="street" type="text" column="street" nullable="false"/>
@@ -18,5 +18,13 @@
     <field name="country" type="integer" column="country" nullable="false"/>
     <field name="defaultDeliveryAddress" type="boolean" column="default_delivery_address" nullable="false"/>
     <field name="addressTitle" type="text" column="address_title" nullable="false"/>
+        <many-to-one
+            field="customer"
+            target-entity="Customers"
+            inversed-by="customeraddress"
+            join-column="customerRef">
+
+            <join-column name="customer_ref" referenced-column-name="id" />
+        </many-to-one>
   </entity>
 </doctrine-mapping>

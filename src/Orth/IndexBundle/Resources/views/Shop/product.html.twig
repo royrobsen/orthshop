@@ -20,10 +20,13 @@
 
         <!-- left column -->
         <div class="col-lg-6 col-md-6 col-sm-6 productImageZoom">
+            <!-- product Image and Zoom -->
 
-            <div>
-                <img class="img-responsive" data-src="/images/product/nw/{{ images.0.picName }}"
-                        src='/images/product/nw/{{ images.0.picName }}' alt='Daisy on the Ohoopee'/>
+            <div class="main-image sp-wrap col-lg-12 no-padding style3 prodimage">
+                {% for image in images %}
+                <a href="/images/product/nw/{{ image.picName }}"><img
+                    src="/images/product/nw/{{ image.picName }}" class="img-responsive" alt="img"></a> 
+                {% endfor %}
             </div>
             
         </div>
@@ -33,7 +36,7 @@
         <div class="col-lg-6 col-md-6 col-sm-5">
             <h1 class="product-title"> {{article.shortName}} </h1>
 
-            <div class="product-price"><span class="price-sales"> ab {{variants.0.price|number_format(2,',','.')}} €</span></div>
+            <div class="product-price"><span class="price-sales"> {% if priceDiff == true %}ab{% endif %} {{variants.0.price|number_format(2,',','.')}} €</span></div>
             <div class="details-description">
                 <p>{{article.shortDescription}} </p>
             </div>
@@ -45,10 +48,7 @@
                 <h3 class="incaps"><i class="glyphicon glyphicon-lock"></i> Sicheres Bestellen</h3>
             </div>
             <!--/.cart-actions-->
-            <div class="zoomThumb pull-left">
-                <a class="zoomThumbLink">
-                    <img src="/images/product/nw/{{ images.0.picName }}" alt="Saleen" style='max-height: 100px;' title=""/></a>
-            </div>
+            <div class="productThumb"></div>
 
         </div>
         <!--/ right column end -->
@@ -175,47 +175,25 @@
 <!-- /main-container -->
 
 <div class="gap"></div>
-{% if is_granted('ROLE_MODERATOR') %}     
-{% if categories is defined %}
-             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Zum Bestellsystem hinzufügen </h4>
-                      </div>
-                      <div class="modal-body">
-                          <h2>Kategorie wählen!</h2>
-                        <p>Der Artikel wird der gewählten Kategorie sofort hinzugefügt!</p>
-                        <form name="selectCatForm" method="get" action="/account/add">
-                            <input name="varRef" id="varRef" value="{{article.id}}" />
-                            
-                        <select name="catref" id="catref" placeholder="Wählen Sie eine Kategorie">
-                        {% for cat in categories %}
-                            <optgroup label="{{cat.catName}}">
-                            {% if cat.children is defined %}
-                            {% for child1 in cat.children %}
-                                <option class="catlvl1" value="{{child1.id}}">{{child1.catName}}</option>
-                                {% if child1.children is defined %}
-                                {% for child2 in child1.children %}
-                                <option class="catlvl2" value="{{child2.id}}"> ->  {{child2.catName}}</option>
-                                {% endfor %}
-                                {% endif %}  
-                            {% endfor %} 
-                            {% endif %}
-                            </optgroup>  
-                        {% endfor %}    
-                        </select>
-                        <button class="btn btn-danger">Speichern</button>
-                        </form>
-                      </div>
-                      <div ng-cloak class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
-                      </div>
-                    </div><!-- /.modal-content -->
-                  </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
-{% endif %}   
+{% if submitted == true %}
+<div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Artikel hinzugefügt</h4>
+      </div>
+      <div class="modal-body">
+          <h2>Warenkorb</h2>
+        <p>Die ausgewählten Artikel wurden dem Warenkorb hinzugefügt</p>
+      </div>
+      <div ng-cloak class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Weiter einkaufen</button>
+        <a href="/account/checkout"><button type="button" class="btn btn-danger">Zur Kasse</button></a>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 {% endif %}
 {% endblock %}
 {% block js_bottom %}
@@ -272,7 +250,11 @@
             $(".mainImg").attr('src', largeImage);
 
         });
-
+        {% if submitted == true %}
+        $(window).load(function(){
+            $('#cartModal').modal('show');
+        });
+        {% endif %}
     });
 </script>
 
@@ -297,6 +279,9 @@
 
 <!-- include touchspin.js // touch friendly input spinner component   -->
 <script src="assets/js/bootstrap.touchspin.js"></script>
+
+<!-- include smoothproducts // product zoom plugin  -->
+<script type="text/javascript" src="assets/js/smoothproducts-thumb.js"></script>
 
 <!-- include custom script for site  -->
 <script src="assets/js/script.js"></script>

@@ -1,0 +1,57 @@
+{% extends "shopbase.html.twig" %}
+{% block content %}
+
+<div class="container main-container headerOffset">
+
+    <div class="row">
+        <div class="breadcrumbDiv col-lg-12">
+            <ul class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li class="active"> Passwort vergessen</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <h1 class="section-title-inner"><span><i class="fa fa-lock"></i> Passwort vergessen?</span></h1>
+
+            <div class="row userInfo">
+
+                <div class="col-xs-12 col-sm-12">
+                {% for flashMessage in app.session.flashbag.get('notice') %}
+                    <div class="alert alert-success">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('alert') %}
+                    <div class="alert alert-danger">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+                {{ form_start(form) }}
+                {{ form_errors(form) }}	
+                    <div class="form-group">
+                       <label>Emailadresse</label>
+                       {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'placeholder' : 'E-Mail'} }) }}
+                    </div>
+                        {{form_widget(form.save, { 'attr': {'class':'btn btn-primary'}} ) }}
+                {{ form_end(form) }}
+                </div>
+            </div>
+            <!--/row end-->
+
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-5"></div>
+    </div>
+    <!--/row-->
+
+    <div style="clear:both"></div>
+</div>
+<!-- /wrapper -->
+
+<div class="gap"></div>
+
+{% endblock %}

@@ -6,7 +6,7 @@
     <div class="row">
         <div class="breadcrumbDiv col-lg-12">
             <ul class="breadcrumb">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="/">Home</a></li>
                 <li class="active"> Mein Konto </li>
             </ul>
         </div>
@@ -33,10 +33,12 @@
                                                                   href="/account/personal-info"><i class="fa fa-cog"></i>
                                 Persönliche Daten</a></div>
                         </li>
+                        {% if is_granted('ROLE_BCUSTOMER') %}
                         <li class="col-lg-2 col-md-2 col-sm-3 col-xs-4  text-center ">
                             <div class="thumbnail equalheight"><a title="Bestellsystem" href="/account/bestellsystem"><i
                                     class="fa fa-cart-arrow-down"></i> Bestellsystem </a></div>
                         </li>
+                        {% endif %} 
                         {% if is_granted('ROLE_MODERATOR') %}
                         <li class="col-lg-2 col-md-2 col-sm-3 col-xs-4  text-center ">
                             <div class="thumbnail equalheight"><a title="Meine Benutzer" href="/account/my-user"><i
@@ -49,6 +51,12 @@
                         {% endif %} 
                     </ul>
                     <div class="clear clearfix"></div>
+                <div class="col-lg-12 clearfix">
+                    <ul class="pager">
+                        <li class="previous pull-right"><a href="/shop"> <i class="fa fa-home"></i> Zum Shop </a>
+                        </li>
+                    </ul>
+                </div>
                 </div>
             </div>
             <!--/row end-->

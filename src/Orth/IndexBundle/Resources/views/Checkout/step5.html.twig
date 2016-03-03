@@ -7,8 +7,8 @@
     <div class="row">
         <div class="breadcrumbDiv col-lg-12">
             <ul class="breadcrumb">
-                <li><a href="index.html">Home</a></li>
-                <li class="active"><a href="category.html">Kasse</a></li>
+                <li><a href="/">Home</a></li>
+                <li class="active"><a href="/account/checkout">Kasse</a></li>
             </ul>
         </div>
     </div>
@@ -83,23 +83,23 @@
                                         <table class="std table" id="cart-summary">
                                             <tr>
                                                 <td>Positionen (netto)</td>
-                                                <td class="price"><span id="jTotal2">{{gesamtpreis}}</span> €</td>
+                                                <td class="price"><span id="jTotal2">{{gesamtpreis|number_format(2, ',', '.')}}</span> €</td>
                                             </tr>
                                             <tr style="">
                                                 <td>Fracht (netto)</td>
-                                                <td class="price">5,50 €</td>
+                                                <td class="price">{{freight}} €</td>
                                             </tr>
                                             <tr class="cart-total-price ">
                                                 <td>Gesamt (exkl. MwSt)</td>
-                                                <td class="price">{{(gesamtpreis + 5.50)|number_format(2)}} €</td>
+                                                <td class="price">{{(gesamtpreis + freight)|number_format(2, ',', '.')}} €</td>
                                             </tr>
                                             <tr>
-                                                <td>Total tax</td>
-                                                <td id="total-tax" class="price">{{((gesamtpreis+ 5.50) /100 * 19)|number_format(2)}} €</td>
+                                                <td>MwSt</td>
+                                                <td id="total-tax" class="price">{{((gesamtpreis+ freight) /100 * 19)|number_format(2, ',', '.')}} €</td>
                                             </tr>
                                             <tr>
-                                                <td> Total</td>
-                                                <td id="total-price" class="price">{{((gesamtpreis+ 5.50) * 1.19)|number_format(2)}} €</td>
+                                                <td> Gesamt (inkl. MwSt)</td>
+                                                <td id="total-price" class="price">{{((gesamtpreis+ freight) * 1.19)|number_format(2, ',', '.')}} €</td>
                                             </tr>
                                             <tbody>
                                             </tbody>
@@ -148,23 +148,23 @@
                     <tbody>
                     <tr>
                         <td>Positionen (netto)</td>
-                        <td class="price"><span id="jTotal3">{{cartSum|number_format(2)}}</span></td>
+                        <td class="price"><span id="jTotal3">{{cartSum|number_format(2, ',', '.')}}</span></td>
                     </tr>
                     <tr style="">
                         <td>Fracht</td>
-                        <td class="price"><span class="success">{{freight|number_format(2)}} €</span></td>
+                        <td class="price"><span class="success">{{freight|number_format(2, ',', '.')}} €</span></td>
                     </tr>
                     <tr class="cart-total-price ">
                         <td>Gesamt (exkl. MwSt)</td>
-                        <td class="price">{{(cartSum+freight)|number_format(2)}} €</td>
+                        <td class="price">{{(cartSum+freight)|number_format(2, ',', '.')}} €</td>
                     </tr>
                     <tr>
                         <td>MwSt. 19%</td>
-                        <td class="price" id="total-tax">{{((cartSum+freight)/100*19)|number_format(2)}} €</td>
+                        <td class="price" id="total-tax">{{((cartSum+freight)/100*19)|number_format(2, ',', '.')}} €</td>
                     </tr>
                     <tr>
                         <td>Gesamt inkl. MwSt.</td>
-                        <td class=" site-color" id="total-price">{{((cartSum+freight)*1.19)|number_format(2)}} €</td>
+                        <td class=" site-color" id="total-price">{{((cartSum+freight)*1.19)|number_format(2, ',', '.')}} €</td>
                     </tr>
                     </tbody>
                     <tbody>
