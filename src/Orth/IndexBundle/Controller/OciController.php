@@ -107,7 +107,7 @@ class OciController extends Controller
         foreach ($articles as $article) {
             $variants = $article->getVariants();
             foreach ($variants as $variant) {
-                dump($article->getCategory()->getId());
+
                 $price = $em->getRepository('OrthIndexBundle:ArticleSuppliers')->getCustomPrice(array('id' => $variant), $user);
                 $category = $em->getRepository('OrthIndexBundle:Categories')->getRootCategory($article->getCategory()->getId());
                 $attribute = "";
