@@ -22,6 +22,31 @@ class OciController extends Controller
         
         $em = $this->getDoctrine()->getManager();
          
+        
+        $username = $request->query->get('oci_username');
+        $password = $request->query->get('oci_password');
+        
+        $query = $em->createQuery("SELECT u FROM Orth\IndexBundle\Entity\Users u WHERE u.email = :username");
+        $query->setParameter('username', $username);
+        $user = $query->getOneOrNullResult();
+        
+        if ($user) {
+          // Get the encoder for the users password
+          $encoder_service = $this->get('security.encoder_factory');
+          $encoder = $encoder_service->getEncoder($user);
+
+          // Note the difference
+          if ($encoder->isPasswordValid($user->getPassword(), $password, '$2a$12$uWepESKverBsrLAuOPY')) {
+            // Get profile list
+          } else {
+              dump('fail1');
+            exit;
+          }
+        } else {
+            dump('fail');
+            exit;
+        }
+        
         $searchTerm = $request->query->get('q');
 
         $page = 0;

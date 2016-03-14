@@ -61,8 +61,9 @@ class ArticleRepository extends EntityRepository
 ////            $fieldQuery->setAnalyzer('custom_search_analyzer');
             $boolQuery->addMust($fieldQuery);
             $fieldQuery = new \Elastica\Query\Match();
-            $fieldQuery->setFieldQuery('shortName', '*' . $searchTerm . '*');
+            $fieldQuery->setFieldQuery('shortName', $searchTerm);
             $fieldQuery->setFieldOperator('shortName', 'AND');
+            $fieldQuery->setFieldAnalyzer('shortName', 'custom_search_analyzer');
             $fieldQuery->setFieldBoost('shortName', '5');
             //$fieldQuery->setFieldMinimumShouldMatch('shortName', '80%');
             ///$fieldQuery->setFieldAnalyzer('allField', 'custom_search_analyzer');

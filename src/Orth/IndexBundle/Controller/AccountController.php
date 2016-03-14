@@ -23,7 +23,8 @@ class AccountController extends Controller
 {
     public function myaccountAction() {
         return $this->render('OrthIndexBundle:Account:myaccount.html.twig');
-    } 
+    }
+    
     public function orderhistoryAction() {
         
         $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -37,6 +38,7 @@ class AccountController extends Controller
 
         return $this->render('OrthIndexBundle:Account:orderhistory.html.twig', array('orders' => $orders));
     }  
+    
     public function orderAction($id) {
         
         $securityContext = $this->container->get('security.authorization_checker');
