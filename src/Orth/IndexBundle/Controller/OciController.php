@@ -25,6 +25,7 @@ class OciController extends Controller
         
         $username = $request->query->get('oci_username');
         $password = $request->query->get('oci_password');
+        $hookurl = $request->query->get('hookurl');
         
         $query = $em->createQuery("SELECT u FROM Orth\IndexBundle\Entity\Users u WHERE u.email = :username");
         $query->setParameter('username', $username);
@@ -104,7 +105,7 @@ class OciController extends Controller
         $query->setFrom($pageOffset);        
         $articles = $finder->find($query);
 
-        return $this->render('OrthIndexBundle:Oci:ocioutput.html.twig', array('articles' => $articles, 'page' => $page, 'totalpages' => $totalpages));
+        return $this->render('OrthIndexBundle:Oci:ocioutput.html.twig', array('articles' => $articles, 'page' => $page, 'totalpages' => $totalpages, 'hookurl' => $hookurl));
         
      }   
     
