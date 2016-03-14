@@ -104,8 +104,23 @@ class OciController extends Controller
         $query->setSize(10000);
         $query->setFrom($pageOffset);        
         $articles = $finder->find($query);
+        foreach ($articles as $article) {
+            $variants = $article->getVariants();
+            foreach ($variants as $variant) {
+                dump($article->getCategory()->getId());
+                $price = $em->getRepository('OrthIndexBundle:ArticleSuppliers')->getCustomPrice(array('id' => $variant), $user);
+                $category = $em->getRepository('OrthIndexBundle:Categories')->getRootCategory($article->getCategory()->getId());
+                $attribute = "";
+                foreach ($variant->getVariantvalues() as $values) {
+                    $attribute .= " " . $values->getAttrname()->getAttributeName() . " " . $values->getAttributeValue() . "" . $values->getAttributeUnit();
+                }
+                if($variant->getVariantvalues()[0]){
+                $result[] = array('shortName' => $article->getShortName() . "" . $attribute, 'articleNumber' => $variant->getSupplierArticleNumber(), 'price' => $price, 'category' => $category);
+                }
+            }
+        }
 
-        return $this->render('OrthIndexBundle:Oci:ocioutput.html.twig', array('articles' => $articles, 'page' => $page, 'totalpages' => $totalpages, 'hookurl' => $hookurl));
+        return $this->render('OrthIndexBundle:Oci:ocioutput.html.twig', array('results' => $result, 'page' => $page, 'totalpages' => $totalpages, 'hookurl' => $hookurl));
         
      }   
     

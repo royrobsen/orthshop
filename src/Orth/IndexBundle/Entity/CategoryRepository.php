@@ -98,4 +98,19 @@ class CategoryRepository extends EntityRepository
         return $op;
     }
     
+    public function getRootCategory($category) 
+    {
+        
+        if ($category == NULL) {
+            return 'Suche';
+        }
+        
+        $query = $this->getEntityManager()
+            ->createQuery('SELECT c, c1, c2 FROM OrthIndexBundle:Categories c LEFT JOIN c.parent c1 LEFT JOIN c1.parent c2 WHERE c.id = :id')->setParameter('id', $category)->getResult();
+        
+        return  $query[0]->getId();
+
+        
+    }
+    
 }
