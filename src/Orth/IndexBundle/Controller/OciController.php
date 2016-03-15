@@ -101,7 +101,7 @@ class OciController extends Controller
         $query = new \Elastica\Query();
         $query->setQuery($boolQuery);
         $totalpages = ceil(count($finder->find($query))/12);
-        $query->setSize(1000);
+        $query->setSize(100);
         $query->setFrom($pageOffset);        
         $articles = $finder->find($query);
         foreach ($articles as $article) {
