@@ -7,7 +7,7 @@
 {% for result in results %}
 {% set lindex = lindex + 1%}
 <!-- Item {{lindex}} -->  
-<input type="hidden" name="NEW_ITEM-DESCRIPTION[{{lindex}}]" value="{{result.shortName}}">  
+<input type="hidden" name="NEW_ITEM-LONGTEXT[{{lindex}}]" value="{{result.shortName}}">  
 <input type="hidden" name="NEW_ITEM-QUANTITY[{{lindex}}]" value="1">  
 <input type="hidden" name="NEW_ITEM-UNIT[{{lindex}}]" value="EA">  
 <input type="hidden" name="NEW_ITEM-PRICE[{{lindex}}]" value="{{result.price}}">  
@@ -25,6 +25,8 @@
 <input type="hidden" name="NEW_ITEM-PARENT_ID[{{lindex}}]" value="">  
 <input type="hidden" name="NEW_ITEM-ITEM_TYPE[{{lindex}}]" value="">  
 <input type="hidden" name="NEW_ITEM-CUST_FIELD5[{{lindex}}]" value="/images/product/nw/{{result.image}}">  
+<input type="hidden" name="NEW_ITEM-THUMBNAIL_PIC_URL[{{lindex}}]" value="/images/product/nw/{{result.image}}">  
+
 {% endfor %}
 <center>  
 <input type="submit" value="Transfer shopping cart" id="submit1" name="submit1">  
