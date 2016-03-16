@@ -30,9 +30,11 @@ class ShopController extends Controller
         $securityContext = $this->container->get('security.authorization_checker');
         $response = new Response();
          
-        if ($request->cookies->get('OrthCookie') == NULL ) {
+        if ($request->cookies->get('OrthCookie') == false ) {
             $cookieValue = uniqid();
             $response->headers->setCookie(new Cookie('OrthCookie', uniqid()));
+            $response->sendHeaders();
+            $response->send();
         } 
         else { 
             $cookieValue = $request->cookies->get('OrthCookie');

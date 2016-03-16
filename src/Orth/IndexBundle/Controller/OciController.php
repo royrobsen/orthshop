@@ -31,7 +31,10 @@ class OciController extends Controller
         $hookurl = $request->query->get('hookurl');
         $response = new Response();
         $response->headers->setCookie(new Cookie('OCIHOOK', $hookurl));
-  
+        $cookieValue = uniqid();
+        $response->headers->setCookie(new Cookie('OrthCookie', uniqid()));
+        $response->sendHeaders();
+        $response->send();
         $query = $em->createQuery("SELECT u FROM Orth\IndexBundle\Entity\Users u WHERE u.email = :username");
         $query->setParameter('username', $username);
         $user = $query->getOneOrNullResult();

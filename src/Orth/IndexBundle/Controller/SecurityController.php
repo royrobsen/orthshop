@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Orth\IndexBundle\Entity\Users;
 use Orth\IndexBundle\Entity\Tokens;
 
+
 class SecurityController extends Controller
 {
     
@@ -20,6 +21,8 @@ class SecurityController extends Controller
         
         $error = $authenticationUtils->getLastAuthenticationError();
         
+        $response = new Response();
+         
         return $this->render(
             'OrthIndexBundle:Index:account.html.twig',
             array(
