@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <body>
-<form action="{{hookurl}}" method="post" target="_top">  
+<form action="{{hookurl}}" name="oci_form" method="post" target="_top">  
 <input type="hidden" name="~caller" value="CTLG" >  
 {% set lindex = 0 %}
 {% for result in results %}
@@ -32,6 +32,9 @@
 <center>  
 <input type="submit" value="Transfer shopping cart" id="submit1" name="submit1">  
 <br > 
+<script type="text/javascript">
+document.getElementById("oci_form").submit();
+</script>
    </body>
 </html>
  
