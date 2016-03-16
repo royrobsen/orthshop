@@ -15,6 +15,10 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Cookie;
 
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+
 class OciController extends Controller
 {
     
@@ -22,11 +26,12 @@ class OciController extends Controller
         
         $em = $this->getDoctrine()->getManager();
          
-        
         $username = $request->query->get('oci_username');
         $password = $request->query->get('oci_password');
         $hookurl = $request->query->get('hookurl');
-        
+        $response = new Response();
+        $response->headers->setCookie(new Cookie('OCIHOOK', $hookurl));
+  
         $query = $em->createQuery("SELECT u FROM Orth\IndexBundle\Entity\Users u WHERE u.email = :username");
         $query->setParameter('username', $username);
         $user = $query->getOneOrNullResult();
@@ -48,15 +53,22 @@ class OciController extends Controller
             exit;
         }
         
+        $token = new UsernamePasswordToken($user, null, "default", $user->getRoles());
+        $this->get("security.context")->setToken($token); //now the user is logged in
+
+        //now dispatch the login event
+        $request = $this->get("request");
+        $event = new InteractiveLoginEvent($request, $token);
+        $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
+        
+        if($request->query->get('FUNCTION') == NULL) {
+            return $this->redirectToRoute('orth_index_homepage', array(), 301);
+        }
+        
         $searchTerm = $request->query->get('SEARCHSTRING');
 
         $page = 0;
         $pageOffset = 0;
-        
-        if ($request->query->get('p')) {
-            $page = $request->query->get('p');
-            $pageOffset = ($page - 1) * 12;
-        }
         
         $catId = $request->query->get('cid');
 
