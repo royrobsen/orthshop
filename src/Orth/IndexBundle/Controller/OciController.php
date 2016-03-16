@@ -148,7 +148,7 @@ class OciController extends Controller
      public function ocipunchoutAction(Request $request) {
          
         $user = $this->get('security.token_storage')->getToken()->getUser(); 
-        $hookurl = $request->query->get('hookurl');
+        $hookurl = $cookieValue = $request->cookies->get('OCIHOOK');
         $em = $this->getDoctrine()->getManager();
         
         $shoppingCart = $em->getRepository('OrthIndexBundle:ShoppingCart');
