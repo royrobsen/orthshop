@@ -63,7 +63,7 @@ class OciController extends Controller
         $finder = $this->container->get('fos_elastica.finder.search.article');
         $boolQuery = new \Elastica\Query\BoolQuery();
                 
-        if ($request->query->get('c') != NULL AND $request->query->get('q') == NULL ) {
+        if ($request->query->get('c') != NULL AND $request->query->get('SEARCHSTRING') == NULL ) {
             $catid = $request->query->get('c');
             $categoryArray = [$request->query->get('c')];
             $rootCategories = $em->getRepository('OrthIndexBundle:Categories')->findBy(array('parentId' => $catid));
@@ -88,7 +88,7 @@ class OciController extends Controller
             $boolQuery->addMust($categoryQuery);
         }
         
-        if($request->query->get('q')) {
+        if($request->query->get('SEARCHSTRING')) {
 
             $fieldQuery = new \Elastica\Query\Match();
             $fieldQuery->setFieldQuery('allField', $searchTerm);
