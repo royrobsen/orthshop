@@ -116,7 +116,12 @@ class OciController extends Controller
                 }
 
                 if($variant->getVariantvalues()){
-                    $result[] = array('shortName' => $article->getShortName() . "" . $attribute, 'articleNumber' => $variant->getSupplierArticleNumber(), 'price' => $price, 'category' => $category, 'image' => $article->getImages()[0]->getPicName());
+                    if($article->getImages()[0]) {
+                        $image = $article->getImages()[0]->getPicName();
+                    } else {
+                        $image = 'nopicture_all.jpg';
+                    }
+                    $result[] = array('shortName' => $article->getShortName() . "" . $attribute, 'articleNumber' => $variant->getSupplierArticleNumber(), 'price' => $price, 'category' => $category, 'image' => $image);
                 }
             }
         }
