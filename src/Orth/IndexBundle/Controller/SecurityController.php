@@ -20,8 +20,6 @@ class SecurityController extends Controller
         $lastUsername = $authenticationUtils->getLastUsername();
         
         $error = $authenticationUtils->getLastAuthenticationError();
-        
-        $response = new Response();
          
         return $this->render(
             'OrthIndexBundle:Index:account.html.twig',

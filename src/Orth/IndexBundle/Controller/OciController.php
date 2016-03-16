@@ -30,6 +30,7 @@ class OciController extends Controller
         $password = $request->query->get('oci_password');
         $hookurl = $request->query->get('hookurl');
         $response = new Response();
+        $response->headers->clearCookie('OCIHOOK');
         $response->headers->setCookie(new Cookie('OCIHOOK', $hookurl));
         $cookieValue = uniqid();
         $response->headers->setCookie(new Cookie('OrthCookie', uniqid()));
