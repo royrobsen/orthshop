@@ -130,23 +130,24 @@ class OciController extends Controller
         
      }   
     
-     public function ocipunchoutAction() {
+     public function ocipunchoutAction(Request $request) {
          
         $user = $this->get('security.token_storage')->getToken()->getUser(); 
-         
+        $hookurl = $request->query->get('hookurl');
+        $em = $this->getDoctrine()->getManager();
+        
+        $shoppingCart = $em->getRepository('OrthIndexBundle:ShoppingCart');
+        
         if ($request->cookies->get('OrthCookie') != NULL ) {
             
             $cookieValue = $request->cookies->get('OrthCookie');
             $cart = $shoppingCart->getCartItems($user, $cookieValue);
             
         }
-         
-        dump($cart);
-        exit;
-        foreach ($articles as $article) {
-            $variants = $article->getVariants();
-            foreach ($variants as $variant) {
 
+        foreach ($cart as $cartitem) {
+            $variant = $em->getRepository('OrthIndexBundle:ArticleSuppliers')->findOneBy(array('id' => $cartitem->getVarRef()));
+            $article = $variant->getArticles();
                 $price = $em->getRepository('OrthIndexBundle:ArticleSuppliers')->getCustomPrice(array('id' => $variant), $user);
                 $category = $em->getRepository('OrthIndexBundle:Categories')->getRootCategory($article->getCategory()->getId());
                 $attribute = "";
@@ -154,12 +155,12 @@ class OciController extends Controller
                     $attribute .= " " . $values->getAttrname()->getAttributeName() . " " . $values->getAttributeValue() . "" . $values->getAttributeUnit();
                 }
                 if($variant->getVariantvalues()[0]){
-                $result[] = array('shortName' => $article->getShortName() . "" . $attribute, 'articleNumber' => $variant->getSupplierArticleNumber(), 'price' => $price, 'category' => $category);
+                $result[] = array('shortName' => $article->getShortName() . "" . $attribute, 'articleNumber' => $variant->getSupplierArticleNumber(), 'price' => $price, 'category' => $category, 'menge' => $cartitem->getAmount());
                 }
-            }
+
         }
-        
-        return $this->render('OrthIndexBundle:Oci:ocioutput.html.twig', array('results' => $result, 'page' => $page, 'totalpages' => $totalpages, 'hookurl' => $hookurl));
+
+        return $this->render('OrthIndexBundle:Oci:ocipunchout.html.twig', array('results' => $result, 'hookurl' => $hookurl));
 
      }
      
