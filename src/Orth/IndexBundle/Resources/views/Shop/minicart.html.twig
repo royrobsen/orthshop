@@ -38,8 +38,9 @@
                         <!--/.miniCartTable-->                            
                         <div class="miniCartFooter text-right">
                             <h3 class="text-right subtotal"> Gesamt: <span id="jTotal">{{gesamtpreis}}</span> € </h3>
-                            <a class="btn btn-sm btn-danger" href="/warenkorb"> <i class="fa fa-shopping-cart"> </i> Korb anzeigen </a> <a
-                                class="btn btn-sm btn-primary" href="/account/checkout"> KASSE </a></div>
+                            <a class="btn btn-sm btn-danger" href="/warenkorb"> <i class="fa fa-shopping-cart"> </i> Korb anzeigen </a> {% if is_granted('ROLE_OCIUSER') %} <a
+                                class="btn btn-sm btn-primary" href="/ocipunchout"> SRM Transfer </a>  {% else %}
+                        <a class="btn btn-sm btn-primary" href="/account/checkout"> KASSE </a>{% endif %}</div>
                         </div>
                     <!--/.dropdown-menu-->
                      

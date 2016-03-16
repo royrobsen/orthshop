@@ -10,8 +10,9 @@ security:
         ROLE_USER:         ROLE_USER
         ROLE_BCUSTOMER:   [ROLE_USER]
         ROLE_MODERATOR:   [ROLE_USER, ROLE_BCUSTOMER]
+        ROLE_OCIUSER:   [ROLE_USER]
         ROLE_ADMIN:       [ROLE_USER, ROLE_MODERATOR, ROLE_BCUSTOMER]
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_MODERATOR, ROLE_BCUSTOMER, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_MODERATOR, ROLE_BCUSTOMER, ROLE_OCIUSER, ROLE_ALLOWED_TO_SWITCH]
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:

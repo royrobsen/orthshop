@@ -245,6 +245,9 @@ class Users implements AdvancedUserInterface, \Serializable
         elseif($this->userGroup == 4) {
             return array('ROLE_BCUSTOMER');
         }
+        elseif($this->userGroup == 5) {
+            return array('ROLE_OCIUSER');
+        }
     }
     public function eraseCredentials()
     {
