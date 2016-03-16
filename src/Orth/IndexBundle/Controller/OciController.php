@@ -114,7 +114,8 @@ class OciController extends Controller
                 foreach ($variant->getVariantvalues() as $values) {
                     $attribute .= " " . $values->getAttrname()->getAttributeName() . " " . $values->getAttributeValue() . "" . $values->getAttributeUnit();
                 }
-                if($variant->getVariantvalues()[0]){
+
+                if($variant->getVariantvalues()){
                     $image = $em->getRepository('OrthIndexBundle:ArticleImages')->findOneBy(array('articles' => $article));
                     $result[] = array('shortName' => $article->getShortName() . "" . $attribute, 'articleNumber' => $variant->getSupplierArticleNumber(), 'price' => $price, 'category' => $category, 'image' => $image->getPicName());
                 }
