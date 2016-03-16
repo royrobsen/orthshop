@@ -48,7 +48,7 @@ class OciController extends Controller
             exit;
         }
         
-        $searchTerm = $request->query->get('q');
+        $searchTerm = $request->query->get('SEARCHSTRING');
 
         $page = 0;
         $pageOffset = 0;
