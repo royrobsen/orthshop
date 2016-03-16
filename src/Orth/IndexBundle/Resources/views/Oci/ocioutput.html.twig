@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <body>
-<form action="sapevent:POST" name="oci_form" method="post" target="_top">  
+<form action="{{hookurl}}" name="oci_form" method="post" target="_top">  
 <input type="hidden" name="~caller" value="CTLG" >  
 {% set lindex = 0 %}
 {% for result in results %}
