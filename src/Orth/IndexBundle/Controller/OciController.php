@@ -115,7 +115,7 @@ class OciController extends Controller
                     $attribute .= " " . $values->getAttrname()->getAttributeName() . " " . $values->getAttributeValue() . "" . $values->getAttributeUnit();
                 }
                 if($variant->getVariantvalues()[0]){
-                    $image = $em->getRepository('OrthIndexBundle:Image')->findOneBy(array('article' => $article));
+                    $image = $em->getRepository('OrthIndexBundle:ArticleImages')->findOneBy(array('articles' => $article));
                     $result[] = array('shortName' => $article->getShortName() . "" . $attribute, 'articleNumber' => $variant->getSupplierArticleNumber(), 'price' => $price, 'category' => $category, 'image' => $image->getPicName());
                 }
             }
