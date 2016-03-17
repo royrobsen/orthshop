@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new Orth\IndexBundle\OrthIndexBundle(),
             new FOS\ElasticaBundle\FOSElasticaBundle(),
             new Orth\AdminBundle\OrthAdminBundle(),
+            new Cocur\Slugify\Bridge\Symfony\CocurSlugifyBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

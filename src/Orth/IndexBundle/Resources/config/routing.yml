@@ -42,12 +42,8 @@ orth_index_werkzeugtechnik:
     path:     /werkzeugtechnik
     defaults: { _controller: OrthIndexBundle:Index:werkzeugtechnik } 
     
-orth_shop_kategorien:
-    path:     /kategorien
-    defaults: { _controller: OrthIndexBundle:Shop:kategorien } 
-    
 orth_shop_product:
-    path:     /product
+    path:     /product/{productslug}
     defaults: { _controller: OrthIndexBundle:Shop:product } 
     
 orth_shop_suche:
@@ -57,6 +53,14 @@ orth_shop_suche:
 orth_shop_catsuche:
     path:     /shop/suche/{catid}
     defaults: { _controller: OrthIndexBundle:Shop:catsuche} 
+    
+orth_shop_childkategorien:
+    path:     /shop/{category}/{childcategory}/{grandchildcategory}
+    defaults: { _controller: OrthIndexBundle:Shop:suche,category: null, childcategory: null, grandchildcategory: null} 
+        
+orth_shop_kategorien:
+    path:     /shop/{category}
+    defaults: { _controller: OrthIndexBundle:Shop:suche} 
     
 orth_account_myaccount:
     path:     /account/my-account

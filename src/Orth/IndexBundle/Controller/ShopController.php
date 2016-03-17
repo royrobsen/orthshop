@@ -23,8 +23,8 @@ class ShopController extends Controller
         return $this->render('OrthIndexBundle:Shop:kategorien.html.twig', array('articles' => $articles));
     }
 
-    public function productAction(Request $request) {
-        
+    public function productAction($productslug, Request $request) {
+        $productId = explode('-', $productslug);
         $submitted = false;
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $securityContext = $this->container->get('security.authorization_checker');
@@ -39,13 +39,11 @@ class ShopController extends Controller
         else { 
             $cookieValue = $request->cookies->get('OrthCookie');
         }
-       
-        $string = $request->query->get('q');
         
         $article = new Articles();      
         
         $em = $this->getDoctrine()->getManager();
-        $article = $em->getRepository('OrthIndexBundle:Articles')->findOneBy(array('id' => $string));
+        $article = $em->getRepository('OrthIndexBundle:Articles')->findOneBy(array('id' => $productId[0]));
         
         $checkPriceDiff = $em->getRepository('OrthIndexBundle:ArticleSuppliers')->checkPriceDifferences($article, $user);
         //$variants = $article->getVariants()->getValues();
@@ -265,7 +263,7 @@ class ShopController extends Controller
 
     }
     
-    public function sucheAction(Request $request, $page = 0, $pageOffset = 0, $categories = []) {
+    public function sucheAction(Request $request, $category = NULL, $childcategory = NULL, $grandchildcategory = NULL, $page = 0, $pageOffset = 0, $categories = []) {
         
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $securityContext = $this->container->get('security.authorization_checker');
@@ -277,15 +275,22 @@ class ShopController extends Controller
             $pageOffset = ($page - 1) * 12;
         }
         
-        $catId = $request->query->get('cid');
-                
-        $category = $request->query->get('c');
+        if($category !== NULL) {        
+        $categoryId = explode('-', $category);
+        }
+        if($childcategory !== NULL) {
+        $categoryId = explode('-', $childcategory);
+        }
+        if($grandchildcategory !== NULL) {
+        $categoryId = explode('-', $grandchildcategory);
+        }
+        
         $searchTerm = $request->query->get('q');
 
-        $categoryPath = $em->getRepository('OrthIndexBundle:Categories')->getCategoryPath($category);
+        $categoryPath = $em->getRepository('OrthIndexBundle:Categories')->getCategoryPath($categoryId[0]);
         
         $finder = $this->container->get('fos_elastica.finder.search.article');
-        $query =  $em->getRepository('OrthIndexBundle:Articles')->getArticleQuery($user, $searchTerm, $page, $pageOffset, $category, $finder);
+        $query =  $em->getRepository('OrthIndexBundle:Articles')->getArticleQuery($user, $searchTerm, $page, $pageOffset, $categoryId[0], $finder);
 
         $boolQuery = new \Elastica\Query\BoolQuery();
         $articles = $finder->find($query);
