@@ -217,6 +217,6 @@ orth_oci:
     path:   /oci
     defaults: { _controller: OrthIndexBundle:Oci:search } 
     
-orth_ocipunchout:
-    path:   /ocipunchout
+orth_oci_punchout:
+    path:   /oci/punchout
     defaults: { _controller: OrthIndexBundle:Oci:ocipunchout } 

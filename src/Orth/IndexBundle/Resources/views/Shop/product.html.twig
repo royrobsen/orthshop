@@ -189,7 +189,12 @@
       </div>
       <div ng-cloak class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Weiter einkaufen</button>
+        {% if is_granted('ROLE_OCIUSER') %} 
+            <a class="btn btn-sm btn-primary" href="/oci/punchout"> SRM Transfer </a>
+            {% else %}
+               
         <a href="/account/checkout"><button type="button" class="btn btn-danger">Zur Kasse</button></a>
+        {% endif %}
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

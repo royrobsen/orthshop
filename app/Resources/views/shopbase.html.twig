@@ -66,15 +66,17 @@
                 <div class="col-lg-6 col-sm-6 col-xs-6 col-md-6 no-margin no-padding">
                     <div class="pull-right">
                         <ul class="userMenu">
-                            <li><a href="/account/my-account"><span class="hidden-xs"> Mein Konto</span> <i
-                                    class="glyphicon glyphicon-user hide visible-xs "></i></a></li>
-                                   {% if is_granted('ROLE_USER') %}     
+                            <li>{% if not is_granted('ROLE_OCIUSER') %} <a href="/account/my-account"><span class="hidden-xs"> Mein Konto</span> <i
+                                    class="glyphicon glyphicon-user hide visible-xs "></i></a>
+                            {% endif %}
+                            </li>
+                                   {% if (is_granted('ROLE_USER') or is_granted('ROLE_OCIUSER') )%}     
                                     <li><a href="/logout"> <span class="hidden-xs">Ausloggen</span>
                                    {% else %}
                                    <li><a href="/login"> <span class="hidden-xs">Einloggen</span>    
                                    {% endif %}         
                                 <i class="glyphicon glyphicon-log-in hide visible-xs "></i> </a></li>
-                                {% if not is_granted('ROLE_USER') %} 
+                                {% if not ( is_granted('ROLE_USER') or is_granted('ROLE_OCIUSER') )%} 
                             <li class="hidden-xs"><a href="/signup"> Neuer Kunde </a></li>
                                 {% endif %}  
                         </ul>

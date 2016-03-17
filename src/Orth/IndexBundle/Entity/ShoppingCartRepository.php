@@ -15,13 +15,20 @@ class ShoppingCartRepository extends EntityRepository
     {
         
         if(is_object($user)) {
-            
+                       
             $cookieItems = $this->getCartItemsBySession($cookie);
             
-            $this->updateSessionToUser($cookieItems, $user);
+            if ($user->getUserGroup() == 5 ) {
+                
+                $items = $cookieItems;
+                
+            } else {
             
-            $items = $this->getCartItemsByUser($user);
-            
+                $this->updateSessionToUser($cookieItems, $user);
+
+                $items = $this->getCartItemsByUser($user);
+                
+            }
         } else {
             
             $items = $this->getCartItemsBySession($cookie);

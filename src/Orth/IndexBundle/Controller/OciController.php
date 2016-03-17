@@ -31,6 +31,9 @@ class OciController extends Controller
         $hookurl = $request->query->get('hookurl');
         $response = new Response();
         $response->headers->clearCookie('OCIHOOK');
+        $response->headers->clearCookie('OrthCookie');
+        $response->sendHeaders();
+        $response->send();
         $response->headers->setCookie(new Cookie('OCIHOOK', $hookurl));
         $cookieValue = uniqid();
         $response->headers->setCookie(new Cookie('OrthCookie', uniqid()));
@@ -149,12 +152,13 @@ class OciController extends Controller
      public function ocipunchoutAction(Request $request) {
          
         $user = $this->get('security.token_storage')->getToken()->getUser(); 
+
         $hookurl = $cookieValue = $request->cookies->get('OCIHOOK');
         $em = $this->getDoctrine()->getManager();
         
         $shoppingCart = $em->getRepository('OrthIndexBundle:ShoppingCart');
         
-        if ($request->cookies->get('OrthCookie') != NULL ) {
+        if ($request->cookies->get('OrthCookie') !== NULL ) {
             
             $cookieValue = $request->cookies->get('OrthCookie');
             $cart = $shoppingCart->getCartItems($user, $cookieValue);
