@@ -2,44 +2,54 @@
 # http://symfony.com/doc/current/book/security.html
 security:
     # http://symfony.com/doc/current/book/security.html#encoding-the-user-s-password
-    encoders:
-        Orth\IndexBundle\Entity\Users:
-            algorithm: bcrypt
+    encoders:   
+        Symfony\Component\Security\Core\User\User: plaintext
+#        Orth\IndexBundle\Entity\Users:
+#            algorithm: bcrypt
     # http://symfony.com/doc/current/book/security.html#hierarchical-roles
-    role_hierarchy:
-        ROLE_USER:         ROLE_USER
-        ROLE_BCUSTOMER:   [ROLE_USER]
-        ROLE_MODERATOR:   [ROLE_USER, ROLE_BCUSTOMER]
-        ROLE_OCIUSER:   ROLE_OCIUSER
-        ROLE_ADMIN:       [ROLE_USER, ROLE_MODERATOR, ROLE_BCUSTOMER]
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_MODERATOR, ROLE_BCUSTOMER, ROLE_OCIUSER, ROLE_ALLOWED_TO_SWITCH]
+#    role_hierarchy:
+#        ROLE_USER:         ROLE_USER
+#        ROLE_BCUSTOMER:   [ROLE_USER]
+#        ROLE_MODERATOR:   [ROLE_USER, ROLE_BCUSTOMER]
+#        ROLE_OCIUSER:   ROLE_OCIUSER
+#        ROLE_ADMIN:       [ROLE_USER, ROLE_MODERATOR, ROLE_BCUSTOMER]
+#        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_MODERATOR, ROLE_BCUSTOMER, ROLE_OCIUSER, ROLE_ALLOWED_TO_SWITCH]
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        
-        db_provider:
-            entity:
-                class: OrthIndexBundle:Users
-                property: email
+        in_memory:
+            memory:
+                users:
+                    admin:
+                        password: 82ScvK
+                        roles: 'ROLE_ADMIN'
+#        db_provider:
+#            entity:
+#                class: OrthIndexBundle:Users
+#                property: email
     # the main part of the security, where you can set up firewalls
     # for specific sections of your app
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
-            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        # disables authentication for assets and the profiler, adapt it according to your needs
+#        dev:
+#            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+#            security: false
         default:
             anonymous: ~
-            form_login:
-                login_path: /login
-                check_path: /login_check
-                default_target_path: orth_account_myaccount
-                target_path_parameter: _target_path
-            logout:
-                path:   /logout
-                target: /
-            #http_basic: ~
-            provider: db_provider
+            http_basic: ~
+#            form_login:
+#                login_path: /login
+#                check_path: /login_check
+#                default_target_path: orth_account_myaccount
+#                target_path_parameter: _target_path
+#            logout:
+#                path:   /logout
+#                target: /
+#            #http_basic: ~
+#            provider: db_provider
 
 
     # with these settings you can restrict or allow access for different parts
@@ -47,5 +57,6 @@ security:
     # http://symfony.com/doc/current/cookbook/security/access_control.html
     access_control:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-        - { path: ^/account, roles: [ROLE_USER, ROLE_BCUSTOMER, ROLE_MODERATOR, ROLE_ADMIN] }
-        - { path: ^/admin, roles: [ROLE_ADMIN] }
+#        - { path: ^/account, roles: [ROLE_USER, ROLE_BCUSTOMER, ROLE_MODERATOR, ROLE_ADMIN] }
+#        - { path: ^/admin, roles: [ROLE_ADMIN] }
+         - { path: ^/, roles: ROLE_ADMIN }
