@@ -8,8 +8,7 @@
             <ul class="breadcrumb">
                 <li><a href="/">Home</a></li>
                 <li><a href="/account/my-account">Mein Konto</a></li>
-                <li><a href="/account/config">Konfiguration</a></li>
-                <li class="active"> Kategorien </li>
+                <li class="active">Konfiguration</li>
             </ul>
         </div>
     </div>
@@ -37,29 +36,69 @@
                         <br />
                         {% endif %} 
                     </div>
-                    <form id="filter-form"><label>Kategorie suchen: </label><input name="filter" class="form-control" id="filter" value="" maxlength="30" size="30" type="text"></form>
-                    <table class="table list">
-                        <tr>
-                            <th>Kategorie</th>
-
-                            <th>Funktionen</th>
-                        </tr>  
-                    {% for category in categories %} 
-                        <tr>
-                            <td><a href="/account/config/category/{{category.id}}">{{ category.categoryName }}</a></td>
-                            <td><a href="/account/config/category/{{category.id}}" class="btn btn-sm btn-warning"> <i
-                                    class="fa fa-th-list"> </i> Unterkategorien </a> <a href="/account/config/categories/edit/{{category.id}}" class="btn btn-sm btn-success"> <i
-                                    class="fa fa-edit"> </i> Bearbeiten </a> <a data-toggle="modal" data-target="#myModal" class="btn btn-sm btn-danger delete" id="{{category.id}}"> <i
-                                    class="fa fa-minus-circle"></i> Löschen </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                            </tr></tbody></table>
+                        <table class="tree table table-striped">
+                            {% for category in categories %}
+                                {% set i = loop.index %}
+                            <tr class="treegrid-{{loop.index}}">
+                                    <td>
+                                        <strong>{{ category.catName }}</strong>
+                                    </td>
+                                    <td style="white-space: nowrap; width: 1%;">
+                                        <a href="/account/config/category/{{category.id}}/add-category"> <i class="fa fa-plus-circle"> </i> Unterkategorie erstellen </a> 
+                                    </td> 
+                                    <td style="white-space: nowrap; width: 1%;">
+                                        <a href="/account/config/category/{{category.id}}"> <i class="fa fa-edit"> </i> Umbenennen </a> 
+                                    </td> 
+                                    <td style="white-space: nowrap; width: 1%;">
+                                        {# class 'delete' is necessary for the modal to pass the id #}
+                                        <a data-toggle="modal" data-target="#myModal" class="delete" id="{{category.id}}"> <i class="fa fa-minus-circle"></i> Löschen </a>
+                                    </td>
+                            </tr>
+                            {% if category.children is defined %}
+                                {% for subcategory in category.children %}
+                                    {% set i2 = loop.index %}
+                                <tr class="treegrid-s{{i2}} treegrid-parent-{{i}}">
+                                    <td>
+                                        {{ subcategory.catName }}
+                                    </td>
+                                    <td style="white-space: nowrap; width: 1%;">
+                                        <a href="/account/config/category/{{subcategory.id}}/add-category"> <i class="fa fa-plus-circle"> </i> Unterkategorie erstellen </a> 
+                                    </td> 
+                                    <td style="white-space: nowrap; width: 1%;">
+                                        <a href="/account/config/category/{{subcategory.id}}"> <i class="fa fa-edit"> </i> Umbenennen </a> 
+                                    </td> 
+                                    <td style="white-space: nowrap; width: 1%;">
+                                        {# class 'delete' is necessary for the modal to pass the id #}
+                                        <a data-toggle="modal" data-target="#myModal" class="delete" id="{{subcategory.id}}"> <i class="fa fa-minus-circle"></i> Löschen </a>
+                                    </td>
+                                </tr>
+                                    {% if subcategory.children is defined %}
+                                        {% for sub2category in subcategory.children %}
+                                            {% set i3 = loop.index %}
+                                        <tr class="treegrid-a{{i3}} treegrid-parent-s{{i2}}">
+                                            <td>
+                                                {{ sub2category.catName }}
+                                            </td>
+                                            <td></td>
+                                            <td style="white-space: nowrap; width: 1%;">
+                                                <a href="/account/config/category/{{sub2category.id}}"> <i class="fa fa-edit"> </i> Umbenennen </a> 
+                                            </td> 
+                                            <td style="white-space: nowrap; width: 1%;">
+                                                {# class 'delete' is necessary for the modal to pass the id #}
+                                                <a data-toggle="modal" data-target="#myModal" class="delete" id="{{sub2category.id}}"> <i class="fa fa-minus-circle"></i> Löschen </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}     
+                                    {% endif %}
+                                {% endfor %}  
+                            {% endif %}
+                            {% endfor %}    
+                        </table>
                 </div>
                 <!--/.w100-->
 
                 <div class="col-lg-12 clearfix">
-                    <a class="btn   btn-primary" href="/account/config/categories/add-category"><i class="fa fa-plus-circle"></i> Neue Kategorie hinzufügen </a>
+                    <a class="btn   btn-primary" href="/account/config/categories/add-category"><i class="fa fa-plus-circle"></i> Neue Hauptkategorie hinzufügen </a>
                 </div>
 
                 <div class="col-lg-12 clearfix">
@@ -104,6 +143,12 @@
                 </div><!-- /.modal -->
 {% endblock %}
 {% block js_special %}
+<script type="text/javascript" src="/assets/js/jquery.treegrid.min.js"></script>
+<link rel="stylesheet" href="/assets/css/jquery.treegrid.css">
+
+<script type="text/javascript">
+  $('.tree').treegrid();
+</script>
 <script src="/assets/js/uiTableFilter.js"></script>
 <script type="text/javascript">
         $(document).ready(function() {

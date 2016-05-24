@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Orth\IndexBundle\Entity\CustomersAddresses" table="customers_addresses">
+  <entity name="Orth\IndexBundle\Entity\CustomersAddresses" repository-class="Orth\IndexBundle\Entity\Repository\CustomersaddressesRepository" table="customers_addresses">
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
@@ -14,7 +14,7 @@
     <field name="street" type="text" column="street" nullable="false"/>
     <field name="zipcode" type="text" column="zipcode" nullable="false"/>
     <field name="city" type="text" column="city" nullable="false"/>
-    <field name="street2" type="text" column="street2" nullable="false"/>
+    <field name="street2" type="text" column="street2" nullable="true"/>
     <field name="country" type="integer" column="country" nullable="false"/>
     <field name="defaultDeliveryAddress" type="boolean" column="default_delivery_address" nullable="false"/>
     <field name="addressTitle" type="text" column="address_title" nullable="false"/>

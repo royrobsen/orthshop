@@ -1,0 +1,59 @@
+{% extends "adminbase.html.twig" %}
+{% block topcss %}
+<link href="https://imperavi.com/assets/js/redactor/redactor.css" rel="stylesheet">
+{% endblock %}
+{% block content %}
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Glossar-Detail</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            {{form_widget(form.save, { 'attr': {'class':'btn btn-primary'}} ) }}
+                            <a href="/admin/deletearticle/" >Eintrag löschen</a>
+                        </div>
+                        <div class="panel-body">	                    
+                            <div class="col-xs-12 col-sm-12">
+                                <div class="form-group">
+                                    <label for="Subject">Überschrift</label>
+                                    {{ form_widget(form.subject, { 'attr': {'class': 'form-control', 'placeholder' : 'Überschrift'} }) }}       
+                                </div>
+                                <div class="form-group">   
+                                    <label for="Letter">Buchstabe</label>
+                                    {{ form_widget(form.letter, { 'attr': {'class': 'form-control', 'placeholder' : 'Buchstabe'} }) }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="Beschreibung">Beschreibung</label>
+                                    {{ form_widget(form.description, { 'attr': {'class': 'form-control redactor', 'rows' : '4', 'style' : 'width: 100%;min-width: 100%; max-width: 100%;', 'placeholder' : 'Beschreibung'} }) }}
+                                </div>
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    <!-- /.panel panel-default -->
+                </div>
+                <!-- /.col-lg-6" -->
+            </div>
+            {{ form_end(form) }}
+{% endblock %}
+
+{% block js %}
+<script src="https://imperavi.com/assets/js/redactor/redactor.js"></script>
+<script src="https://imperavi.com/assets/js/plugins/source/source.js"></script>
+<script src="https://imperavi.com/assets/js/plugins/table/table.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.redactor').redactor({
+        minHeight: 300,
+        plugins: ['source', 'table']
+    });
+});
+</script>
+{% endblock %}

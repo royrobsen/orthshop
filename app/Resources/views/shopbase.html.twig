@@ -9,7 +9,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
     <link rel="shortcut icon" href="/assets/ico/favicon.png">
-    <title>Ute Orth - Bekleidung + Technik</title>
+    <title>BasisOrth GmbH - Startseite</title>
     <!-- Bootstrap core CSS -->
     <link href="/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
     
@@ -22,6 +22,7 @@
     <!-- Custom styles for this template -->
     <link href="/assets/css/style.css" rel="stylesheet">
     <link href="/assets/css/skin-5.css" rel="stylesheet">
+    
     <!-- Just for debugging purposes. -->
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -30,18 +31,12 @@
     <![endif]-->
 
     <!-- include pace script for automatic web page progress bar  -->
-
     <script>
         paceOptions = {
             elements: true
         };
     </script>
     <script src="/assets/js/pace.min.js"></script>
-    <script type="text/javascript">
-    function swapStyleSheet(sheet){
-    document.getElementById('pagestyle').setAttribute('href', sheet);
-    }
-    </script> <style>.themeControll{background:#2d3e50;height:auto;width:100px;position:fixed;left:0;padding:20px;top:20%;z-index:999999;-webkit-transform:translateX(0);-moz-transform:translateX(0);-o-transform:translateX(0);-ms-transform:translateX(0);transform:translateX(0);opacity:1;-ms-filter:none;filter:none;-webkit-transition:opacity .5s linear,-webkit-transform .7s cubic-bezier(.56,.48,0,.99);-moz-transition:opacity .5s linear,-moz-transform .7s cubic-bezier(.56,.48,0,.99);-o-transition:opacity .5s linear,-o-transform .7s cubic-bezier(.56,.48,0,.99);-ms-transition:opacity .5s linear,-ms-transform .7s cubic-bezier(.56,.48,0,.99);transition:opacity .5s linear,transform .7s cubic-bezier(.56,.48,0,.99);}.themeControll.active{display:block;-webkit-transform:translateX(-100px);-moz-transform:translateX(-100px);-o-transform:translateX(-100px);-ms-transform:translateX(-1020px);transform:translateX(-100px);-webkit-transition:opacity .5s linear,-webkit-transform .7s cubic-bezier(.56,.48,0,.99);-moz-transition:opacity .5s linear,-moz-transform .7s cubic-bezier(.56,.48,0,.99);-o-transition:opacity .5s linear,-o-transform .7s cubic-bezier(.56,.48,0,.99);-ms-transition:opacity .5s linear,-ms-transform .7s cubic-bezier(.56,.48,0,.99);transition:opacity .5s linear,transform .7s cubic-bezier(.56,.48,0,.99);}.themeControll a{border-radius:3px;clear:both;display:block;height:25px;margin-bottom:4px;width:50px;}.tbtn{background:#2D3E50;color:#FFFFFF!important;font-size:30px;height:auto;padding:10px;position:absolute;right:-40px;top:0;width:40px;cursor:pointer;}.tbtn2{transform: rotate(90deg); transform-origin: left top 0;}@media (max-width: 780px) {.themeControll{display:none;}}</style>
 </head>
 
 <body>
@@ -57,28 +52,8 @@
                             <li><a href="#"> <span class="hidden-xs">Fragen?</span><i
                                     class="glyphicon glyphicon-info-sign hide visible-xs "></i> </a></li>
                             <li class="phone-number"><a href="#"> <span> <i
-                                    class="glyphicon glyphicon-phone-alt "></i></span> <span class="hidden-xs"
-                                                                                             style="margin-left:5px"> +49 4152 87 87 0 </span>
+                                    class="glyphicon glyphicon-phone-alt "></i></span> <span class="hidden-xs" style="margin-left:5px"> +49 4152 87 87 0 </span>
                             </a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-sm-6 col-xs-6 col-md-6 no-margin no-padding">
-                    <div class="pull-right">
-                        <ul class="userMenu">
-                            <li>{% if not is_granted('ROLE_OCIUSER') %} <a href="/account/my-account"><span class="hidden-xs"> Mein Konto</span> <i
-                                    class="glyphicon glyphicon-user hide visible-xs "></i></a>
-                            {% endif %}
-                            </li>
-                                   {% if (is_granted('ROLE_USER') or is_granted('ROLE_OCIUSER') )%}     
-                                    <li><a href="/logout"> <span class="hidden-xs">Ausloggen</span>
-                                   {% else %}
-                                   <li><a href="/login"> <span class="hidden-xs">Einloggen</span>    
-                                   {% endif %}         
-                                <i class="glyphicon glyphicon-log-in hide visible-xs "></i> </a></li>
-                                {% if not ( is_granted('ROLE_USER') or is_granted('ROLE_OCIUSER') )%} 
-                            <li class="hidden-xs"><a href="/signup"> Neuer Kunde </a></li>
-                                {% endif %}  
                         </ul>
                     </div>
                 </div>
@@ -92,282 +67,161 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span
                     class="sr-only"> Toggle navigation </span> <span class="icon-bar"> </span> <span
                     class="icon-bar"> </span> <span class="icon-bar"> </span></button>
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-cart"><i
-                    class="fa fa-shopping-cart colorWhite"> </i> <span
-                    class="cartRespons colorWhite"> Korb ($210.00) </span></button>
             <a class="navbar-brand" href="/"> <img src="/images/logo.png" alt="Ute Orth"> </a>
 
             <!-- this part for mobile -->
-            <div class="search-box pull-right hidden-lg hidden-md hidden-sm">
-                <div class="input-group">
-                    <button class="btn btn-nobg getFullSearch" type="button"><i class="fa fa-search"> </i></button>
-                </div>
-                <!-- /input-group -->
 
-            </div>
         </div>
-
+        <div style="width: 100%; height: 40px;"></div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="/"> Home </a></li>
-                <li class="dropdown megamenu-fullwidth"><a data-toggle="dropdown" class="dropdown-toggle" href="#"> SERVICE <b class="caret"> </b> </a>
+                <li class="dropdown megamenu-fullwidth"><a data-toggle="dropdown" class="dropdown-toggle" href="#"> Über uns <b class="caret"> </b> </a>
                     <ul class="dropdown-menu">
                         <li class="megamenu-content ">
                             <ul class="col-lg-3  col-sm-3 col-md-3 unstyled noMarginLeft newCollectionUl">
                                 <li class="no-border">
-                                    <p class="promo-1"><strong> Was wir bieten </strong></p>
+                                    <p class="promo-1 promo-menu1"><strong> Was wir bieten </strong></p>
                                 </li>
                                 <li><a href="/arbeitsschutz"> Arbeitsschutz </a></li>
                                 <li><a href="/berufsbekleidung"> Berufsbekleidung </a></li>
-                                <li><a href="/emblemservice"> Emblemservice </a></li>
-                                <li><a href="/hygieneartikel"> Hygieneartikel </a></li>
                                 <li><a href="/werkzeugtechnik"> Werkzeugtechnik </a></li>
+                                <li><a href="/c-teile-management"> C-Teile Management </a></li>
+                            </ul>
+                            <ul class="col-lg-3  col-sm-3 col-md-3 unstyled noMarginLeft newCollectionUl">
+                                <li class="no-border">
+                                    <p class="promo-1 promo-menu1"><strong> Wer wir sind </strong></p>
+                                </li>
+                                <li><a href="/unternehmen"> Unternehmen </a></li>
+                                <li><a href="/team"> Team </a></li>
+                                <li><a href="/kontakt"> Kontakt </a></li>
+                                <li><a href="/jobs"> Jobs </a></li>
                             </ul>
                         </li>
                     </ul>
                 </li>
-
-                <!-- change width of megamenu = use class > megamenu-fullwidth, megamenu-60width, megamenu-40width -->
-                <li class="dropdown megamenu-fullwidth"><a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                    SHOP <b class="caret"> </b> </a>
-                    <ul class="dropdown-menu">
-                        <li class="megamenu-content">
-
-                            <!-- megamenu-content -->
-
-                            <h3 class="promo-1 no-margin hidden-xs"> Von Bekleidung bis Technik - hier findet man alles! </h3>
-
-                            <h3 class="promo-1sub hidden-xs"> </h3>
-                            <ul class="col-lg-2  col-sm-2 col-md-2 unstyled">
-                                <li class="no-border">
-                                    <p><strong> Arbeitsschutz</strong></p>
-                                </li>
-                                <li><a href="/shop/1435-atemschutz"> Atemschutz </a></li>
-                                <li><a href="/shop/suche?c=664"> Augenschutz </a></li>
-                                <li><a href="/shop/suche?c=465"> Brandschutz </a></li>
-                                <li><a href="/shop/suche?c=2468"> Erste Hilfe </a></li>
-                                <li><a href="/shop/suche?c=659"> Gehörschutz </a></li>
-                                <li><a href="/shop/suche?c=679"> Handschutz </a></li>
-                                <li><a href="/shop/suche?c=6225"> Hitzeschutz </a></li>
-                                <li><a href="/shop/suche?c=666"> Kopfschutz </a></li>
-                                <li><a href="/shop/suche?c=701"> PSA gegen Absturz </a></li>
-                            </ul>
-                            <ul class="col-lg-2  col-sm-2 col-md-2 unstyled">
-                                <li class="no-border">
-                                    <p><strong> Berufsbekleidung </strong></p>
-                                </li>
-
-                                <li><a href="/shop/6150-arbeitskleidung"> Arbeitskleidung </a></li>
-                                <li><a href="/shop/suche?c=6182"> Chemikalienschutz </a></li>
-                                <li><a href="/shop/suche?c=6184"> Einwegbekleidung </a></li>
-                                <li><a href="/shop/suche?c=6170"> Forstbekleidung </a></li>
-                                <li><a href="/shop/suche?c=1574"> Kälteschutz </a></li>
-                                <li><a href="/shop/suche?c=6173"> Schweisser- und Hitzeschutz </a></li>
-                                <li><a href="/shop/suche?c=2431"> Warnschutz </a></li>
-                                <li><a href="/shop/suche?c=2425"> Wetter-/Regenschutz </a></li>
-                                <li><a href="/shop/suche?c=6167"> Zunftbekleidung</a></li>
-                            </ul>
-                            <ul class="col-lg-2  col-sm-2 col-md-2 unstyled">
-                                <li class="no-border">
-                                    <p><strong> Schuhe </strong></p>
-                                </li>
-                                <li><a href="/shop/suche?c=1590"> Schuhe </a></li>
-                                <li><a href="/shop/suche?c=1591"> Stiefel</a></li>
-                                <li><a href="/shop/suche?c=6134"> Sandalen</a></li>
-                                <li><a href="/shop/suche?c=1594"> Socken</a></li>
-                                <li><a href="/shop/suche?c=6144"> Gummistiefel</a></li>
-                                <li><a href="/shop/suche?c=6146"> Schuhzubehör</a></li>
-                            </ul>
-                            <ul class="col-lg-2  col-sm-2 col-md-2 unstyled">
-                                <li class="no-border">
-                                    <p><strong> Technik </strong></p>
-                                </li>
-                                <li><a href="/shop/suche?c=6088"> Bautechnik </a></li>
-                                <li><a href="/shop/suche?c=6089"> Befestigungstechnik </a></li>
-                                <li><a href="/shop/suche?c=6090"> Beschlagsysteme & Sicherheitstechnik </a></li>
-                                <li><a href="/shop/suche?c=354"> Elektrotechnik </a></li>
-                                <li><a href="/shop/suche?c=817"> Garten- und Landschaftsbau </a></li>
-                                <li><a href="/shop/suche?c=3823"> Industrietechnik </a></li>
-                                <li><a href="/shop/suche?c=3855"> Lager- und Betriebseinrichtung </a></li>
-                                <li><a href="/shop/suche?c=127"> Maschinenelemente, Befestigungsmittel </a></li>
-                                <li><a href="/shop/suche?c=61"> Schweiß- und Schneidtechnik</a></li>
-                                <li><a href="/shop/suche?c=6409"> Werkzeugmaschinen </a></li>
-                            </ul>
-                            <ul class="col-lg-2  col-sm-2 col-md-2 unstyled">
-                                <li class="no-border">
-                                    <p><strong> Werkzeuge</strong></p>
-                                </li>
-                                <li><a href="/shop/suche?c=6400"> Druckluftwerkzeuge</a></li>
-                                <li><a href="/shop/suche?c=6401"> Einsteckwerkzeuge</a></li>
-                                <li><a href="/shop/suche?c=6402"> Elektrowerkzeuge</a></li>
-                                <li><a href="/shop/suche?c=6405"> Handwerkzeuge</a></li>
-                                <li><a href="/shop/suche?c=6406"> KFZ-Werkzeuge</a></li>
-                                <li><a href="/shop/suche?c=6407"> Messwerkzeuge</a></li>
-                                <li><a href="/shop/suche?c=6408"> Sanitärwerkzeuge</a></li>
-                                <li><a href="/shop/suche?c=6296"> Schleiftechnik</a></li>
-                                <li><a href="/shop/suche?c=6403"> Schraubwerkzeuge</a></li>
-                                <li><a href="/shop/suche?c=6410"> Werkzeugaufbewahrung</a></li>
-                                <li><a href="/shop/suche?c=6411"> Werkzeugmaschinen</a></li>
-                                <li><a href="/shop/suche?c=6404"> Zangen</a></li>
-                                <li><a href="/shop/suche?c=6227"> Zerspanung</a></li>
-                            </ul>
-                            <ul class="col-lg-2  col-sm-2 col-md-2 unstyled">
-                                <li class="no-border">
-                                    <p><strong> Hygiene & Reinigung </strong></p>
-                                </li>
-                                <li><a href="/shop/suche?c=6214"> Abfallbeseitung </a></li>
-                                <li><a href="/shop/suche?c=6211"> Reinigungsmittel</a></li>
-                                <li><a href="/shop/suche?c=6209"> Waschraumausstattung </a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                
-
-                {% if is_granted('ROLE_BCUSTOMER') %} 
-                    <li><a href="/account/bestellsystem"> Bestellsystem </a></li>
-                {% endif %}
-
+                <li><a href="/shop"> Shop </a></li>
 
             </ul>
+      
 
-            <!--- this part will be hidden for mobile version -->
-            <div class="nav navbar-nav navbar-right hidden-xs">
-                <div class="dropdown  cartMenu "><a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i
-                        class="fa fa-shopping-cart"> </i> <span class="cartRespons"> Warenkorb</span> <b
-                        class="caret"> </b> </a>
-
-                            {{ render(controller('OrthIndexBundle:Shop:miniCart', { 'max': 3 })) }}
-                        
-                </div>
-                <!--/.cartMenu-->
-
-                <div class="search-box">
-                    <div class="input-group">
-                        <button class="btn btn-nobg getFullSearch" type="button"><i class="fa fa-search">  </i> <span style="font-size: 14px; font-weight: 600; line-height: 20px;">  Suche </span> </button>
-                    </div>
-                    <!-- /input-group -->
-
-                </div>
-                <!--/.search-box -->
             </div>
-            <!--/.navbar-nav hidden-xs-->
+           
         </div>
         <!--/.nav-collapse -->
 
     </div>
     <!--/.container -->
 
-    <div class="search-full text-right"><a class="pull-right search-close"> <i class=" fa fa-times-circle"> </i> </a>
-        <form action="/shop/suche" method="get">
-            <div class="searchInputBox pull-right">
-                <input type="search" name="q" placeholder="Suchbegriff eingeben"
-                       class="search-input">
-                <button class="btn-nobg search-btn" type="submit"><i class="fa fa-search"> </i></button>
-            </div>
-        </form>    
-    </div>
-    <!--/.search-full-->
 
 </div>
                       
-                                
+<!-- begin of inner content block -->                                
 {% block content %}
 <!-- /.Fixed navbar  -->
-<div class="banner banner-boxes">
-    <div class="slider-content"><span class="prevControl sliderControl"> <i class="fa fa-angle-left fa-3x "></i></span>
-        <span class="nextControl sliderControl"> <i class="fa fa-angle-right fa-3x "></i></span>
 
-        <div class="swiper-container">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide slide-2x">
-                    <div class="box-slider-content">
-                        <div class="box-text">
-                            <a href="/ueber-uns" class="btn btn-stroke-light"> ÜBER UNS</a></div>
-                        <div class="box-content-overly">
-                            <!-- Delete this div if you dont want overly effect -->
-                        </div>
-                        <a href="#" class="box-img"> <img src="/images/slider/orth1.jpg" alt="img"></a></div>
-                </div>
-                <div class="swiper-slide slide-2x">
-                    <div class="slider-box-top">
-                        <div class="box-slider-content">
-                            <div class="box-text-table">
-                                <div class="box-text-cell">
-                                    <h1 class="bolder-style light" style="font-size: 40px;"><a href="/emblemservice">EMBLEMSERVICE</a></h1>
-                                    <span class="bolder-sub"> <a href="/emblemservice"> WIR BESTICKEN, BEFLOCKEN UND PATCHEN </a> </span></div>
+<div class="banner">
+    <div class="full-container">
+        <div class="slider-content">
+            <ul id="pager" class="container">
+            </ul>
+            <div class="slider slider-v2">
+                <div class="slider-item slider-item-img1 "
+                     data-cycle-pager-template="<a href=#> LATEST COLLECTION </a>">
+                    <div class="sliderInfo">
+                        <div class="container">
+                            <div class="col-lg-3 col-md-3 col-sm-5 sliderText dark alpha80 hidden-xs">
+                                <div class="inner">
+                                    <h1>LATEST COLLECTION</h1>
+
+                                    <p class="hidden-xs"> Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+                                        sed diam nonummy nibh euismod tincidunt ut
+                                        laoreet dolore magna aliquam erat volutpa </p>
+                                    <a href="category.html" class="slide-link">SHOP NOW <span
+                                            class="arrowUnicode">►</span></a></div>
                             </div>
-                            <div class="box-content-overly">
-                                <!-- Delete this div if you dont want overly effect -->
-                            </div>
-                            <a href="#" class="box-img"> <img src="/images/slider/box/emblembg.jpg" alt="img"></a></div>
-                    </div>
-                    <div class="slider-box-bottom">
-                        <div class="box-slider-content">
-                            <div class="box-text-table">
-                                <div class="box-text-cell">
-                                    <h1 class="bolder-style light" style="font-size: 40px;"><a href="/werkzeugtechnik">Werkzeugtechnik</a></h1>
-                                    <span class="bolder-sub"> <a href="/werkzeugtechnik"> IHR PARTNER IM C-TEILE MANAGEMENT </a> </span></div>
-                            </div>
-                            <div class="box-content-overly">
-                                <!-- Delete this div if you dont want overly effect -->
-                            </div>
-                            <a href="/werkzeugtechnik" class="box-img"> <img src="/images/slider/box/werkzeug.jpg" alt="img"> </a>
                         </div>
                     </div>
-                </div>
-                <div class="swiper-slide slide-2x">
-                    <div class="box-slider-content">
-                            <div class="box-text bottom-align">
-                                <div class="box-text-cell">
-                                    <h1 class="bolder-style light" style="font-size: 40px;"><a href="/berufsbekleidung">BERUFSBEKLEIDUNG</a></h1>
-                                    <span class="bolder-sub"> <a href="/berufsbekleidung"> WIR STATTEN SIE AUS </a> </span></div>
+                    <img alt="img" src="images/slider/slider3.jpg" class="img-responsive parallaximg sliderImg"></div>
+                <!--/.slider-item-->
+
+                <div class="slider-item slider-item-img2  parallax"
+                     data-cycle-pager-template="<a href=#> WOMEN COLLECTION </a>">
+                    <div class="sliderInfo">
+                        <div class="container">
+                            <div class="col-lg-3 col-md-3 col-sm-5 pull-left sliderText dark alpha80 hidden-xs">
+                                <div class="inner">
+                                    <h1>WOMEN COLLECTION</h1>
+
+                                    <p class="hidden-xs"> Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+                                        sed diam nonummy nibh euismod tincidunt ut
+                                        laoreet dolore magna aliquam erat volutpa </p>
+                                    <a href="category.html" class="slide-link">SHOP NOW <span
+                                            class="arrowUnicode">►</span></a></div>
                             </div>
-                            <div class="box-content-overly">
-                                <!-- Delete this div if you dont want overly effect -->
-                            </div>
-                            <a href="#" class="box-img"> <img src="/images/slider/box/berufsbekleidung.jpg" alt="img"></a>
-                    </div>
-                </div>
-                <div class="swiper-slide slide-2x">
-                    <div class="slider-box-top">
-                        <div class="box-slider-content">
-                            <div class="box-text-table">
-                                <div class="box-text-cell">
-                                    <h1 class="bolder-style light" style="font-size: 40px;"><a href="/arbeitsschutz">ARBEITSSCHUTZ</a></h1>
-                                    <span class="bolder-sub"> <a href="/arbeitsschutz"> WIR RÜSTEN SIE AUS </a> </span></div>
-                            </div>
-                            <div class="box-content-overly">
-                                <!-- Delete this div if you dont want overly effect -->
-                            </div>
-                            <a href="/arbeitsschutz" class="box-img"> <img src="/images/slider/arbeitsschutz.jpg" alt="img"></a></div>
-                    </div>
-                    <div class="slider-box-bottom">
-                        <div class="box-slider-content">
-                            <div class="box-text-table">
-                                <div class="box-text-cell">
-                                    <h1 class="bolder-style light" style="font-size: 40px;"><a href="/hygieneartikel">Hygiene</a></h1>
-                                    <span class="bolder-sub"> <a href="/hygieneartikel"> PROFESSIONELLE REINIGUNSMITTEL </a> </span></div>
-                            </div>
-                            <div class="box-content-overly">
-                                <!-- Delete this div if you dont want overly effect -->
-                            </div>
-                            <a href="/hygieneartikel" class="box-img"> <img src="/images/slider/hygiene.jpg" alt="img"> </a>
                         </div>
                     </div>
-                </div>
+                    <img alt="img" src="images/slider/arbeitsschutz.jpg" class="img-responsive parallaximg sliderImg"></div>
+                <!--/.slider-item-->
+
+                <div class="slider-item slider-item-img3  parallax"
+                     data-cycle-pager-template="<a href=#> NEW COLLECTION </a>">
+                    <div class="sliderInfo">
+                        <div class="container">
+                            <div class="col-lg-3 col-md-3 col-sm-5 sliderText dark alpha80 transformRight hidden-xs">
+                                <div class="inner">
+                                    <h1>NEW COLLECTION</h1>
+
+                                    <p class="hidden-xs"> Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+                                        sed diam nonummy nibh euismod tincidunt ut
+                                        laoreet dolore magna aliquam erat volutpa </p>
+                                    <a href="category.html" class="slide-link">SHOP NOW <span
+                                            class="arrowUnicode">►</span></a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <img alt="img" src="images/slider/slider2.jpg" class="img-responsive parallaximg sliderImg"></div>
+                <!--/.slider-item-->
             </div>
-            <div class="box-pagination"></div>
+            <!--/.slider-v2-->
         </div>
-
-        <!--/.full-container-->
+        <!--/.slider-content-->
     </div>
+    <!--/.full-container-->
 </div>
-<!--/.banner style1-->
+<!--/.banner style2-->
 
 <div class="container main-container">
 
-    <!-- Main component call to action -->
+    <!-- welcome -->
+
+    <div class="row featuredPostContainer style2">
+        <div class="gap"></div>
+        <h3 class="section-title style2 text-center"><span>herzlich willkommen</span></h3>
+                <div class="col-lg-6">
+                    <button type="button" class="btn btn-default btn-circle btn-xl center-block"><img style="height: 40px;"src="/images/home/icon_as.png" /></button>
+                    <h4 class="text-center">Arbeitsschutz</h4>
+                    <p class="text-justify">Bei uns erfahren Sie alles zum Thema “Persönliche Schutzausrüstung” und Arbeitsschutz. In unserem Angebotssortiment erhalten Sie Schutzbekleidung gegen unterschiedlichste Risiken,von der orangen Warnweste bis hin zur Multifunktions-Schutzkleidung der Klasse III.</p>
+                </div>
+                <div class="col-lg-6">
+                    <button type="button" class="btn btn-default btn-circle btn-xl center-block"><img style="height: 40px;"src="/images/home/icon_ber.png" /></button>
+                    <h4 class="text-center">Berufsbekleidung</h4>
+                    <p class="text-justify">Wir bieten hochwertige und modische Berufsbekleidung für alle Branchen. Die Berufsbekleidung weist durch funktionelle Stoffe und verstärkte Nähte eine hohe Qualität auf. Dabei wird sie mit elastischen und atmungsaktiven Stoffen bequem zu tragen. </p>
+                </div>
+        <div class="gap"></div> 
+                <div class="col-lg-6">
+                    <button type="button" class="btn btn-default btn-circle btn-xl center-block"><img style="height: 40px;"src="/images/home/hammer-128.png" /></button>
+                    <h4 class="text-center">Werkzeugtechnik</h4>
+                    <p class="text-justify">Perfekte Werkzeuge für jede Aufgabe. Mit kompetenter Beratung. Mit individuellen Lösungen und mit jeder Menge Engagement. BasisOrth ist Ihr Partner für eine einzigartige Bandbreite an Produkten und Dienstleistungen. Unsere hohe Qualität gilt für ein breites und tiefes Angebot an Präzisionswerkzeugen und ebenso Werkzeugtechnik. Unser exzellenter und schneller Lieferservice bietet Ihnen höchste Flexibilität und Verfügbarkeit.</p>
+                </div>
+                <div class="col-lg-6">
+                    <button type="button" class="btn btn-default btn-circle btn-xl center-block"><i class="fa fa-cogs service-icon"></i></button>
+                    <h4 class="text-center">C-Teile-Management</h4>
+                    <p class="text-justify">Unsere Basis ist eine kooperative partnerschaftliche Zusammenarbeit, die jetzt und zukünftig das Ziel verfolgt, alle stattfindenden Prozesskosten bei der Beschaffung von Materialien, die unter der Bezeichnung C – Teile definiert sind, zu reduzieren und zu optimieren. Eine erfolgreiche Full-Service-Lösung für Lagerung, Beschaffung und Lieferung von C-Teilen beinhaltet die Zusammenstellung verschiedener Vorgänge zu einem komplexen Prozess, der dem Kunden Zeit, Kosten und Mühen spart. </p>
+                </div>
+    </div>
+    
+    <!-- list of suppliers -->
 
     <div class="row featuredPostContainer globalPadding style2">
         <h3 class="section-title style2 text-center"><span>PREMIUM LIEFERANTEN</span></h3>
@@ -376,35 +230,42 @@
             <div class="col-lg-2 col-xs-6 col-md-4 wf-cell border-left-none">
                 <div class="borders" style="height: 80px; line-height: 80px;">
                     <a title="" target="_blank" href="http://kuebler.eu">
-                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="CG" src="/images/suppliers/Kuebler_Logo1.png">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Kübler" src="/images/suppliers/Kuebler_Logo1.png">
                     </a>
                 </div>    
             </div>
             <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
                 <div class="borders" style="height: 80px; line-height: 80px;">
                     <a title="" target="_blank" href="http://atlasschuhe.de">
-                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Greiff" src="/images/suppliers/atlas.png">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Atlas" src="/images/suppliers/atlas.png">
                     </a>
                 </div>
             </div>
             <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
                 <div class="borders" style="height: 80px; line-height: 80px;">
                     <a title="" target="_blank" href="http://www.otter-schutz.de/">
-                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Hiza" src="/images/suppliers/otter.png">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Otter" src="/images/suppliers/otter.png">
                     </a>
                 </div>
             </div>
             <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
                 <div class="borders" style="height: 80px; line-height: 80px;">
-                    <a title="" target="_blank" href="http://www.jobman.se/">
-                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Hummel" src="/images/suppliers/jobman.png">
+                    <a title="" target="_blank" href="http://www.honeywellsafety.com/de/brands/kcl.aspx">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="KCL" src="/images/suppliers/kcl.jpg">
                     </a>
                 </div>
             </div>
             <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
                 <div class="borders" style="height: 80px; line-height: 80px;">
                     <a title="" target="_blank" href="http://www.hakro.com/">
-                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Hummel" src="/images/suppliers/hakro.png">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Hakro" src="/images/suppliers/hakro.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-2 col-xs-6 col-md-4 wf-cell">
+                <div class="borders" style="height: 80px; line-height: 80px;">
+                    <a title="" target="_blank" href="http://www.hellyhansen.com/">
+                    <img class="scale-up animate-element preload-me start-animation-done start-animation" width="130" height="80" alt="Helly Hansen" src="/images/suppliers/hh.png">
                     </a>
                 </div>
             </div>
@@ -544,7 +405,7 @@
             </div>  
         </section>
     </div>
-    <!--/.featuredPostContainer-->
+    <!-- /.list of suppliers -->
 </div>
 <!-- /main container -->
 
@@ -558,7 +419,7 @@
                     <h3> *gültig nur für paketdienstfähige Bestellungen </h3>
 
                     <div style="clear:both"></div>
-                    <a href="/shop" class="btn btn-discover "> <i class="fa fa-shopping-cart"></i> JETZT ZUM SHOP </a></div>
+                    <a href="http://orth-shop.de" class="btn btn-discover "> <i class="fa fa-shopping-cart"></i> JETZT ZUM SHOP </a></div>
             </div>
         </div>
         <!--/.row-->
@@ -568,6 +429,9 @@
 <!--/.parallax-image-1-->
 
 {% endblock %}
+<!-- /. end of inner content block --> 
+
+<!-- begin of footer --> 
 <footer>
     <div class="footer">
         <div class="container">
@@ -579,21 +443,19 @@
                             <p> Bei Fragen wenden Sie sich bitte an uns </p>
                             <h4><a class="inline" href="callto:+49415287870"> <strong> <i class="fa fa-phone"> </i> +49 4152
                                 87 87 - 0</strong> </a></h4>
-                            <h4><a class="inline" href="mailto:info@ute-orth.de"> <i class="fa fa-envelope-o"> </i>
-                                info@ute-orth.de </a></h4>
+                            <h4><a class="inline" href="mailto:info@basisorth.de"> <i class="fa fa-envelope-o"> </i>
+                                info@basisorth.de </a></h4>
                         </li>
                     </ul>
                 </div>
                 <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
                     <h3> Shop </h3>
                     <ul>
-                        <li><a href="/"> Home </a></li>
-                        <li><a href="/shop/suche?c=2"> Arbeitsschutz </a></li>
-                        <li><a href="/shop/suche?c=6149"> Berufsbekleidung </a></li>
-                        <li><a href="/shop/suche?c=1"> Schuhe</a></li>
-                        <li><a href="/shop/suche?c=3"> Technik</a></li>
-                        <li><a href="/shop/suche?c=115"> Werkzeuge</a></li>
-                        <li><a href="/shop/suche?c=6208"> Hygiene & Reinigung</a></li>
+                        <li><a href="http://orth-shop.de"> Home </a></li>
+                        <li><a href="http://www.orth-shop.de/index.php?cat=c4512_Arbeitsschutz-Arbeitsschutz-4512.html&XTCsid=nkn7uurj37fp143a3gua7gvk16"> Arbeitsschutz </a></li>
+                        <li><a href="http://www.orth-shop.de/index.php?cat=c4518_Berufsbekleidung-Berufsbekleidung-4518.html"> Berufsbekleidung </a></li>
+                        <li><a href="http://www.orth-shop.de/index.php?cat=c4477_Schuhe-Schuhe-4477.html&XTCsid=nkn7uurj37fp143a3gua7gvk16"> Schuhe</a></li>
+                        <li><a href="http://www.orth-shop.de/index.php?cat=c4528_Technik-Technik-4528.html"> Werkzeuge & Technik</a></li>
                     </ul>
                 </div>
 
@@ -606,15 +468,6 @@
                         <li><a href="/widerruf"> Widerruf </a></li>
                         <li><a href="/agb"> AGB </a></li>
                         <li><a href="/datenschutz"> Datenschutz </a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
-                    <h3> Mein Konto </h3>
-                    <ul>
-                        <li><a href="/login"> Konto Login </a></li>
-                        <li><a href="/account/my-account"> Mein Konto </a></li>
-                        <li><a href="/account/my-address"> Meine Adressen </a></li>
-                        <li><a href="/account/cart"> Warenkorb </a></li>
                     </ul>
                 </div>
 
@@ -630,12 +483,13 @@
 
     <div class="footer-bottom">
         <div class="container">
-            <p class="pull-left"> &copy; Ute Orth GmbH & Co KG 2016. All rights reserved. </p>
+            <p class="pull-left"> &copy; BasisOrth GmbH 2016. All rights reserved. </p>
 
         </div>
     </div>
     <!--/.footer-bottom-->
 </footer>
+<!-- /.end of footer --> 
 
 <!-- Le javascript
 ================================================== -->

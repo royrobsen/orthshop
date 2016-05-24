@@ -104,7 +104,7 @@ class ShoppingCartRepository extends EntityRepository
                 $varData = $orders = $query->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
                 $price = $variantsRepo->getSingleCustomPrice($variants->getArticles() ,$user);
                 
-            $cartItems[] = array('id' => $item->getId(), 'shortName' => $variants->getArticles()->getShortName(), 'articlenumber' => $variants->getSupplierArticleNumber(), 'amount' => $item->getAmount(), 'image' => $variants->getArticles()->getImages(), 'varData' => $varData, 'price' => $price, 'varref' => $item->getVarRef());
+            $cartItems[] = array('id' => $item->getId(), 'pid' => $variants->getArticles()->getId(), 'shortName' => $variants->getArticles()->getShortName(), 'articlenumber' => $variants->getSupplierArticleNumber(), 'amount' => $item->getAmount(), 'postext' => $item->getPositionsText(),'image' => $variants->getArticles()->getImages(), 'varData' => $varData, 'price' => $price, 'varref' => $item->getVarRef());
 
         }
         
@@ -116,14 +116,17 @@ class ShoppingCartRepository extends EntityRepository
         
         $em = $this->_em;
         
+        $cookieItems = $this->getCartItemsBySession($cookieValue);
+        
         if(is_object($user)) {
             $this->updateSessionToUser($cookieItems, $user);
         }
         
-        foreach ($updateItems as $key => $value) {
-            
-            $cartItem = $this->getSingleCartItemByUser($key);
-            $cartItem->setAmount($value);
+        foreach ($updateItems as $value) {
+ 
+            $cartItem = $this->getSingleCartItemByUser($value[1]);
+            $cartItem->setAmount($value[2]);
+            $cartItem->setPositionsText($value[0]);
             
             $em->persist($cartItem);
             

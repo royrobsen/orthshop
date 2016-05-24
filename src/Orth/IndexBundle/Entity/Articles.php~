@@ -19,7 +19,18 @@ class Articles
     /**
      * @var string
      */
+    
+    private $priceDiff; 
+    
+    /**
+     * @var string
+     */
     private $shortName;
+    
+    /**
+     * @var string
+     */
+    private $shortName1;
 
     /**
      * @var string
@@ -70,6 +81,29 @@ class Articles
      * @return string 
      */
     public function getShortName()
+    {
+        return $this->shortName;
+    }
+    
+    /**
+     * Set shortName1
+     *
+     * @param string $shortName
+     * @return Articles
+     */
+    public function setShortName1($shortName)
+    {
+        $this->shortName = $shortName;
+
+        return $this;
+    }
+
+    /**
+     * Get shortName1
+     *
+     * @return string 
+     */
+    public function getShortName1()
     {
         return $this->shortName;
     }
@@ -441,5 +475,28 @@ class Articles
     public function getCategory()
     {
         return $this->category;
+    }
+    
+    /**
+     * Set priceDiff
+     *
+     * @param string $priceDiff
+     * @return Articles
+     */
+    public function setPriceDiff($priceDiff)
+    {
+        $this->priceDiff = $priceDiff;
+
+        return $this;
+    }
+
+    /**
+     * Get priceDiff
+     *
+     * @return string 
+     */
+    public function getPriceDiff()
+    {
+        return $this->priceDiff;
     }
 }

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Orth\IndexBundle\Entity\Orders" table="orders">
+  <entity name="Orth\IndexBundle\Entity\Orders" repository-class="Orth\IndexBundle\Entity\Repository\OrdersRepository"  table="orders">
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
+    
     <field name="invoiceAdrRef" type="integer" column="invoice_adr_ref" nullable="false"/>
     <field name="shippingAdrRef" type="integer" column="shipping_adr_ref" nullable="false"/>
     <field name="paymentMethod" type="integer" column="payment_method" nullable="false"/>
@@ -13,9 +14,12 @@
     <field name="customerRef" type="integer" column="customer_ref" nullable="false"/>
     <field name="createdDate" type="datetime" column="created_date" nullable="false"/>
     <field name="customerOrderNumber" type="text" column="customerOrderNumber" nullable="false"/>
+    
+    <!-- relationshop to order positions -->
      <one-to-many
             field="positions"
             target-entity="OrderPositions"
             mapped-by="orders" />
+     
   </entity>
 </doctrine-mapping>

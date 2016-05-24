@@ -31,9 +31,11 @@
 
         <!--left column-->
 
-        <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <h4>Ergebnisse anzeigen für</h4>
             <div class="panel-group" id="accordionNo">
                 <!--Category-->
+                {% set q = app.request.get('q')%}
                 {% for category in categories %}
                     {% set anzahl = 0 %}
                     {% if category.children is defined %}
@@ -56,21 +58,32 @@
                             <ul class="nav nav-pills nav-stacked tree">
                                 {% if category.children is defined %}
                                  {% for subcategory in category.children %}
+                                    {% set maincatindex = loop.index %}
                                     {% set anzahl2 = 0 %}
                                     {% if subcategory.children is defined %}
-                                        {% for sub2category in subcategory.children %}
+                                        {% for sub2category in subcategory.children %} 
                                         {% set anzahl2 = anzahl2 + sub2category.anzahl %} 
                                         {% endfor %}  
                                     {% endif %}
-                                <li class="dropdown-tree open-tree active"><a class="dropdown-tree-a"> <span
-                                        class="badge pull-right">{{anzahl2}}</span> {{subcategory.catName}} </a>
+                                <li class="dropdown-tree open-tree"><a class="" href="/shop/{{category.id ~ "-" ~ category.catName|slugify ~"/"~ subcategory.id ~ "-" ~ subcategory.catName|slugify}}{% if q is not empty %}?q={{q}}{% endif %}">{{subcategory.catName}} <span
+                                        class="badge pull-right">{{anzahl2}}</span> </a>  
                                     {% if subcategory.children is defined %}    
                                     <ul class="category-level-2 dropdown-menu-tree">
                                         {% for sub2category in subcategory.children %}
-                                        <li class="dropdown-tree"><a class="dropdown-tree-a" href="{{ path(app.request.get('_route'), {'category' :category.id ~ "-" ~ category.catName|slugify, 'childcategory' :subcategory.id ~ "-" ~ subcategory.catName|slugify, 'grandchildcategory' :sub2category.id ~ "-" ~ sub2category.catName|slugify},app.request.get('_route_params')|merge({'category' :app.request.get('category')})|merge({'childcategory' :app.request.get('childcategory')})|merge({'' :sub2category.id ~ "-" ~ sub2category.catName|slugify})|merge({'q': app.request.get('q')})) }}">{{sub2category.catName}} <span
-                                        class="badge pull-right">{{sub2category.anzahl}}</span> </a>           
+                                        <li class="dropdown-tree {% if loop.index >= 5 %}demo{{maincatindex}} collapse{% endif %}"><a class="dropdown-tree-a" href="/shop/{{category.id ~ "-" ~ category.catName|slugify ~"/"~ subcategory.id ~ "-" ~ subcategory.catName|slugify~"/"~ sub2category.id ~ "-" ~ sub2category.catName|slugify}}{% if q is not empty %}?q={{q}}{% endif %}">{{sub2category.catName}} <span
+                                        class="badge pull-right">{{sub2category.anzahl}}</span> </a>    
                                         </li>
-                                        {% endfor %}   
+                                        {% endfor %}  
+                                        {% if subcategory.children|length >= 5 %}
+                                         <li class="demo{{maincatindex}} collapse in">
+                                        <a class="dropdown-tree-a" data-toggle="collapse" data-target=".demo{{maincatindex}}"> >> Mehr anzeigen <span
+                                        class="badge pull-right"></span> </a>    
+                                        </li>
+                                        <li class="demo{{maincatindex}} collapse">
+                                        <a class="dropdown-tree-a" data-toggle="collapse" data-target=".demo{{maincatindex}}"> >> Weniger anzeigen <span
+                                        class="badge pull-right"></span> </a>    
+                                        </li>
+                                        {% endif %}
                                     </ul>
                                     {% endif %}
                                 </li>
@@ -86,9 +99,13 @@
         </div>
 
         <!--right column-->
-        <div class="col-lg-9 col-md-9 col-sm-12">
+        <div class="col-lg-8 col-md-8 col-sm-12">
             <div class="w100 clearfix category-top">
-                <h2> SUCHEN </h2>
+                {% if q is not empty %}
+                    <h2> SUCHERGEBNISSE FÜR "{{q}}" </h2>
+                {% else %}
+                    <h2> SUCHEN </h2>
+                {% endif %}
             </div>
             <!--/.category-top-->
             <form action="{{ app.request.getBaseUrl ~ app.request.getPathInfo }}" name="search2" method="get">
@@ -99,12 +116,18 @@
                         <label for="suche" class="glyphicon glyphicon-search" rel="tooltip" title="suche"></label>
                     </div>
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Suchen!</button>
+                        <button class="btn btn-default" type="submit">Suchen!</button>
                     </span>
                 </div>
             </div>
             <div class="w100 productFilter clearfix">
-
+                <div class="change-order pull-right">
+                    <select id="orderby" class="form-control" name="orderby">
+                        <option selected="selected" value="default">Standsortierung</option>
+                        <option value="asc">Preis: aufsteigend</option>
+                        <option value="desc">Preis: absteigend</option>
+                    </select>
+                </div>
                 <div class="pull-right ">
                     <div class="change-view pull-right"><a href="#" title="Grid" class="grid-view"> <i
                             class="fa fa-th-large"></i> </a> <a href="#" title="List" class="list-view "><i
@@ -123,11 +146,11 @@
                 <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
                     <div class="product">
                         <div class="image">
-                            <a href="/product/{{article.id}}-{{article.shortDescription|slugify}}"><img src="/images/product/nw/{{article.images.0.picName}}" alt="img" class="img-responsive"></a>
+                            <a href="/product/{{article.id}}-{{article.shortName|slugify}}"><img src="{% if article.images is empty %}/images/product/nw/nopicture_all.jpg{% else %}/images/product/nw/{{article.images.0.picName}}{% endif %}" alt="img" class="img-responsive"></a>
                         </div>
                         <div class="description">
                             <div class="shortname">
-                                <h4><a href="/product/{{article.id}}-{{article.shortDescription|slugify}}">{{article.shortName}}</a></h4>
+                                <h4><a href="/product/{{article.id}}-{{article.shortName|slugify}}">{{article.shortName}}</a></h4>
                             </div>
                             <div class="grid-description">
                                 <p>{{article.shortDescription}} </p>
@@ -312,5 +335,15 @@
 </div>
 <!-- End Modal -->
 
+{% endblock %}
+{% block js_special %}
+<script>
+    $(document).ready(function () {
 
+    $('.minict_wrapper input').change(
+    function(){
+         $(this).closest('form').trigger('submit');
+    });
+});
+    </script>
 {% endblock %}

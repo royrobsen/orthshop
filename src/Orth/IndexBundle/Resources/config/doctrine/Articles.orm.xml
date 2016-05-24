@@ -13,6 +13,7 @@
     <field name="modifiedDate" type="datetime" column="modified_date" nullable="false"/>
     <field name="catRef" type="integer" column="cat_ref" nullable="false"/>
     <field name="deliverable" type="integer" column="deliverable" nullable="false"/>
+    <field name="customized" type="integer" column="customized" nullable="false"/>
         <one-to-many
             field="images"
             target-entity="ArticleImages"

@@ -22,6 +22,10 @@ orth_admin_newarticlevar:
     path:     /admin/new-articlevar
     defaults: { _controller: OrthAdminBundle:Articles:newarticlevar }    
     
+orth_admin_addarticlevar:
+    path:     /admin/add-articlevar/{id}
+    defaults: { _controller: OrthAdminBundle:Articles:addarticlevar }    
+    
 orth_admin_article:
     path:     /admin/article/{id}
     defaults: { _controller: OrthAdminBundle:Articles:article }
@@ -125,3 +129,15 @@ orth_admin_deactivateuser:
 orth_admin_activateuser:
     path:     /admin/activate-user/{id}
     defaults: { _controller: OrthAdminBundle:Users:activate }
+    
+orth_admin_glossar:
+    path:   /admin/glossar/{letter}
+    defaults: { _controller: OrthAdminBundle:Glossar:glossar, letter: null } 
+    
+orth_admin_glossar_detail:
+    path:   /admin/glossar/{letter}/{string}
+    defaults: { _controller: OrthAdminBundle:Glossar:detail } 
+    
+orth_admin_glossar_new:
+    path:   /admin/glossar/new
+    defaults: { _controller: OrthAdminBundle:Glossar:new } 

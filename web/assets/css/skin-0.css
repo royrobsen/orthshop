@@ -121,7 +121,7 @@ a:focus, a.link {
 
 #pager a.cycle-pager-active {
     background-color: #4bb777 !important;
-    background-color: rgba(75, 183, 119, 0.7) !important;
+    background-color: rgba(204, 13, 23, 0.7) !important;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#b34bb777, endColorstr=#b34bb777) !important;
     -ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#b34bb777, endColorstr=#b34bb777) !important;
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Orth\IndexBundle\Entity;
+namespace Orth\IndexBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -33,7 +33,9 @@ class ArticleSuppliersRepository extends EntityRepository
             ->createQuery(
                 'SELECT asu FROM OrthIndexBundle:ArticleSuppliers asu WHERE asu.articles = :article ORDER BY asu.price ASC'
             )->setParameter('article', $article)->setMaxResults(1)->getOneOrNullResult();
-
+        if($priceQuery == NULL) {
+            return 0;
+        }
         return $priceQuery->getPrice();
 
     }
@@ -239,6 +241,22 @@ class ArticleSuppliersRepository extends EntityRepository
         
         return $variants;
         
+    }
+        
+    public function getCustomerDataArticleNumber($variant, $user) {
+        
+            $customDataQuery = $this->getEntityManager()
+            ->createQuery(
+                'SELECT cd FROM OrthIndexBundle:Customerdata cd WHERE cd.varRef = :variant AND cd.customerRef = :customer'
+            )
+            ->setParameter('variant', $variant['id'])->setParameter('customer', $user->getCustomerRef())->setMaxResults(1)->getOneOrNullResult();
+            if($customDataQuery != NULL) {
+                $customArtNr = $customDataQuery->getCustomArtnr();
+            } else {
+                $customArtNr = NULL;
+            }
+            
+        return $customArtNr;
     }
     
 }

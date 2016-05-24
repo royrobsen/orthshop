@@ -227,6 +227,8 @@
                                                                                                                                                         </div>
                                                                                                                                                         <div style="font-family: Verdana, sans-serif;margin:0 0 2px 0;font-size:11px;">
                                                                                                                                                         {% for var in product.varData|reverse %} {% if var.attributeName is defined %}{{var.attributeName}}{% endif %}{% if var.attributeValue is defined %}{{var.attributeValue}} {{var.attributeUnit}} | {% endif %}{% endfor %}
+                                                                                                                                                        <br />
+                                                                                                                                                        Positionstext: {{product.posText}}
                                                                                                                                                         </div>
                                                                                                                                                     </td>
                                                                                                                                                 </tr>
@@ -320,23 +322,29 @@
                                                                                                                                 <td style="font-family: Verdana, sans-serif;">
                                                                                                                                     <div class="yiv4982556372ish-address">
                                                                                                                                         <div class="yiv4982556372ish-address-name">
-                                                                                                                                            Roy
-                                                                                                                                            Brannath
+                                                                                                                                            {{invAddress.companyName1}} {{invAddress.companyName2}} {{invAddress.companyName3}}
+                                                                                                                                            </div>
+                                                                                                                                            <div class="yiv4982556372ish-address-name">
+                                                                                                                                            {{invAddress.firstName}} {{invAddress.lastName}} 
                                                                                                                                             </div>
                                                                                                                                             <div class="yiv4982556372ish-address-street">
-                                                                                                                                            Häußlerstraße&nbsp;45
+                                                                                                                                            {{invAddress.street}}<br />
+                                                                                                                                            {{invAddress.street2}}
                                                                                                                                             </div>
                                                                                                                                             <div class="yiv4982556372ish-address-postalCodeCity">
                                                                                                                                             <span class="yiv4982556372ish-address-postalCode">
-                                                                                                                                                21031</span>
+                                                                                                                                                {{invAddress.zipcode}}</span>
                                                                                                                                                 <span class="yiv4982556372ish-address-city">
-                                                                                                                                                Hamburg</span>
-                                                                                                                                            </div>
-                                                                                                                                            <div class="yiv4982556372ish-address-email yiv4982556372ish-address-lastEntry">
-                                                                                                                                            rbrannath@yahoo.de
+                                                                                                                                                {{invAddress.city}}</span>
                                                                                                                                             </div>
                                                                                                                                             <div class="yiv4982556372ish-address-country">
+                                                                                                                                            {% if invAddress.country == 1 %}
                                                                                                                                             Deutschland
+                                                                                                                                            {% elseif invAddress.country == 2 %}
+                                                                                                                                            Österreich
+                                                                                                                                            {% else %}
+                                                                                                                                            Schweiz
+                                                                                                                                            {% endif %}
                                                                                                                                             </div>
                                                                                                                                         </div>
                                                                                                                                     </td>
@@ -362,23 +370,29 @@
                                                                                                                                 <td style="font-family: Verdana, sans-serif;">
                                                                                                                                     <div class="yiv4982556372ish-address">
                                                                                                                                         <div class="yiv4982556372ish-address-name">
-                                                                                                                                            Roy
-                                                                                                                                            Brannath
+                                                                                                                                            {{delAddress.companyName1}} {{delAddress.companyName2}} {{delAddress.companyName3}}
+                                                                                                                                            </div>
+                                                                                                                                            <div class="yiv4982556372ish-address-name">
+                                                                                                                                            {{delAddress.firstName}} {{delAddress.lastName}} 
                                                                                                                                             </div>
                                                                                                                                             <div class="yiv4982556372ish-address-street">
-                                                                                                                                            Häußlerstraße&nbsp;45
+                                                                                                                                            {{delAddress.street}}<br />
+                                                                                                                                            {{delAddress.street2}}
                                                                                                                                             </div>
                                                                                                                                             <div class="yiv4982556372ish-address-postalCodeCity">
                                                                                                                                             <span class="yiv4982556372ish-address-postalCode">
-                                                                                                                                                21031</span>
+                                                                                                                                                {{delAddress.zipcode}}</span>
                                                                                                                                                 <span class="yiv4982556372ish-address-city">
-                                                                                                                                                Hamburg</span>
-                                                                                                                                            </div>
-                                                                                                                                            <div class="yiv4982556372ish-address-email yiv4982556372ish-address-lastEntry">
-                                                                                                                                            rbrannath@yahoo.de
+                                                                                                                                                {{delAddress.city}}</span>
                                                                                                                                             </div>
                                                                                                                                             <div class="yiv4982556372ish-address-country">
+                                                                                                                                            {% if delAddress.country == 1 %}
                                                                                                                                             Deutschland
+                                                                                                                                            {% elseif delAddress.country == 2 %}
+                                                                                                                                            Österreich
+                                                                                                                                            {% else %}
+                                                                                                                                            Schweiz
+                                                                                                                                            {% endif %}
                                                                                                                                             </div>
                                                                                                                                         </div>
                                                                                                                                     </td>
@@ -406,7 +420,11 @@
                                                                                                                                 <td style="font-family: Verdana, sans-serif;">
                                                                                                                                     <div class="yiv4982556372ish-address">
                                                                                                                                         <div class="yiv4982556372ish-address-name">
-                                                                                                                                            Auf Rechnung
+                                                                                                                                            {% if invKind == 0 %}
+                                                                                                                                                Rechnung
+                                                                                                                                            {% elseif invKind == 1 %}
+                                                                                                                                                Vorkasse
+                                                                                                                                            {% endif %}
                                                                                                                                         </div>
                                                                                                                                         </div>
                                                                                                                                     </td>
@@ -466,8 +484,8 @@
 
                                                                                                                             Ihr
                                                                                                                             Team
-                                                                                                                            vom
-                                                                                                                            UTE ORTH Bekleidung & Technik GmbH & Co. KG
+                                                                                                                            von
+                                                                                                                            Basis Orth GmbH
                                                                                                                         </div>
                                                                                                                     </td>
                                                                                                                 </tr>

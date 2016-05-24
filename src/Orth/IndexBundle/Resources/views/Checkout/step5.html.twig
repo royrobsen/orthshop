@@ -34,12 +34,39 @@
 
 
                         <div class="row userInfo">
-
+                            <div class="col-xs-12 col-sm-12 col-lg-6">
+                                <h3 class="block-title-2"> Rechnungsadresse </h3>
+                                {% if invAddress.companyName1 is not empty %} {{invAddress.companyName1}} {{invAddress.companyName2}} {{invAddress.companyName3}}}}<br />{% endif %}
+                                {{invAddress.firstName}} {{invAddress.lastName}} <br />
+                                {{invAddress.street}}{% if invAddress.companyName1 is not empty %}<br />
+                                {{invAddress.street2}}{% endif %}<br />
+                                {{invAddress.zipcode}} {{invAddress.city}}<br />
+                                {% if invAddress.country == 1 %}
+                                Deutschland
+                                {% elseif invAddress.country == 2 %}
+                                Österreich
+                                {% else %}
+                                Schweiz
+                                {% endif %}
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-lg-6">
+                                <h3 class="block-title-2"> Lieferadresse </h3>
+                                {% if delAddress.companyName1 is not empty %} {{delAddress.companyName1}} {{delAddress.companyName2}} {{delAddress.companyName3}}}}<br />{% endif %}
+                                {{delAddress.firstName}} {{delAddress.lastName}} <br />
+                                {{delAddress.street}}{% if delAddress.companyName1 is not empty %}<br />
+                                {{delAddress.street2}}{% endif %}<br />
+                                {{delAddress.zipcode}} {{delAddress.city}}<br />
+                                {% if delAddress.country == 1 %}
+                                Deutschland
+                                {% elseif delAddress.country == 2 %}
+                                Österreich
+                                {% else %}
+                                Schweiz
+                                {% endif %}
+                            </div>
                             <div class="col-lg-12">
                                 <h2 class="block-title-2"> Bestellung ansehen </h2>
                             </div>
-
-
                             <div class="col-xs-12 col-sm-12">
                                 <div class="cartContent w100 checkoutReview ">
                                 <table style="width:100%">
@@ -47,19 +74,19 @@
                                     {% for product in cart %}
                                     <tr class="miniCartProduct {{product.varref}}">
                                         <td style="width:10%"  rowspan="2" class="miniCartProductThumb">
-                                            <div><a href="product-details.html"> <img src="/images/product/nw/{{product.image.0.picName}}" style="margin: 10px; max-height: 90px;" class="img-responsive" alt="img">
+                                            <div><a href="/product/{{product.pid}}-{{product.shortName|slugify}}"> <img src="/images/product/nw/{{product.image.0.picName}}" style="margin: 10px; max-height: 90px;" class="img-responsive" alt="img">
                                             </a></div>
                                         </td>
                                         <td style="width:90%; vertical-align: top;">
                                             <div class="miniCartDescription">
-                                                <h4><a href="product-details.html"> {{product.shortName}}</a></h4>
+                                                <h4><a href="/product/{{product.pid}}-{{product.shortName|slugify}}"> {{product.shortName}}</a></h4>
                                                 <span class="size">{{product.articlenumber}}</span>
                                                 <span class="size">{% for var in product.varData|reverse %} {% if var.attributeName is defined %}{{var.attributeName}}{% endif %}{% if var.attributeValue is defined %}{{var.attributeValue}} {{var.attributeUnit}} | {% endif %}{% endfor %}</span>
                                             </div>
                                         </td>
                                         </tr>
                                     <tr class="tr-border miniCartAction {{product.varref}}">
-                                        <td style="width:90%" class="delete"><a> <span>{{product.amount}} x {{product.price|number_format(2)}} € </span> <a id="{{product.varref}}" class="btn btn-danger btn-sm pull-right">Entfernen </a> <b class="pull-right" style="padding-right: 10px;"><span class="jSum2">{{(product.amount * product.price)|number_format(2)}}</span> €  </b></td>
+                                        <td style="width:90%" class="delete"><a> <span>{{product.amount}} x {{product.price|number_format(2)}} € </span> <b class="pull-right" style="padding-right: 10px;"><span class="jSum2">{{(product.amount * product.price)|number_format(2)}}</span> €  </b></td>
                                     </tr>
                                     {% set gesamtpreis = gesamtpreis + (product.amount * product.price) %}
                                     {% endfor %}
@@ -87,7 +114,7 @@
                                             </tr>
                                             <tr style="">
                                                 <td>Fracht (netto)</td>
-                                                <td class="price">{{freight}} €</td>
+                                                <td class="price">{{freight|number_format(2, ',', '.')}} €</td>
                                             </tr>
                                             <tr class="cart-total-price ">
                                                 <td>Gesamt (exkl. MwSt)</td>
@@ -126,7 +153,7 @@
                         <div class="box-footer">
                             <div class="pull-left"><a class="btn btn-default" href="{{ path('orth_shop_checkout_step4', app.request.get('_route_params')|merge(app.request.query.all)) }}"> <i
                                     class="fa fa-arrow-left"></i> &nbsp; Zurück zur Zahlungsart </a></div>
-                            <div class="pull-right"><a href="{{ path('orth_shop_checkout_success', app.request.get('_route_params')|merge(app.request.query.all)) }}" class="btn btn-success btn-small " type="submit">
+                            <div class="pull-right"><a href="/warenkorb" class="btn btn-warning btn-small ">Warenkorb bearbeiten</a> <a  href="{{ path('orth_shop_checkout_success', app.request.get('_route_params')|merge(app.request.query.all)) }}" class="btn btn-success btn-small " type="submit">
                                 Bestellen &nbsp; <i class="fa fa-arrow-circle-right"></i> </a></div>
                         </div>
 

@@ -78,6 +78,28 @@ class CategoryRepository extends EntityRepository
         
     }
     
+    public function getChildCategories ($category, $value = 0) 
+    {
+        
+        if ($category == NULL) {
+            return 'Suche';
+        }
+        
+        $query = $this->getEntityManager()
+            ->createQuery('SELECT c, c1, c2 FROM OrthIndexBundle:Categories c LEFT JOIN c.children c1 LEFT JOIN c1.children c2 WHERE c.id = :id')->setParameter('id', $category)->getResult();
+   
+        $test[] = array('id' => $query[0]->getId(), 'parentId' => $query[0]->getParentId(),'catName' => $query[0]->getCategoryName(), 'anzahl' => $value);
+            if($query[0]->getParent() != NULL) {
+                $test[] = array('id' => $query[0]->getParent()->getId(), 'parentId' => $query[0]->getParent()->getParentId(),'catName' => $query[0]->getParent()->getCategoryName(), 'anzahl' => 0);
+            
+            if($query[0]->getParent()->getParent() != NULL) {
+                $test[] = array('id' => $query[0]->getParent()->getParent()->getId(), 'parentId' => $query[0]->getParent()->getParent()->getParentId(),'catName' => $query[0]->getParent()->getParent()->getCategoryName(), 'anzahl' => 0);
+            }}
+           
+            return $this->buildTree( array_unique($test, SORT_REGULAR) );
+        
+    }
+    
     public function buildTree( $ar, $pid = null ) {
         $op = array();
         foreach( $ar as $item ) {

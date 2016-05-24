@@ -29,7 +29,11 @@ class ShoppingCart
      */
     private $id;
 
-
+    /**
+     * @var text
+     */
+    private $positionsText;
+    
     /**
      * Set varRef
      *
@@ -94,7 +98,29 @@ class ShoppingCart
      * @var integer
      */
     private $customerRef;
+    
+    /**
+     * Set positionsText
+     *
+     * @param integer $positionsText
+     * @return OrderPositions
+     */
+    public function setPositionsText($positionsText)
+    {
+        $this->positionsText = $positionsText;
 
+        return $this;
+    }
+
+    /**
+     * Get positionsText
+     *
+     * @return integer 
+     */
+    public function getPositionsText()
+    {
+        return $this->positionsText;
+    } 
 
     /**
      * Set userRef

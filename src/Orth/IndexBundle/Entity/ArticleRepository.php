@@ -17,12 +17,12 @@ class ArticleRepository extends EntityRepository
 
     }
     
-    public function getArticleQuery($user, $searchTerm, $page,  $pageOffset, $category) 
+    public function getArticleQuery($user, $searchTerm, $page,  $pageOffset, $category, $orderby) 
     {
         
         $boolQuery = new \Elastica\Query\BoolQuery();
         
-        if( $category != NULL AND $searchTerm == NULL ) {
+        if( $category != NULL) {
             $categoryArray = [$category];
             $rootCategories = $this->getEntityManager()->getRepository('OrthIndexBundle:Categories')->findBy(array('parentId' => $category));
             
@@ -38,19 +38,15 @@ class ArticleRepository extends EntityRepository
             $categoryQuery->setTerms('catRef', $categoryArray);
             $boolQuery->addMust($categoryQuery);
             
-        } elseif ($category != NULL ) {
-            
-            $categoryQuery = new \Elastica\Query\Terms();
-            $categoryQuery->setTerms('catRef', array($category));
-            $boolQuery->addMust($categoryQuery);
         }
-        
-        if($searchTerm) {
+
+        if( $searchTerm ) {
 
             $fieldQuery = new \Elastica\Query\Match();
             $fieldQuery->setFieldQuery('allField', $searchTerm);
             $fieldQuery->setFieldOperator('allField', 'AND');
             $fieldQuery->setFieldMinimumShouldMatch('allField', '80%');
+            $fieldQuery->setFieldFuzziness('allField', '0.8');
             $fieldQuery->setFieldAnalyzer('allField', 'custom_search_analyzer');
 //
 ////            $fieldQuery = new \Elastica\Query\MultiMatch();
@@ -69,12 +65,31 @@ class ArticleRepository extends EntityRepository
             ///$fieldQuery->setFieldAnalyzer('allField', 'custom_search_analyzer');
             $boolQuery->addShould($fieldQuery);
         } 
-        
-        $query = new \Elastica\Query();
-        $query->setQuery($boolQuery);
-        $query->setSize(12);
-        $query->setFrom($pageOffset);        
+        $agg = new \Elastica\Aggregation\Terms("catRef");
+        $agg->setSize(5000000); // Edit this one!
+        $agg->setField('catRef');
+        $boolFilter = new \Elastica\Filter\Bool();
+        if($user == "anon.") {
+            $boolFilter->addShould(
+                    new \Elastica\Filter\Terms('customized', array(0))
+                );
+        } else {
+            $boolFilter->addShould(
+                    new \Elastica\Filter\Terms('customized', array(0,$user->getCustomerRef()))
+                );
+        }
 
+        $filtered = new \Elastica\Query\Filtered($boolQuery, $boolFilter);
+        $query = new \Elastica\Query();
+        $query->setQuery($filtered);
+        $query->addAggregation($agg);
+        $query->setSize(12);
+        $query->setFrom($pageOffset); 
+        if($orderby == 'desc') {
+            $query->setSort(array('variants.price' => array('order' => 'desc')));
+        } elseif($orderby == 'asc') {
+            $query->setSort(array('variants.price' => array('order' => 'asc')));
+        }
         return $query;
     }
     

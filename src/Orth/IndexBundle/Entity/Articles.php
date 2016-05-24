@@ -63,6 +63,11 @@ class Articles
     private $id;
 
     /**
+     * @var integer
+     */
+    private $customized;
+    
+    /**
      * Set shortName
      *
      * @param string $shortName
@@ -223,6 +228,29 @@ class Articles
         return $this->deliverable;
     }
 
+    /**
+     * Set customized
+     *
+     * @param integer $customized
+     * @return Articles
+     */
+    public function setCustomized($customized)
+    {
+        $this->customized = $customized;
+
+        return $this;
+    }
+
+    /**
+     * Get customized
+     *
+     * @return integer 
+     */
+    public function getCustomized()
+    {
+        return $this->customized;
+    }
+    
     /**
      * Get id
      *

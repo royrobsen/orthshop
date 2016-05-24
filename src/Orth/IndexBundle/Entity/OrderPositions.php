@@ -22,19 +22,23 @@ class OrderPositions
     /**
      * @var float
      */
-    private $posPrice;
+    private $price;
 
     /**
      * @var integer
      */
-    private $posAmount;
+    private $amount;
 
     /**
      * @var integer
      */
     private $id;
 
-
+    /**
+     * @var text
+     */
+    private $positionsText;
+    
     /**
      * Set orderRef
      *
@@ -82,49 +86,72 @@ class OrderPositions
     }
 
     /**
-     * Set posPrice
+     * Set positionsText
      *
-     * @param float $posPrice
+     * @param integer $positionsText
      * @return OrderPositions
      */
-    public function setPosPrice($posPrice)
+    public function setPositionsText($positionsText)
     {
-        $this->posPrice = $posPrice;
+        $this->positionsText = $positionsText;
 
         return $this;
     }
 
     /**
-     * Get posPrice
-     *
-     * @return float 
-     */
-    public function getPosPrice()
-    {
-        return $this->posPrice;
-    }
-
-    /**
-     * Set posAmount
-     *
-     * @param integer $posAmount
-     * @return OrderPositions
-     */
-    public function setPosAmount($posAmount)
-    {
-        $this->posAmount = $posAmount;
-
-        return $this;
-    }
-
-    /**
-     * Get posAmount
+     * Get positionsText
      *
      * @return integer 
      */
-    public function getPosAmount()
+    public function getPositionsText()
     {
-        return $this->posAmount;
+        return $this->positionsText;
+    } 
+    
+    /**
+     * Set price
+     *
+     * @param float $price
+     * @return OrderPositions
+     */
+    public function setPrice($posPrice)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return float 
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set amount
+     *
+     * @param integer $amount
+     * @return OrderPositions
+     */
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    /**
+     * Get amount
+     *
+     * @return integer 
+     */
+    public function getAmount()
+    {
+        return $this->amount;
     }
 
     /**

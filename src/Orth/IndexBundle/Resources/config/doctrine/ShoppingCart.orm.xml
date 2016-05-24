@@ -6,6 +6,7 @@
     </id>
     <field name="varRef" type="integer" column="var_ref" nullable="false"/>
     <field name="amount" type="integer" column="amount" nullable="false"/>
+    <field name="positionsText" type="text" column="positions_text" nullable="false"/>
     <field name="userRef" type="integer" column="user_ref" nullable="false"/>
     <field name="customerRef" type="integer" column="customer_ref" nullable="false"/>
     <field name="sessionId" type="text" column="session_id" nullable="true"/>

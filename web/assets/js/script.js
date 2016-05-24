@@ -430,7 +430,7 @@ $(document).ready(function () {
 
     var options = [];
     
-$('.miniCartAction').find('a').click(function (e) {
+$('.miniCartAction').find('.entfernen').click(function (e) {
         e.stopPropagation();
         var varRef = $(this).attr('id');
 

@@ -1,0 +1,55 @@
+{% extends "shopbase.html.twig" %}
+{% block content %}
+
+<div class="container main-container headerOffset">
+    <div class="row innerPage">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="row userInfo">
+                <div class="col-xs-12 col-sm-12">
+                    <h1 class=" text-left border-title"> Glossar </h1>
+                    <div class="breadcrumbDiv col-lg-12">
+                        <ul class="breadcrumb">
+                            {% for letter in 'a'..'z' %}
+                            <li>
+                                <a href="/glossar/{{letter}}">{{letter|capitalize}}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <form action="/glossar" name="search2" method="get">
+                    <div class="form-group">
+                        <div class="input-group input-group-sm"> 
+                            <div class="icon-addon addon-sm">
+                                <input type="text" name="q" placeholder="Suchbegriff eingeben" class="form-control">
+                                <label for="suche" class="glyphicon glyphicon-search" rel="tooltip" title="suche"></label>
+                            </div>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit">Suchen!</button>
+                            </span>
+                        </div>
+                    </div>
+                    </form>
+                {% for result in results %}   
+                    <a href="/glossar/{{result.letter}}/{{result.id}}-{{result.subject|slugify}}"><h3 class="text-left border-title">{{result.subject}}</h3></a>
+                    <p>{{result.description| truncate(500) |striptags |raw}}</p>
+                {% endfor %}
+                {% if results is empty %}
+                    Leider gibt es unter diesem Begriff keine Einträge!
+                {% endif %}
+                </div>
+                </div>
+            </div>
+            <!--/row end-->
+
+        </div>
+    </div>
+    <!--/row-->
+
+    <div style="clear:both"></div>
+</div>
+
+<!-- /wrapper -->
+
+<div class="gap"></div>
+
+{% endblock %}

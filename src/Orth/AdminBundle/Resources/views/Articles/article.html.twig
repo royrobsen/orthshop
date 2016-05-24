@@ -59,6 +59,10 @@
                             <div class="col-lg-12 col-sm-12 col-xs-12">
                             {{ form_widget(form.attachment) }}
                             </div>
+                            <div class="col-lg-6">
+                                <label for="InputCompany3">Kundenspezifisch?</label>
+                                {{ form_widget(form.customized, { 'attr': {'class': 'form-control', 'placeholder' : 'Kundenspezifisch'} }) }}
+                            </div>
                         </div>
                             <!-- /.panel-body -->
                     </div>
@@ -74,7 +78,7 @@
                             <div class="panel-body">
                                 <div class="form-group table-responsive">
                                     <label for="InputCompany3">Varianten</label> <a data-toggle="modal" style="cursor: pointer;" data-target="#newAttr" class="create"> <i
-                                            class="fa fa-plus-circle"></i>Neues Attribut</a> | <a href="/admin/fixattr/{{ app.request.get('id') }}">Varianten reparieren</a>
+                                            class="fa fa-plus-circle"></i>Neues Attribut</a> | <a href="/admin/fixattr/{{ app.request.get('id') }}">Varianten reparieren</a>  | <a href="/admin/add-articlevar/{{ app.request.get('id') }}">Varianten hinzufügen</a>
                                     <table class="table">
                                         <tr>
                                             <th>

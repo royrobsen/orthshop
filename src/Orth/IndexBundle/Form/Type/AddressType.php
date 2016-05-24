@@ -29,9 +29,9 @@ class AddressType extends AbstractType
                 ->add('city', 'text', 
                     array('label' => false))
                 ->add('street2', 'text', 
-                    array('label' => false))
+                    array('label' => false, 'required' => false))
                 ->add('addressTitle', 'text', 
-                    array('label' => false))
+                    array('label' => false, 'required' => false))
                 ->add('firstName', 'text', 
                     array('label' => false))
                 ->add('country', 'choice', array('choices' =>$countryArray))

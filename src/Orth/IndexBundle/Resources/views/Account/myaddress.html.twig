@@ -23,6 +23,11 @@
                         {{ flashMessage }}
                     </div>
                 {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('warning') %}
+                    <div class="alert alert-danger">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
             <div class="row userInfo">
 
                 <div class="col-lg-12">
@@ -40,13 +45,13 @@
                             </div>
                             <div class="panel-body">
                                 <ul>
-                                    <li><span class="address-name"> <strong>{{ invoiceAddress.0.companyName1 }} {{ invoiceAddress.0.companyName2 }} {{ invoiceAddress.0.companyName3 }}</strong></span></li>
-                                    <li><span class="address-name"> <strong>{{ invoiceAddress.0.firstName }} {{ invoiceAddress.0.lastName }} </strong></span></li>
-                                    <li><span class="address-line1"> {{ invoiceAddress.0.street }} {{ invoiceAddress.0.street2 }}</span></li>
-                                    <li><span class="address-line2"> {{ invoiceAddress.0.zipcode }}, {{ invoiceAddress.0.city }} </span></li>
+                                    <li><span class="address-name"> <strong>{{ addresses.primary.companyName1 }} {{ addresses.primary.companyName2 }} {{ addresses.primary.companyName3 }}</strong></span></li>
+                                    <li><span class="address-name"> <strong>{{ addresses.primary.firstName }} {{ addresses.primary.lastName }} </strong></span></li>
+                                    <li><span class="address-line1"> {{ addresses.primary.street }} {{ addresses.primary.street2 }}</span></li>
+                                    <li><span class="address-line2"> {{ addresses.primary.zipcode }}, {{ addresses.primary.city }} </span></li>
                                 </ul>
                             </div>
-                            <div class="panel-footer panel-footer-address"><a href="/account/edit-address/{{invoiceAddress.0.id}}" class="btn btn-sm btn-success"> <i
+                            <div class="panel-footer panel-footer-address"><a href="/account/edit-address/{{addresses.primary.id}}" class="btn btn-sm btn-success"> <i
                                     class="fa fa-edit"> </i> Bearbeiten </a></div>
                         </div>
                     </div>
@@ -58,19 +63,19 @@
                             </div>
                             <div class="panel-body">
                                 <ul>
-                                    <li><span class="address-name"> <strong>{{ deliveryAddress.0.companyName1 }} {{ deliveryAddress.0.companyName2 }} {{ deliveryAddress.0.companyName3 }}</strong></span></li>
-                                    <li><span class="address-line1"> {{ deliveryAddress.0.firstName }} {{ deliveryAddress.0.lastName }}</span></li>
-                                    <li><span class="address-line1"> {{ deliveryAddress.0.street }} {{ deliveryAddress.0.street2 }}</span></li>
-                                    <li><span class="address-line2"> {{ deliveryAddress.0.zipcode }}, {{ deliveryAddress.0.city }} </span></li>
+                                    <li><span class="address-name"> <strong>{{ addresses.delivery.companyName1 }} {{ addresses.delivery.companyName2 }} {{ addresses.delivery.companyName3 }}</strong></span></li>
+                                    <li><span class="address-line1"> {{ addresses.delivery.firstName }} {{ addresses.delivery.lastName }}</span></li>
+                                    <li><span class="address-line1"> {{ addresses.delivery.street }} {{ addresses.delivery.street2 }}</span></li>
+                                    <li><span class="address-line2"> {{ addresses.delivery.zipcode }}, {{ addresses.delivery.city }} </span></li>
                                 </ul>
                             </div>
-                            <div class="panel-footer panel-footer-address"><a href="/account/edit-address/{{deliveryAddress.0.id}}" class="btn btn-sm btn-success"> <i
+                            <div class="panel-footer panel-footer-address"><a href="/account/edit-address/{{addresses.delivery.id}}" class="btn btn-sm btn-success"> <i
                                     class="fa fa-edit"> </i> Bearbeiten </a> </div>
                         </div>
                     </div>
                     <div class="col-lg-12">
                         <h2 class="block-title-2"> Weitere Adressen. </h2>
-                        {% if addresses is empty %} 
+                        {% if addresses.others is empty %} 
                         Zur gibt es keine weiteren Adressen.
                         <br />
                         {% endif %} 
@@ -86,7 +91,7 @@
                             <th>Funktionen</th>
                         </tr>
                         <tbody>
-                    {% for address in addresses %} 
+                    {% for address in addresses.others %} 
                         <tr>
                             <td>{{ address.addressTitle }}</td>
                             <td>{{ address.companyName1 }} {{ address.companyName2 }} {{ address.companyName3 }}</td>

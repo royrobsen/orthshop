@@ -1,39 +1,39 @@
 
 ::selection {
     color: #fff;
-    background: #c0392b;
+    background: #cc0d17;
 }
 
 ::-moz-selection {
     color: #fff;
-    background: #c0392b;
+    background: #cc0d17;
 }
 
 ::-webkit-selection {
     color: #fff;
-    background: #c0392b;
+    background: #cc0d17;
 }
 
 a:hover,
 a:focus, a.link {
-    color: #e74c3c;
+    color: #cc0d17;
 }
 
 .search-full, .search-input {
-    background: #c0392b;
+    background: #cc0d17;
 }
 
 .search-close {
-    color: #c0392b;
+    color: #cc0d17;
 }
 
 .btn-primary, .btn-primary, .product:hover .add-fav:hover, .product:hover .add-fav.active {
-    background-color: #e74c3c;
+    background-color: #cc0d17;
     color: #FFFFFF;
 }
 
 .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
-    background: #2c88c5;
+    background: #333;
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary, .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
@@ -43,39 +43,42 @@ a:focus, a.link {
 }
 
 .navbar-top {
-    background: #c0392b;
+    background: #fff;
+    border-bottom: 1px solid #1a2e50;
 }
 
 .navbar-tshop {
-    background: #333;
+    background: #fff;
+    height: auto;
+    border-bottom: 3px solid #cc0d17;
 }
 
 .site-color {
-    color: #e74c3c !important;
+    color: #cc0d17 !important;
 }
 
 .navbar-nav > li > a {
-    color: #fff;
+    color: #333;
 }
 
 .nav > li.active, .nav > li > a:hover, .nav > li > a:focus, .nav > li:hover > a {
-    background: #444;
+    background: #fff;
 }
 
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus, .cartMenu:hover > a.dropdown-toggle {
-    background: #444;
+    background: #fff;
 }
 
 .dropdown-menu {
-    border-top: solid #c0392b;
+    border-top: solid #cc0d17;
 }
 
 .search-box:hover .form-control {
-    background: #e74c3c;
+    background: #cc0d17;
 }
 
 .search-box:hover .btn-nobg {
-    color: #e74c3c;
+    color: #cc0d17;
 }
 
 .searchInputBox .search-btn {
@@ -88,31 +91,31 @@ a:focus, a.link {
 
 .action-control a:hover, .action-control a.active {
     color: #fff;
-    background: #c0392b;
+    background: #cc0d17;
 }
 
 .product:hover, .featuredImgLook2 .inner:hover {
-    border: 1px solid #e74c3c;
+    border: 1px solid #cc0d17;
 }
 
 .subCategoryList .thumbnail:hover {
-    border: 1px solid #e74c3c;
+    border: 1px solid #cc0d17;
 }
 
 .pager2 a {
-    border: 1px solid #e74c3c;
+    border: 1px solid #cc0d17;
 }
 
 .pager2 a.selected {
-    background: #e74c3c;
+    background: #cc0d17;
 }
 
 .btn-site, .newsLatterBox .btn {
-    background: #e74c3c;
+    background: #cc0d17;
 }
 
 .btn-discover:hover, .btn-site:hover, .newsLatterBox .btn:hover {
-    background: #c0392b;
+    background: #cc0d17;
 }
 
 .full {
@@ -120,19 +123,19 @@ a:focus, a.link {
 }
 
 .footer a:hover {
-    color: #e74c3c;
+    color: #cc0d17;
 }
 
 .footer {
-    /*border-top: solid 3px #e74c3c;*/
+    /*border-top: solid 3px #cc0d17;*/
 }
 
 .modal-header {
-    background: #e74c3c;
+    background: #cc0d17;
 }
 
 .form-control:focus {
-    border-color: #e74c3c;
+    border-color: #cc0d17;
 }
 
 .new-product {
@@ -140,7 +143,7 @@ a:focus, a.link {
 }
 
 #pager a.cycle-pager-active {
-    background: rgba(231, 76, 60, 0.5);
+    background: rgba(204, 13, 23, 0.5);
 }
 
 /* tree menu */
@@ -157,7 +160,7 @@ a:focus, a.link {
 }
 
 .panel-default > .panel-heading {
-    border-top: 4px solid #e74c3c;
+    border-top: 4px solid #cc0d17;
 }
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus, .nav-tabs > li:hover > a {
@@ -169,31 +172,31 @@ a:focus, a.link {
 }
 
 .socialIcon a:hover {
-    background: #e74c3c;
+    background: #cc0d17;
 }
 
 .cart-actions button, .cart-actions .wishlist {
-    background: none repeat scroll 0 0 #e74c3c;
-    border: 2px solid #c0392b;
+    background: none repeat scroll 0 0 #cc0d17;
+    border: 2px solid #cc0d17;
 }
 
 .cart-actions button:hover {
     background: #fff;
     color: #2c3e50;
-    border: solid 2px #e74c3c;
+    border: solid 2px #cc0d17;
 }
 
 .sp-thumbs a:hover, .sp-thumbs a:active, .sp-current, sp-current:visited {
-    border: 2px solid #e74c3c !important;
+    border: 2px solid #cc0d17 !important;
 }
 
 .promo-1 {
-    background: none repeat scroll 0 0 #c0392b;
+    background: none repeat scroll 0 0 #cc0d17;
 }
 
 @media (max-width: 767px) {
     .miniCartFooter {
-        background: #c0392b !important;
+        background: #cc0d17 !important;
     }
 }
 
@@ -201,19 +204,19 @@ a:focus, a.link {
 }
 
 #pager2 span.cycle-pager-active {
-    background: #c0392b !important;
+    background: #cc0d17 !important;
 }
 
 #pager2 span {
-    border: 2px solid #c0392b
+    border: 2px solid #cc0d17
 }
 
 .orderStep li.active a {
-    background: #e74c3c;
+    background: #cc0d17;
 }
 
 .orderStep li.active a:after {
-    border-top-color: #e74c3c !important;
+    border-top-color: #cc0d17 !important;
 }
 
 darkcoilor {
@@ -221,12 +224,7 @@ darkcoilor {
 }
 
 citecolor {
-    color: #e74c3c !important;
-}
-
-.navbar-brand img {
-    margin-top: -20px;
-    height: 66px;
+    color: #cc0d17 !important;
 }
 
 .logos-grid .wf-cell {

@@ -21,6 +21,8 @@ class ArticleType extends AbstractType
                     array('label' => false))
                 ->add('longDescription', 'textarea', 
                     array('label' => false))
+                ->add('customized', 'integer', 
+                    array('label' => false))
                 ->add('attachment', 'file',
                 array('label' => false, 'required' => false, 'multiple' => true))
                 ->add('category', 'entity', array(

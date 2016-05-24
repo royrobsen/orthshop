@@ -60,7 +60,7 @@
 /* =============================================================== */
 
 a {
-    color: #34495E;
+    color: #1a2e50;
     text-decoration: none;
     outline: none !important;
     -moz-transition: all .2s ease-in;
@@ -83,7 +83,7 @@ ul, ol {
 body {
     margin: 0;
     padding: 0;
-    color: #34495E;
+    color: #1a2e50;
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 14px;
     line-height: 21px;
@@ -551,7 +551,7 @@ input[type="text"], input[type="password"], input[type="email"] {
 }
 
 .btn-dark {
-    background-color: #34495e;
+    background-color: #1a2e50;
     color: #FFFFFF;
 }
 
@@ -585,7 +585,7 @@ input[type="text"], input[type="password"], input[type="email"] {
 }
 
 .btn-danger {
-    background-color: #E74C3C;
+    background-color: #cc0d17;
     color: #FFFFFF;
 }
 
@@ -600,7 +600,7 @@ input[type="text"], input[type="password"], input[type="email"] {
 }
 
 .btn-danger.disabled, .btn-danger[disabled], fieldset[disabled] .btn-danger, .btn-danger.disabled:hover, .btn-danger[disabled]:hover, fieldset[disabled] .btn-danger:hover, .btn-danger.disabled:focus, .btn-danger[disabled]:focus, fieldset[disabled] .btn-danger:focus, .btn-danger.disabled:active, .btn-danger[disabled]:active, fieldset[disabled] .btn-danger:active, .btn-danger.disabled.active, .btn-danger.active[disabled], fieldset[disabled] .btn-danger.active {
-    background-color: #E74C3C;
+    background-color: #cc0d17;
 }
 
 .btn-success {
@@ -642,7 +642,7 @@ input[type="text"], input[type="password"], input[type="email"] {
 }
 
 .btn-inverse {
-    background-color: #34495E;
+    background-color: #1a2e50;
     color: #FFFFFF;
 }
 
@@ -657,7 +657,7 @@ input[type="text"], input[type="password"], input[type="email"] {
 }
 
 .btn-inverse.disabled, .btn-inverse[disabled], fieldset[disabled] .btn-inverse, .btn-inverse.disabled:hover, .btn-inverse[disabled]:hover, fieldset[disabled] .btn-inverse:hover, .btn-inverse.disabled:focus, .btn-inverse[disabled]:focus, fieldset[disabled] .btn-inverse:focus, .btn-inverse.disabled:active, .btn-inverse[disabled]:active, fieldset[disabled] .btn-inverse:active, .btn-inverse.disabled.active, .btn-inverse.active[disabled], fieldset[disabled] .btn-inverse.active {
-    background-color: #34495E;
+    background-color: #1a2e50;
 }
 
 .btn-stroke-dark, .btn-stroke-light {
@@ -737,7 +737,7 @@ input[type="text"], input[type="password"], input[type="email"] {
 }
 
 p.required, .required sup {
-    color: #E74C3C;
+    color: #cc0d17;
 }
 
 .pagination li.active a {
@@ -773,6 +773,7 @@ legend {
 
 .navbar-tshop {
     width: 100%;
+    border-bottm: 1px solid red;
 }
 
 .menuWrap {
@@ -971,7 +972,7 @@ legend {
 }
 
 .userMenu li a {
-    color: #FFFFFF;
+    color: #333;
     display: block;
     float: right;
     font-size: 12px;
@@ -3387,7 +3388,7 @@ h5.parallaxSubtitle {
 
 .footer h3 {
     border-bottom: 1px solid #BAC1C8;
-    color: #54697E;
+    color: #1a2e50;
     font-size: 18px;
     font-weight: 600;
     line-height: 27px;
@@ -3553,7 +3554,7 @@ h5.parallaxSubtitle {
 }
 
 .headerOffset {
-    padding-top: 120px;
+    padding-top: 180px;
 }
 
 .subCategoryList .thumbnail {
@@ -3734,7 +3735,7 @@ h5.parallaxSubtitle {
     margin-bottom: 0;
     margin-top: 0;
     padding-bottom: 0;
-    color: #34495E;
+    color: #1a2e50;
     font-size: 15px;
 }
 
@@ -5319,9 +5320,13 @@ div.quickview {
     }
 
     .megamenu-content ul li a, .megamenu-content ul li p, .megamenu-content ul li, .navbar-nav .dropdown a, .navbar-nav .dropdown {
-        color: #fff;
+        color: #333;
     }
 
+    .promo-menu1 {
+        color: #fff !important;
+    }
+    
     .searchInputBox {
         max-width: 80%;
     }
@@ -5360,7 +5365,7 @@ div.quickview {
 
     /***  banner slider responsive  ***/
     .banner {
-        margin-top: 70px !important;
+        margin-top: 130px !important;
     }
 
     .sliderTextFull .inner.dark {
@@ -6063,4 +6068,29 @@ div.quickview {
 
 .userInfo h2 {
     text-align: center;
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+.btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    font-size: 24px;
+    line-height: 1.33;
+    border-radius: 35px;
+    background: #cc0d17;
+}
+
+.btn-circle.btn-xl:hover{
+    transform: scaleX(-1);
 }

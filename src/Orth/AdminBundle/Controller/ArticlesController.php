@@ -75,8 +75,12 @@ class ArticlesController extends Controller
                   $attributeRef[$variantvalue->getAttributeRef()] = $attrName->getAttributeName();
               }
         }
-        foreach ( $attributeRef as $key=>$value ) {
-            $usedattrNames[] = array('id' => $key, 'attributeName' => $value);
+        if(isset($attributeRef)) {
+            foreach ( $attributeRef as $key=>$value ) {
+                $usedattrNames[] = array('id' => $key, 'attributeName' => $value);
+            }
+        } else {
+            $usedattrNames = NULL;
         }
                 
         $allAttrNames = $em->getRepository('OrthIndexBundle:ArticleAttributes')->findAll();
@@ -345,12 +349,82 @@ class ArticlesController extends Controller
                 $em->persist($variant);
                 
                 $i = 0;
+                if(isset($formData['data2'])) {
+                    foreach ($formData['data2'] as $attrData) {
+
+                        if($i % 2 == 0) { 
+
+                            $attrVal = new ArticleAttributeValues();
+                            $attrVal->setVariants($variant);
+                            $attrVal->setSorting(0);
+                            $attrVal->setAttributeValue($attrData);
+                            $attrName = $em->getRepository('OrthIndexBundle:ArticleAttributes')->findOneBy(array('id' => $attrNames[$i]));
+                            $attrVal->setAttrName($attrName);
+
+                            //$attrVal->setAttributeRef($attrNames[$i]);
+                        }
+                        elseif($i % 2 != 0) {
+                            $attrVal->setAttributeUnit($attrData);
+                            $em->persist($attrVal);
+                        }
+
+                        $i++;
+
+                    }
+                }
+                $em->flush();
+                $this->container->get('fos_elastica.object_persister.search.article')->replaceOne($article);
+            }
+            return $this->redirect($this->generateUrl('orth_admin_article', array('id' => $id)), 301);
+        }
+         
+        return $this->render('OrthAdminBundle:Articles:newVar.html.twig', array('attrNames' => $attrNames, 'artId' => $id, 'article' => $article));
+
+    }
+    
+    public function addarticlevarAction(Request $request, $id)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $article = $em->getRepository('OrthIndexBundle:Articles')->findOneBy(array('id' => $id));
+       if( $article->getVariants()[0] != NULL) {
+        foreach ($article->getVariants()[0]->getVariantValues() as $var) {
+            $attrNames[] = $var->getAttrName();
+        }
+       } else {
+           $attrNames = NULL;
+       }
+        if($request->request->get('data1') != NULL ) {
+            $id = $request->request->get('artId');
+            $article = $em->getRepository('OrthIndexBundle:Articles')->findOneBy(array('id' => $id));
+
+            foreach ( $request->request->get('data1') as $formData) {
+                
+                $variant = new ArticleSuppliers();
+
+                $variant->setArticles($article);
+                $variant->setAmountUnit($request->request->get('amountunit'));
+                $variant->setMinOrder($request->request->get('minorder'));
+                $variant->setPriceUnit($request->request->get('priceunit'));
+                $variant->setVpe($request->request->get('vpe'));
+                $variant->setVpePackage($request->request->get('vpepackage'));
+                $variant->setVpePalette($request->request->get('vpepalette'));
+                $variant->setRank(0);
+                $variant->setAttributes(0);
+                $variant->setAddressRef(0);
+                $variant->setSupplierArticleNumber($formData[0]);
+                $variant->setPrice($formData[1]);
+                
+                $em->persist($variant);
+                
+                $i = 0;
                 
                 foreach ($formData['data2'] as $attrData) {
-                    
-                    if($i % 2 == 0) { 
-                        $attrVal = new ArticleAttributeValues();
 
+                    if($i % 2 == 0) { 
+
+                        $attrVal = new ArticleAttributeValues();
                         $attrVal->setVariants($variant);
                         $attrVal->setSorting(0);
                         $attrVal->setAttributeValue($attrData);

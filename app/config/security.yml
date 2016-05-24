@@ -30,7 +30,6 @@ security:
             security: false
         default:
             anonymous: ~
-            pattern: ^/
             form_login:
                 login_path: /login
                 check_path: /login_check

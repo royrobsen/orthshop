@@ -6,19 +6,19 @@
                                 {% for product in cart %}
                                 <tr class="miniCartProduct {{product.varref}}">
                                     <td style="width:20%"  rowspan="2" class="miniCartProductThumb">
-                                        <div><a href="product-details.html"> <img src="/images/product/nw/{{product.image.0.picName}}" style="margin: 10px; max-height: 90px;" class="img-responsive" alt="img">
+                                        <div><a href="/product/{{product.pid}}-{{product.shortName|slugify}}"> <img src="/images/product/nw/{{product.image.0.picName}}" style="margin: 10px; max-height: 90px;" class="img-responsive" alt="img">
                                         </a></div>
                                     </td>
                                     <td style="width:80%; vertical-align: top;">
                                         <div class="miniCartDescription">
-                                            <h4><a href="product-details.html"> {{product.shortName}}</a></h4>
+                                            <h4><a href="/product/{{product.pid}}-{{product.shortName|slugify}}"> {{product.shortName}}</a></h4>
                                             <span class="size">{{product.articlenumber}}</span>
                                             <span class="size">{% for var in product.varData|reverse %} {% if var.attributeName is defined %}{{var.attributeName}}{% endif %}{% if var.attributeValue is defined %}{{var.attributeValue}} {{var.attributeUnit}} | {% endif %}{% endfor %}</span>
                                         </div>
                                     </td>
                                     </tr>
                                 <tr class="tr-border miniCartAction {{product.varref}}">
-                                    <td style="width:80%" class="delete"><a> <span>{{product.amount}} x {{product.price|number_format(2)}} € </span> <a id="{{product.varref}}" class="btn btn-danger btn-sm pull-right">Entfernen </a> <b class="pull-right" style="padding-right: 10px;"><span class="jSum">{{(product.amount * product.price)|number_format(2)}}</span> €  </b></td>
+                                    <td style="width:80%" class="delete"><a> <span>{{product.amount}} x {{product.price|number_format(2)}} € </span> <a id="{{product.varref}}" class="btn btn-danger btn-sm pull-right entfernen">Entfernen </a> <b class="pull-right" style="padding-right: 10px;"><span class="jSum">{{(product.amount * product.price)|number_format(2)}}</span> €  </b></td>
                                 </tr>
                                 {% set gesamtpreis = gesamtpreis + (product.amount * product.price) %}
                                 {% endfor %}

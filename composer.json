@@ -26,7 +26,8 @@
         "cocur/slugify": "^2.0"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3"
+        "sensio/generator-bundle": "~2.3",
+        "phpdocumentor/phpdocumentor": "~2.2"
     },
     "scripts": {
         "post-root-package-install": [

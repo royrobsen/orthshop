@@ -114,15 +114,58 @@ class IndexController extends Controller
         return $this->render('OrthIndexBundle:Index:berufsbekleidung.html.twig');
     }
     
-    public function emblemserviceAction() {
-        return $this->render('OrthIndexBundle:Index:emblemservice.html.twig');
-    }
-
-    public function hygieneartikelAction() {
-        return $this->render('OrthIndexBundle:Index:hygieneartikel.html.twig');
+    public function cteilemanagementAction() {
+        return $this->render('OrthIndexBundle:Index:cteilemanagement.html.twig');
     }
 
     public function werkzeugtechnikAction() {
         return $this->render('OrthIndexBundle:Index:werkzeugtechnik.html.twig');
+    } 
+    
+    public function unternehmenAction() {
+        return $this->render('OrthIndexBundle:Index:unternehmen.html.twig');
+    } 
+    
+    public function teamAction() {
+        return $this->render('OrthIndexBundle:Index:team.html.twig');
+    } 
+    
+    public function kontaktAction(Request $request) {
+        
+        $form = $this->createFormBuilder()
+                ->add('firstname', 'text', array('label' => false, 'attr' => array('class' => 'form-control')))
+                ->add('lastname', 'text', array('label' => false, 'attr' => array('class' => 'form-control')))
+                ->add('email', 'email', array('label' => false, 'attr' => array('class' => 'form-control')))
+                ->add('subject', 'text', array('label' => false, 'attr' => array('class' => 'form-control')))
+                ->add('message', 'textarea', array('label' => false, 'attr' => array('class' => 'form-control', 'style' => 'height: 200px; resize: none;')))
+                ->add('save', 'submit', array('label' => 'Absenden', 'attr' => array('class' => 'btn btn-primary')))
+                ->getForm();
+        
+        
+        $form->handleRequest($request);
+        
+        $formData = $form->getData();
+        
+        if ($form->isValid()) {
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Kontaktformular')
+                ->setFrom('no-reply@ute-orth.de')
+                ->setTo('info@ute-orth.de')
+                ->setContentType("text/html")
+                ->setBody(
+                    $this->renderView(
+                        'OrthIndexBundle:Mail:kontaktform.html.twig',
+                        array('firstname' => $formData['firstname'], 'lastname' => $formData['lastname'], 'email' => $formData['email'], 'subject' => $formData['subject'], 'message' => $formData['message']),
+                    'text/html'
+                    )
+                );
+            
+            $this->get('mailer')->send($message);
+            
+            $this->get('session')->getFlashBag()->add('notice', 'Nachricht wurde erfolgreich versendet!');
+        }
+
+        
+        return $this->render('OrthIndexBundle:Index:kontakt.html.twig', array('form' => $form->createView()));
     } 
 }

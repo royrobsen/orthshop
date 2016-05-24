@@ -31,7 +31,12 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-
+    
+services:
+ twig.extension.text:
+     class: Twig_Extensions_Extension_Text
+     tags:
+         - { name: twig.extension }
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
@@ -152,7 +157,8 @@ fos_elastica:
                                 properties:
                                     SupplierArticleNumber: 
                                        type: string 
-                                    price: ~
+                                    price:
+                                        type: double
                                     variantvalues:
                                         type: nested
                                         properties:
@@ -160,6 +166,10 @@ fos_elastica:
                                                 type: string 
                                             attributeUnit:
                                                 type: string 
+                                            attrName:
+                                                type: nested
+                                                properties:
+                                                    attributeName: ~
                         analyzer: custom_analyzer
                         analyzer: my_analyzer
                         analyzer: custom_search_analyzer    
@@ -173,7 +183,8 @@ fos_elastica:
                                 properties:
                                     SupplierArticleNumber: 
                                        type: string 
-                                    price: ~
+                                    price: 
+                                        type: double
                                     variantvalues:
                                         type: nested
                                         properties:
@@ -181,6 +192,10 @@ fos_elastica:
                                                 type: string 
                                             attributeUnit:
                                                 type: string 
+                                            attrName:
+                                                type: nested
+                                                properties:
+                                                    attributeName: ~
                         analyzer: custom_analyzer
                         analyzer: my_analyzer
                         analyzer: custom_search_analyzer    
@@ -205,6 +220,8 @@ fos_elastica:
                         copyTo: [allField, allcustField]
                     catRef:
                         type: integer
+                    customized:
+                        type: integer    
                     variants: 
                         type: nested
                         properties:
@@ -213,7 +230,8 @@ fos_elastica:
                                analyzer: custom_analyzer
                                analyzer: custom_search_analyzer
                                copyTo: [allField, allcustField]
-                            price: ~
+                            price:
+                                type: double
                             variantvalues:
                                 type: nested
                                 properties:
@@ -227,6 +245,10 @@ fos_elastica:
                                         analyzer: custom_analyzer
                                         analyzer: custom_search_analyzer    
                                         copyTo: [allField, allcustField]
+                                    attrName:
+                                        type: nested
+                                        properties:
+                                            attributeName: ~
                     custdata: 
                         type: object
                         properties:

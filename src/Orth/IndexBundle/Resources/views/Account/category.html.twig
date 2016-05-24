@@ -9,73 +9,60 @@
                 <li><a href="/">Home</a></li>
                 <li><a href="/account/my-account">Mein Konto</a></li>
                 <li><a href="/account/config">Konfiguration</a></li>
-                <li class="active"> Kategorien </li>
+                <li class="active"> Kategorie umbenennen </li>
             </ul>
         </div>
     </div>
     <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-7">
 
-        <div class="col-lg-10 col-md-10 col-sm-7">
-            <h1 class="section-title-inner"><span><i class="fa fa-map-marker"></i> Meine Kategorien </span></h1>
-            
-            <p>Ändern Sie hier Ihre Kategorien für Ihr Bestellsystem. Sie können für eine Kategorie in maximal 2 Unterkategorien aufteilen.</p>
-                {% for flashMessage in app.session.flashbag.get('notice') %}
-                    <div class="alert alert-success">
-                        {{ flashMessage }}
-                    </div>
-                {% endfor %}
+            <h1 class="section-title-inner"><span><i class="fa fa-map-marker"></i> Kategorie umbenennen </span></h1>
+
             <div class="row userInfo">
 
-                <div class="col-lg-12">
-                    <h2 class="block-title-2"> Ihre Kategorien werden hier angezeigt. </h2>
-                    <p>Sie befinden sich zur Zeit in der Kategorie <b>{{mainCategory.categoryName}}</b></p>
+
+                <div class="col-lg-12 col-xs-12">
+                    <h2 class="block-title-2"> Sie können die Kategorie hier umbenennen. </h2>
+
+                    <p class="required"><sup>*</sup> Pflichtfeld</p>
                 </div>
 
-                <div class="w100 clearfix">
-                    <div class="col-lg-12">
-                        {% if categories is empty %} 
-                        Sie haben noch keine Kategorien erstellt.
-                        <br />
-                        {% endif %} 
+                {{ form_start(form) }}
+                {{ form_errors(form) }}	                    
+                    <div class="col-xs-12 col-sm-6">
+                        
+                        <div class="form-group required">
+                            <label for="InputCompany">Kategorienname <sup>*</sup></label>
+                            {{ form_widget(form.categoryName, { 'attr': {'class': 'form-control', 'placeholder' : 'Name der Kategorie'} }) }}
+                        </div>
+
                     </div>
-                    <form id="filter-form"><label>Kategorie suchen: </label><input name="filter" class="form-control" id="filter" value="" maxlength="30" size="30" type="text"></form>
-                    <table class="table list">
-                        <tr>
-                            <th>Kategorie</th>
 
-                            <th>Funktionen</th>
-                        </tr>  
-                    {% for category in categories %} 
-                        <tr>
-                            <td><a href="/account/config/category/{{category.id}}">{{ category.categoryName }}</a></td>
-                            <td>{% if level != 1 %}<a href="/account/config/category/{{category.id}}" class="btn btn-sm btn-warning"> <i
-                                    class="fa fa-th-list"> </i> Unterkategorien </a>{% endif %} <a href="/account/config/categories/edit/{{category.id}}" class="btn btn-sm btn-success"> <i
-                                    class="fa fa-edit"> </i> Bearbeiten </a> <a data-toggle="modal" data-target="#myModal" class="btn btn-sm btn-danger delete" id="{{category.id}}"> <i
-                                    class="fa fa-minus-circle"></i> Löschen </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                            </tr></tbody></table>
-                </div>
-                <!--/.w100-->
+                    <div class="col-lg-12 col-sm-6 clearfix">
+                        {{form_widget(form.save, { 'attr': {'class':'btn btn-primary'}} ) }}
+                    </div>
 
-                <div class="col-lg-12 clearfix">
-                    <a class="btn   btn-primary" href="/account/config/category/{{mainCategory.id}}/add-category"><i class="fa fa-plus-circle"></i> Neue Kategorie hinzufügen </a>
-                </div>
+                {{ form_end(form) }}
 
-                <div class="col-lg-12 clearfix">
+
+                <div class="col-lg-12 col-xs-12  clearfix ">
+
                     <ul class="pager">
                         <li class="previous pull-right"><a href="/shop"> <i class="fa fa-home"></i> Zum Shop </a>
                         </li>
-                        <li class="next pull-left"><a href="/account/config"> &larr; Zurück zu den Kategorien</a></li>
+                        <li class="next pull-left"><a href="/account/my-account"> &larr; Zurück zu meinem Konto</a></li>
                     </ul>
                 </div>
 
+
             </div>
             <!--/row end-->
+
+
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-5">
         </div>
 
-        <div class="col-lg-3 col-md-3 col-sm-5"></div>
 
     </div>
     <!--/row-->

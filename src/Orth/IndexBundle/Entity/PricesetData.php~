@@ -164,4 +164,32 @@ class PricesetData
     {
         return $this->priceset;
     }
+    /**
+     * @var integer
+     */
+    private $articleRef;
+
+
+    /**
+     * Set articleRef
+     *
+     * @param integer $articleRef
+     * @return PricesetData
+     */
+    public function setArticleRef($articleRef)
+    {
+        $this->articleRef = $articleRef;
+
+        return $this;
+    }
+
+    /**
+     * Get articleRef
+     *
+     * @return integer 
+     */
+    public function getArticleRef()
+    {
+        return $this->articleRef;
+    }
 }

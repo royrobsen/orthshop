@@ -172,12 +172,12 @@
                                         {% for product in cart %}
                                         <tr class="miniCartProduct {{product.varref}}">
                                             <td style="width:20%"  rowspan="2" class="miniCartProductThumb">
-                                                <div><a href="/product?q={{product.artId}}"> <img src="/images/product/nw/{{product.image.0.picName}}" style="margin: 10px; max-height: 90px;" class="img-responsive" alt="img">
+                                                <div><a href="/product?q={{product.id}}"> <img src="/images/product/nw/{{product.image.0.picName}}" style="margin: 10px; max-height: 90px;" class="img-responsive" alt="img">
                                                 </a></div>
                                             </td>
                                             <td style="width:80%; vertical-align: top;">
                                                 <div class="miniCartDescription">
-                                                    <h4><a href="/product?q={{product.artId}}"> {{product.shortName}}</a></h4>
+                                                    <h4><a href="/product?q={{product.id}}"> {{product.shortName}}</a></h4>
                                                     <span class="size">{{product.articlenumber}}</span>
                                                     <span class="size">{% for var in product.varData|reverse %} {% if var.attributeName is defined %}{{var.attributeName}}{% endif %}{% if var.attributeValue is defined %}{{var.attributeValue}} {{var.attributeUnit}} | {% endif %}{% endfor %}</span>
                                                 </div>

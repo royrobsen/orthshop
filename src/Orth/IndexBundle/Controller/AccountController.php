@@ -6,166 +6,217 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use Orth\IndexBundle\Entity\Customers;
-use Orth\IndexBundle\Entity\CustomersAddresses;
-use Orth\IndexBundle\Entity\Customcategory;
-use Orth\IndexBundle\Entity\Users;
-use Orth\IndexBundle\Entity\UserPermissions;
-use Orth\IndexBundle\Entity\Tokens;
-
-use Orth\IndexBundle\Form\Type\AddressType;
 use Orth\IndexBundle\Form\Type\CustomerType;
+
+use Orth\IndexBundle\Entity\CustomersAddresses;
+
+use Orth\IndexBundle\Entity\Customcategory;
+use Orth\IndexBundle\Form\Type\CustomcategoryType;
+
+use Orth\IndexBundle\Entity\Users;
 use Orth\IndexBundle\Form\Type\UserType;
 use Orth\IndexBundle\Form\Type\PasswordType;
-use Orth\IndexBundle\Form\Type\CustomcategoryType;
+
+use Orth\IndexBundle\Entity\UserPermissions;
+use Orth\IndexBundle\Entity\Tokens;
+use Orth\IndexBundle\Form\Type\AddressType;
 use Orth\IndexBundle\Form\Model\ChangePassword;
 
 class AccountController extends Controller
 {
+    
+    // returns account root page
     public function myaccountAction() {
+        
         return $this->render('OrthIndexBundle:Account:myaccount.html.twig');
+        
     }
     
+    // returns order history of current user
     public function orderhistoryAction() {
         
+        // loads current user, '.anon' if not logged in
         $user = $this->get('security.token_storage')->getToken()->getUser();
         
-        $em = $this->getDoctrine()->getManager();
+        $em_orders = $this->getDoctrine()->getManager()->getRepository('OrthIndexBundle:Orders');
         
-        $query = $em->createQuery( "SELECT o, sum(op.posPrice * op.posAmount) as sumvalue FROM OrthIndexBundle:Orders o JOIN o.positions op WHERE o.customerRef = :customerRef GROUP BY o.id")
-                ->setParameter(':customerRef', $user->getCustomerRef());
-        
-        $orders = $query->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+        $orders = $em_orders->getOrderHistory($user);
 
         return $this->render('OrthIndexBundle:Account:orderhistory.html.twig', array('orders' => $orders));
     }  
     
+    // returns single order of current user
     public function orderAction($id) {
         
+        // load security auth check
         $securityContext = $this->container->get('security.authorization_checker');
 
+        // check if user is logged in
         if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
         
+            
             $user = $this->get('security.token_storage')->getToken()->getUser();
 
             $em = $this->getDoctrine()->getManager();
 
-            $query = $em->createQuery( "SELECT o,op FROM OrthIndexBundle:Orders o JOIN o.positions op WHERE o.customerRef = :customerRef AND o.id = :id")
-                    ->setParameter(':customerRef', $user->getCustomerRef())
-                    ->setParameter(':id', $id);
+            // load repository classes
+            $em_orders = $em->getRepository('OrthIndexBundle:Orders');
+            $em_customersaddresses = $em->getRepository('OrthIndexBundle:CustomersAddresses');
+            $em_shoppingCart = $em->getRepository('OrthIndexBundle:ShoppingCart');
+            
+            // find order
+            $order = $em_orders->getOrder($user, $id);
 
-            $order = $query->getResult();
+            // find addresses
+            $invoiceAddress = $em_customersaddresses->getAddressById($user, $order[0]->getInvoiceAdrRef()); 
+            $shippingAddress = $em_customersaddresses->getAddressById($user, $order[0]->getShippingAdrRef()); 
 
-            $invoiceAddress = $em->getRepository('OrthIndexBundle:CustomersAddresses')->findBy(array('customerRef' => $user->getCustomerRef(), 'id' => $order[0]->getInvoiceAdrRef())); 
-            $shippingAddress = $em->getRepository('OrthIndexBundle:CustomersAddresses')->findBy(array('customerRef' => $user->getCustomerRef(), 'id' => $order[0]->getShippingAdrRef())); 
-
-                foreach ($order[0]->getPositions() as $item) {
-
-                    $em = $this->getDoctrine()->getManager();
-                    $product = $em->getRepository('OrthIndexBundle:ArticleSuppliers')->find($item->getVarRef());
-
-                    $repository = $this->getDoctrine()->getRepository('OrthIndexBundle:articleAttributeValues');
-
-                    $query = $repository->createQueryBuilder('aav')
-                        ->select('aa, aav')
-                        ->innerJoin('OrthIndexBundle:ArticleAttributes', 'aa', 'WITH', 'aav.attributeRef = aa.id')
-                        ->where('aav.varRef = :string')
-                        ->setParameter('string', $item->getVarRef())
-                        ->getQuery();
-
-                    $varData = $query->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
-
-                    $price = $product->getPrice();
-
-                if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-                    $customerData = $em->getRepository('OrthIndexBundle:Customerdata')->findOneBy(array('varRef' => $item->getVarRef(), 'userRef' => $user->getId(), 'customerRef' => $user->getCustomerRef()));
-                    if($customerData != NULL AND $customerData->getCustomPrice() != 0) {
-                        $price = $customerData->getCustomPrice();
-                    }
-                }  
-
-                    $cartItems[] = array('shortName' => $product->getArticles()->getShortName(), 'artId' => $product->getArticles()->getId(), 'articlenumber' => $product->getSupplierArticleNumber(), 'amount' => $item->getPosAmount(), 'image' => $product->getArticles()->getImages(), 'varData' => $varData, 'price' => $price, 'varref' => $item->getVarRef());
-                }
+            // build cart of the order
+            $cartItems = $em_shoppingCart->buildCart($order[0]->getPositions(), $user);
         
-        } else { exit; }
-        return $this->render('OrthIndexBundle:Account:order.html.twig', array('order' => $order, 'invAdr' => $invoiceAddress, 'delAdr' => $shippingAddress, 'cart' => $cartItems));
+        } else { 
+            // force to exit if user is not logged in
+            exit; 
+        }
+        
+        return $this->render('OrthIndexBundle:Account:order.html.twig', 
+                array('order' => $order, 'invAdr' => $invoiceAddress, 
+                      'delAdr' => $shippingAddress, 'cart' => $cartItems));
+        
     }  
+  
+    // returns config page for account (navigation here only)
     public function configAction() {
+    
         return $this->render('OrthIndexBundle:Account:config.html.twig');
+        
     }  
+    
+    // returns page with lists of customers address NOTE: CUSTOMERS, NOT USERS!
     public function myaddressAction() {
         
+        // loads current user, '.anon' if not logged in
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        
-        $addresses = new CustomersAddresses();      
-        
+                
         $em = $this->getDoctrine()->getManager();
-        $addresses = $em->getRepository('OrthIndexBundle:CustomersAddresses')->findBy(array('customerRef' => $user->getCustomerRef(), 'primaryAddress' => '0', 'defaultDeliveryAddress' => '0'));
-        $invoiceAddress = $em->getRepository('OrthIndexBundle:CustomersAddresses')->findBy(array('customerRef' => $user->getCustomerRef(), 'primaryAddress' => '1'));
-        $deliveryAddress = $em->getRepository('OrthIndexBundle:CustomersAddresses')->findBy(array('customerRef' => $user->getCustomerRef(), 'defaultDeliveryAddress' => '1'));
+        
+        $em_customersaddresses = $em->getRepository('OrthIndexBundle:CustomersAddresses');
+        
+        // returns array of primary, delivery and all other addresses by customer
+        $addresses = $em_customersaddresses->getAddresses($user);
                   
-        return $this->render('OrthIndexBundle:Account:myaddress.html.twig', array('addresses' => $addresses, 'invoiceAddress' => $invoiceAddress, 'deliveryAddress' => $deliveryAddress));
+        return $this->render('OrthIndexBundle:Account:myaddress.html.twig', array('addresses' => $addresses));
+        
     } 
+    
+    // returns page with form to add address to a customer
     public function addaddressAction(Request $request) {
         
+        // loads current user, '.anon' if not logged in
         $user = $this->get('security.token_storage')->getToken()->getUser();
         
+        // create new address object
         $addresses = new CustomersAddresses(); 
 
+        // create form
         $form = $this->createForm(new AddressType(), $addresses);
         
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            
             $addresses->setCustomerRef($user->getCustomerRef());
             $addresses->setPrimaryAddress(0);
             $addresses->setDefaultDeliveryAddress(0);
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($addresses);
             $em->flush();
+            
+            // generate 'success' flash bag message to show for user
             $this->get('session')->getFlashBag()->add('notice', 'Adresse wurde erfolgreich hinzugefügt!');
             
+            // redirect to account address list
             return $this->redirectToRoute('orth_account_myaddress');
         }
         
         return $this->render('OrthIndexBundle:Account:addaddress.html.twig', array('form' => $form->createView()));
     } 
+    
+    // delete address by id; returns no page
     public function deleteAddressAction($id) {
           
-        $em = $this->getDoctrine()->getManager();
-        $address = $em->getRepository('OrthIndexBundle:CustomersAddresses')->find($id);
+        // loads current user, '.anon' if not logged in
+        $user = $this->get('security.token_storage')->getToken()->getUser();
         
+        $em = $this->getDoctrine()->getManager();
+        $em_customersaddresses = $em->getRepository('OrthIndexBundle:CustomersAddresses');
+        
+        // returns address object by customer and (address)id
+        $address = $em_customersaddresses->getAddressById($user, $id);
+        
+        // deleting address from database
         $em->remove($address);
         $em->flush();
-        $this->get('session')->getFlashBag()->add('notice', 'Adresse wurde erfolgreich gelöscht!');
         
+        // generate 'success' flash bag message to show for user
+        $this->get('session')->getFlashBag()->add('notice', 'Die Adresse wurde erfolgreich gelöscht!');
+        
+        // redirect to account address list
         return $this->redirectToRoute('orth_account_myaddress');
-    } 
-    public function editaddressAction($id, Request $request) {
         
-        $address = new CustomersAddresses(); 
+    } 
+    
+    // returns page with form to edit address of a customer
+    public function editaddressAction($id, Request $request) {
+           
+        // loads current user, '.anon' if not logged in
+        $user = $this->get('security.token_storage')->getToken()->getUser();
         
         $em = $this->getDoctrine()->getManager();
-        $address = $em->getRepository('OrthIndexBundle:CustomersAddresses')->find($id);
+        $em_customersaddresses = $em->getRepository('OrthIndexBundle:CustomersAddresses');
         
+        // returns address object by customer and (address)id
+        $address = $em_customersaddresses->getAddressById($user, $id);
+        
+        // check if address exists, if not show fail message to user and redirect
+        if($address == NULL) {
+            // generate 'fail' flash bag message to show for user
+            $this->get('session')->getFlashBag()->add('warning', 'Adresse existiert nicht!');
+            
+            // redirect to account address list
+            return $this->redirectToRoute('orth_account_myaddress');
+        }
+        
+        // create form
         $form = $this->createForm(new AddressType(), $address);
         
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            
+            // save changes to database
             $em->persist($address);
             $em->flush();
+            
+            // generate 'success' flash bag message to show for user
             $this->get('session')->getFlashBag()->add('notice', 'Adresse wurde erfolgreich gespeichert!');
             
+            // redirect to account address list
             return $this->redirectToRoute('orth_account_myaddress');
         }
         
         return $this->render('OrthIndexBundle:Account:editaddress.html.twig', array('form' => $form->createView()));
+        
     } 
+    
+    // returns page with form of personal info, such as firstname, lastname, email
     public function personalinfoAction(Request $request) {
         
+        // loads current user, '.anon' if not logged in
         $user = $this->get('security.token_storage')->getToken()->getUser();
-                
+         
+        // create form
         $form = $this->createForm(new UserType(), $user);
         
         $form->handleRequest($request);
@@ -173,125 +224,166 @@ class AccountController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             
-            
-            
+            // save changes to database
             $em->persist($user);
             $em->flush();
+            
+            // generate 'success' flash bag message to show for user
             $this->get('session')->getFlashBag()->add('notice', 'Ihre Daten wurden erfolgreich gespeichert!');
         }
         
         return $this->render('OrthIndexBundle:Account:personalinfo.html.twig', array('form' => $form->createView()));
     } 
     
+    // returns page with lists of articles to be remembered
     public function wishlistAction() {
         
         return $this->render('OrthIndexBundle:Account:wishlist.html.twig');
         
     } 
     
+    // returns page to change users password, no further auth required, since user is already logged in
     public function changePasswordAction(Request $request) {
         
+      // set empty error variable
+      $error = "";
+      
+      // create new ChangePassword object
       $changePasswordModel = new ChangePassword();
       
+      // create form
       $form = $this->createForm(new PasswordType(), $changePasswordModel);
-      
-      $authenticationUtils = $this->get('security.authentication_utils');
-      
+            
       $form->handleRequest($request);
 
       if ($form->isValid()) {
           
+          // loads current user, '.anon' if not logged in
           $user = $this->get('security.token_storage')->getToken()->getUser();
           
           $encoderFactory = $this->get('security.encoder_factory');
           $encoder = $encoderFactory->getEncoder($user);
           
           $salt = '$2a$12$uWepESKverBsrLAuOPY';
+          
+          // returns data of the form
           $newPw = $form->getData();
 
+          // encode new password with salt
           $password = $encoder->encodePassword($newPw->getNewPassword(), $salt);
           $user->setPasskey($password);
           
           $em = $this->getDoctrine()->getManager();
+          
+          // save changes to database
           $em->persist($user);
           $em->flush();
           
+          // generate 'success' flash bag message to show for user
           $this->get('session')->getFlashBag()->add('success', 'Ihr Passwort wurde erfolgreich geändert. Sie können sich nun damit einloggen!');
-
           
       }
-        $error = "";
           return $this->render('OrthIndexBundle:Account:changePw.html.twig', array(
           'form' => $form->createView(), 'error' => $error));
-      }
-      
+    }
+    
+    // returns config page for custom categories
     public function configCategoriesAction() {
         
+        // loads current user, '.anon' if not logged in
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        
-        $categories = new Customcategory();      
-        
+                
         $em = $this->getDoctrine()->getManager();
-        $categories = $em->getRepository('OrthIndexBundle:Customcategory')->findBy(array('customerRef' => $user->getCustomerRef(), 'userRef' => $user->getId(), 'parentRef' => NULL));
-             
+        $em_customercategory = $em->getRepository('OrthIndexBundle:Customcategory');
+        
+        // returns array of objects of categories with subarrays of children categories by customer
+        $categories = $em_customercategory->getCategoryCustom($user);
+                
         return $this->render('OrthIndexBundle:Account:categories.html.twig', array('categories' => $categories));
-    }  
-      
+        
+    }
+    
+    // returns page with form to add a new custom main category
     public function addcategoryAction(Request $request) {
         
+        // loads current user, '.anon' if not logged in
         $user = $this->get('security.token_storage')->getToken()->getUser();
         
+        // create new category object
         $category = new Customcategory(); 
+        
+        // create new userpermissions object
         $userPerm = new UserPermissions(); 
         
+        // create new form 
         $form = $this->createForm(new CustomcategoryType(), $category);
+        
+        // remove unnecessary fields from form object, only category name remains
         $form->remove('parentRef');
         $form->remove('userRef');
         $form->remove('customerRef');
         
         $form->handleRequest($request);
         
+        // check if form is valid
         if ($form->isValid()) {
-                       
+            
             $category->setCustomerRef($user->getCustomerRef());
             $category->setUserRef($user->getId());
+            
+            // this has to be NULL because it is a main category with no parent category
             $category->setParentRef(NULL);
-                        
+            
+            // creates standard user permission for this category, it will be visible for the current user
             $userPerm->setUserRef($user->getId());
             $userPerm->setCustcat($category);
             $userPerm->setPermStatus(1);
             
             $em = $this->getDoctrine()->getManager();
+            
+            // save objects to database
             $em->persist($category);
             $em->persist($userPerm);
             $em->flush();
             
+            // generate 'success' flash bag message to show for user
             $this->get('session')->getFlashBag()->add('notice', 'Kategorie wurde erfolgreich hinzugefügt!');
             
+            // redirect to categories confing page
             return $this->redirectToRoute('orth_account_config_categories');
         }
         
         return $this->render('OrthIndexBundle:Account:addcategory.html.twig', array('form' => $form->createView()));
     } 
     
+    // returns form to add a sub (child) category
     public function addsubcategoryAction(Request $request, $id) {
         
+        // loads current user, '.anon' if not logged in
         $user = $this->get('security.token_storage')->getToken()->getUser();
         
+        // create new category object
         $category = new Customcategory(); 
+        
+        // create new userpermissions object
         $userPerm = new UserPermissions(); 
         
+        // create new form
         $form = $this->createForm(new CustomcategoryType(), $category);
+        
+        // remove unnecessary fields from form object, only category name remains
         $form->remove('parentRef');
         $form->remove('userRef');
         $form->remove('customerRef');
         
         $form->handleRequest($request);
         
+        // check if form is valid
         if ($form->isValid()) {
             
             $category->setCustomerRef($user->getCustomerRef());
             $category->setUserRef($user->getId());
+            // sets id of parent category
             $category->setParentRef($id);
             
             $userPerm->setUserRef($user->getId());
@@ -299,88 +391,107 @@ class AccountController extends Controller
             $userPerm->setPermStatus(1);
             
             $em = $this->getDoctrine()->getManager();
+            
+            // save objects to database
             $em->persist($category);
             $em->persist($userPerm);
             $em->flush();
+            
+            // generate 'success' flash bag message to show for user
             $this->get('session')->getFlashBag()->add('notice', 'Kategorie wurde erfolgreich hinzugefügt!');
             
+            // redirect to categories confing page
             return $this->redirectToRoute('orth_account_config_categories');
         }
         
         return $this->render('OrthIndexBundle:Account:addcategory.html.twig', array('form' => $form->createView()));
     } 
         
-    public function categoryAction($id) {
+    // returns form to edit category name
+    public function categoryAction(Request $request, $id) {
         
+        // loads current user, '.anon' if not logged in
         $user = $this->get('security.token_storage')->getToken()->getUser();
         
-        $categories = new Customcategory();      
-        
         $em = $this->getDoctrine()->getManager();
+        $em_customercategory = $em->getRepository('OrthIndexBundle:Customcategory');
+        // get 'one or null result' by id and customer
+        $category = $em_customercategory->getCategoryCustomById($id, $user);
         
-        $mainCategory = $em->getRepository('OrthIndexBundle:Customcategory')->findOneBy(array('customerRef' => $user->getCustomerRef(), 'id' => $id));
-               
-        $categories = $em->getRepository('OrthIndexBundle:Customcategory')->findBy(array('customerRef' => $user->getCustomerRef(), 'parentRef' => $id));
-            
-        if($mainCategory->getParentRef() == NULL ) {
-            $level = 0;
-        } else {
-            $parentCat = $em->getRepository('OrthIndexBundle:Customcategory')->findOneBy(array('customerRef' => $user->getCustomerRef(), 'id' => $mainCategory->getParentRef()));
-
-            if ($parentCat != NULL AND $parentCat->getParentRef() == NULL) {
-                $level = 1;
-            } 
+        // check if the category exist and if the user share the same customer id with the category, else an exception is thrown
+        if ( $category == NULL ) {
+            throw new \Exception();
         }
-        return $this->render('OrthIndexBundle:Account:category.html.twig', array('categories' => $categories, 'mainCategory' => $mainCategory, 'level' => $level));
+        
+        // create new form
+        $form = $this->createForm(new CustomcategoryType(), $category);
+        
+        // remove unnecessary fields from form object, only category name remains
+        $form->remove('parentRef');
+        $form->remove('userRef');
+        $form->remove('customerRef');
+        
+        $form->handleRequest($request);
+        
+        // check if form is valid
+        if ($form->isValid()) {
+            
+             // save objects to database
+            $em->persist($category);
+            $em->flush();
+            
+            // generate 'success' flash bag message to show for user
+            $this->get('session')->getFlashBag()->add('notice', 'Kategorie wurde erfolgreich umbenannt!');
+            
+            // redirect to categories confing page
+            return $this->redirectToRoute('orth_account_config_categories');
+        }
+        
+        return $this->render('OrthIndexBundle:Account:category.html.twig', array('form' => $form->createView()));
     }  
-    
-    public function subcategoryAction($id) {
         
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-        
-        $categories = new Customcategory();      
-        
-        $em = $this->getDoctrine()->getManager();
-        
-        $mainCategory = $em->getRepository('OrthIndexBundle:Customcategory')->findBy(array('customerRef' => $user->getCustomerRef(), 'id' => $id));
-                
-        $categories = $em->getRepository('OrthIndexBundle:Customcategory')->findBy(array('customerRef' => $user->getCustomerRef(), 'parentRef' => $id));
-              
-        return $this->render('OrthIndexBundle:Account:subcategory.html.twig', array('categories' => $categories, 'mainCategory' => $mainCategory));
-    }  
-    
+    // returns page with list of users with same customer id
     public function myuserAction() {
         
+        // loads current user, '.anon' if not logged in
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        
-        $users = new Users();      
-        
+                
         $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository('OrthIndexBundle:Users')->findBy(array('customerRef' => $user->getCustomerRef()));
+        $em_user = $em->getRepository('OrthIndexBundle:Users');
+        
+        // get users by customer id
+        $users = $em_user->getUsersByCustomer($user);
              
         return $this->render('OrthIndexBundle:Account:myusers.html.twig', array('users' => $users, 'loggedInUser' => $user));
     }  
     
+    // returns page with form to edit single user with same customer id
     public function myusereditAction($id, Request $request) {
         
+        // loads current user, '.anon' if not logged in
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        
-        $users = new Users();      
-        
+
         $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository('OrthIndexBundle:Users')->findOneBy(array('customerRef' => $user->getCustomerRef(), 'id' => $id));
+        $em_user = $em->getRepository('OrthIndexBundle:Users');
+        
+        // get one user by customer and provided id
+        $users = $em_user->getOneUserByCustomerAndId($user, $id);
                              
+        // create new form
         $form = $this->createForm(new UserType(), $users);
         
         $form->handleRequest($request);
 
+        // check if form is valid
         if ($form->isValid()) {
             
             $em = $this->getDoctrine()->getManager();
             
+            // save object to databases
             $em->persist($users);
             $em->flush();
             
+            // generate 'success' flash bag message to show for user
             $this->get('session')->getFlashBag()->add('notice', 'Ihre Daten wurden erfolgreich gespeichert!');
         }
         
@@ -388,14 +499,19 @@ class AccountController extends Controller
         
     }  
     
+    // returns page to edit sub users permissions, such as visible customer categories
     public function myusermanagerAction($id, Request $request) {
         
+        // loads current user, '.anon' if not logged in
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        
-        $users = new Users();      
-        
+
         $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository('OrthIndexBundle:Users')->findOneBy(array('customerRef' => $user->getCustomerRef(), 'id' => $id));
+        $em_user = $em->getRepository('OrthIndexBundle:Users');
+        $em_userPerm = $em->getRepository('OrthIndexBundle:UserPermissions');
+        $em_customcategory = $em->getRepository('OrthIndexBundle:Customcategory');
+        
+        // get one user by customer and provided id
+        $users = $em_user->getOneUserByCustomerAndId($user, $id);
                                             
         if ( $request->request->all()) {
 
@@ -403,10 +519,9 @@ class AccountController extends Controller
   
             foreach ($formPost as $key => $value) {
                 
-                   $userPerm = new UserPermissions();  
-                   $userPerm = $em->getRepository('OrthIndexBundle:UserPermissions')->findOneBy(array('userRef' => $id, 'custcatRef' => $key));
+                   $userPerm = $em_userPerm->getUsersPermission($id,$key);
 
-                   $custCat= $em->getRepository('OrthIndexBundle:Customcategory')->findOneBy(array('id' => $key));
+                   $custCat = $em_customcategory->getCategoryCustomById($id, $user);
     
                 if ( $userPerm == NULL ) {
                     

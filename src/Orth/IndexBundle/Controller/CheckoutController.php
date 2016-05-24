@@ -317,7 +317,7 @@ class CheckoutController extends Controller
                         $price = $product->getPrice();
                     }
                     
-                    $cartItems[] = array('shortName' => $product->getArticles()->getShortName(), 'articlenumber' => $product->getSupplierArticleNumber(), 'amount' => $item->getAmount(), 'image' => $product->getArticles()->getImages(), 'varData' => $varData, 'price' => $price, 'varref' => $item->getVarRef());
+                    $cartItems[] = array('shortName' => $product->getArticles()->getShortName(), 'pid' => $product->getArticles()->getId(), 'articlenumber' => $product->getSupplierArticleNumber(), 'amount' => $item->getAmount(), 'image' => $product->getArticles()->getImages(), 'varData' => $varData, 'price' => $price, 'varref' => $item->getVarRef());
                 }
             }
             
@@ -344,7 +344,7 @@ class CheckoutController extends Controller
             $freight = 5.50;
         }
 
-            return $this->render('OrthIndexBundle:Checkout:step5.html.twig', array('cart' => $cartItems, 'cartSum' => $cartSum, 'freight' => $freight));
+            return $this->render('OrthIndexBundle:Checkout:step5.html.twig', array('cart' => $cartItems, 'cartSum' => $cartSum, 'freight' => $freight, 'invAddress' => $checkInvoiceId,'delAddress' => $checkDeliveryId));
             
        }
         exit;
@@ -375,8 +375,8 @@ class CheckoutController extends Controller
         }
         
         $shoppingCart = $em->getRepository('OrthIndexBundle:ShoppingCart')->findBy(array('userRef' => $user->getId()));
-        $invoiceAdr = $em->getRepository('OrthIndexBundle:CustomersAddresses')->findBy(array('id' => $invoiceId));
-        $deliveryAdr = $em->getRepository('OrthIndexBundle:CustomersAddresses')->findBy(array('id' => $deliveryId));
+        $invoiceAdr = $em->getRepository('OrthIndexBundle:CustomersAddresses')->findOneBy(array('id' => $invoiceId));
+        $deliveryAdr = $em->getRepository('OrthIndexBundle:CustomersAddresses')->findOneBy(array('id' => $deliveryId));
         
         $order->setStatus(0);
         $order->setCustomerOrderNumber(0);
@@ -409,7 +409,7 @@ class CheckoutController extends Controller
                 ->getQuery();
             $varData = $orders = $query->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
             
-            $cartItems[] = array('shortName' => $product->getArticles()->getShortName(), 'articlenumber' => $product->getSupplierArticleNumber(), 'amount' => $item->getAmount(), 'image' => $product->getArticles()->getImages(), 'varData' => $varData, 'price' => $product->getPrice(), 'varref' => $item->getVarRef());
+            $cartItems[] = array('shortName' => $product->getArticles()->getShortName(), 'articlenumber' => $product->getSupplierArticleNumber(), 'amount' => $item->getAmount(), 'posText' => $item->getPositionsText(), 'image' => $product->getArticles()->getImages(), 'varData' => $varData, 'price' => $product->getPrice(), 'varref' => $item->getVarRef());
 
 //            $em->persist($orderPositions);
 //            $em->flush();
@@ -430,7 +430,7 @@ class CheckoutController extends Controller
         ->setBody(
             $this->renderView(
                 'OrthIndexBundle:Mail:orderSuccessMail.html.twig',
-                array('cartItems' => $cartItems, 'freight' => $freight, 'delKind' => $deliveryKind),
+                array('cartItems' => $cartItems, 'freight' => $freight, 'delKind' => $deliveryKind, 'invKind' => $invoiceKind,'invAddress' => $invoiceAdr, 'delAddress' => $deliveryAdr),
             'text/html'
             )
         )
