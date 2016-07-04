@@ -42,6 +42,14 @@ orth_index_jobs:
     path:     /jobs
     defaults: { _controller: OrthIndexBundle:Index:jobs }  
     
+orth_index_dienstleistungen:
+    path:     /dienstleistungen
+    defaults: { _controller: OrthIndexBundle:Index:dienstleistungen }  
+    
+orth_index_logoemblemservice:
+    path:     /logo-emblemservice
+    defaults: { _controller: OrthIndexBundle:Index:logoemblemservice }  
+    
 
 # landing pages
 #  
@@ -61,6 +69,10 @@ orth_landing_emblemservice:
 orth_landing_werkzeugtechnik:
     path:     /werkzeugtechnik
     defaults: { _controller: OrthIndexBundle:Index:werkzeugtechnik } 
+    
+orth_landing_hygieneartikel:
+    path:     /hygieneartikel
+    defaults: { _controller: OrthIndexBundle:Index:hygieneartikel } 
     
 #
 # shop routing

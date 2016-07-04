@@ -83,12 +83,13 @@ ul, ol {
 body {
     margin: 0;
     padding: 0;
-    color: #1a2e50;
+    color: #263039;
     font-family: 'Source Sans Pro', sans-serif;
-    font-size: 14px;
-    line-height: 21px;
+    font-size: 16px;
+    line-height: 1.42857;
     position: relative;
     background: #fff;
+    
 }
 
 /* =============================================================== */
@@ -2709,6 +2710,64 @@ h1.bolder-style.dark, h1.bolder-style.dark a {
     margin: 0 auto;
 }
 
+/***  -------  Style 3  ------- ***/
+
+.style3 .section-title, .section-title.style3 {
+    font-size: 42px;
+    font-weight: lighter;
+    line-height: 44px;
+    margin: 10px 0 20px;
+    padding: 0;
+    position: relative;
+    border: none;
+}
+
+.section-title-style2, .section-title.style3 {
+    position: relative;
+}
+
+.style3 .section-title:after, .section-title-style2:after, .section-title.style3:after, .section-title-style2:after {
+    background: #DDDDDD;
+    content: "";
+    display: block;
+    height: 1px;
+    margin-left: 20%;
+    position: absolute;
+    top: 28px;
+    width: 60%;
+    z-index: 1;
+}
+
+.section-title-style3 span2, .section-title.style3 span2 {
+    background: #1a2e50;
+    display: inline-block;
+    padding: 10px;
+    position: relative;
+    width: auto;
+    z-index: 2;
+}
+
+.style3 .section-title span2, .section-title.style3 span2, {
+    color: #fff;
+    display: table;
+    position: relative;
+    z-index: 2;
+    background: #fff;
+    padding: 5px 15px;
+    text-align: center;
+    text-transform: uppercase;
+    width: auto;
+    margin: 0 auto;
+}
+
+.section-title span2 {
+    color: #fff;
+    display: inline-block;
+    padding: 5px 15px 5px 0;
+    text-transform: uppercase;
+    width: auto;
+}
+
 .productslider {
     width: 100%;
     display: block;
@@ -4510,7 +4569,7 @@ tr.CartProduct td, tr.CartProduct th {
 }
 
 .parallaxOffset {
-    margin-top: 80px;
+    margin-top: 120px;
     -webkit-transition: all 0.1s ease-out 0s;
     -moz-transition: all 0.1s ease-out 0s;
     -ms-transition: all 0.1s ease-out 0s;
@@ -5535,7 +5594,7 @@ div.quickview {
     }
 
     .navbar-toggle {
-        background: none !important;
+        background: rgba(0,0,0,0.7);
     }
 
     h1.xlarge {
@@ -6093,4 +6152,47 @@ div.quickview {
 
 .btn-circle.btn-xl:hover{
     transform: scaleX(-1);
+}
+
+.img-team
+{
+    height: 316px;
+    width: 253px;
+}
+
+.margin-bottom65 {
+    margin-bottom: 65px;
+}
+
+.post-content {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
+    bottom:0;
+    right:0;
+    width:100%;
+    position: absolute;
+    color: #fff;
+    display: block;
+    float: left;
+    font-family: Oswald,Helvetica Neue;
+    font-size: 15px;
+    font-weight: normal;
+    list-style: outside none none;
+    padding: 10px 0;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+    text-transform: uppercase;
+}
+
+.thumbnail-noborder {
+    display: block;
+    height: auto;
+    max-width: 100%;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.thumbnail-noborder img {
+    height: auto;
+    max-width: 100%;
 }

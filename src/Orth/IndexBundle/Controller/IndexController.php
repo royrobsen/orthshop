@@ -122,12 +122,24 @@ class IndexController extends Controller
         return $this->render('OrthIndexBundle:Index:werkzeugtechnik.html.twig');
     } 
     
+    public function hygieneartikelAction() {
+        return $this->render('OrthIndexBundle:Index:hygieneartikel.html.twig');
+    } 
+    
     public function unternehmenAction() {
         return $this->render('OrthIndexBundle:Index:unternehmen.html.twig');
     } 
     
     public function teamAction() {
         return $this->render('OrthIndexBundle:Index:team.html.twig');
+    } 
+    
+    public function dienstleistungenAction() {
+        return $this->render('OrthIndexBundle:Index:dienstleistungen.html.twig');
+    } 
+    
+    public function logoemblemserviceAction() {
+        return $this->render('OrthIndexBundle:Index:logoemblemservice.html.twig');
     } 
     
     public function kontaktAction(Request $request) {

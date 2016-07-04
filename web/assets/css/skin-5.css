@@ -395,3 +395,21 @@ citecolor {
 .image {
     padding: 15px;
 }
+
+.section-bereiche {
+    background: #1a2e50;
+}
+
+.lightversion a {
+    background: #bfc9ca;
+    color: #FAFAFA;
+}
+
+.nav-tabslight > li.active > a, .nav-tabslight > li.active > a:hover, .nav-tabs > li.active > a:focus, .nav-tabs > li:hover > a {
+    background: #FAFAFA !important;
+    color: #333 !important;
+}
+
+.lighttext {
+    color: #fff;
+}
