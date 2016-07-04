@@ -1991,7 +1991,7 @@ h1.bolder-style.dark, h1.bolder-style.dark a {
 }
 
 .sliderText {
-    margin-top: 15%;
+    margin-top: 10%;
 }
 
 .sliderText.dark {
@@ -6156,8 +6156,10 @@ div.quickview {
 
 .img-team
 {
-    height: 316px;
-    width: 253px;
+    max-width:230px;
+    max-height:316px;
+    width: auto;
+    height: auto;
 }
 
 .margin-bottom65 {
