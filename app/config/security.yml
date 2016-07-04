@@ -2,11 +2,10 @@
 # http://symfony.com/doc/current/book/security.html
 security:
     # http://symfony.com/doc/current/book/security.html#encoding-the-user-s-password
-    encoders:   
-        #Symfony\Component\Security\Core\User\User: plaintext
-                Orth\IndexBundle\Entity\Users:
-                    algorithm: bcrypt
-    #http://symfony.com/doc/current/book/security.html#hierarchical-roles
+    encoders:
+        Orth\IndexBundle\Entity\Users:
+            algorithm: bcrypt
+    # http://symfony.com/doc/current/book/security.html#hierarchical-roles
     role_hierarchy:
         ROLE_USER:         ROLE_USER
         ROLE_BCUSTOMER:   [ROLE_USER]
@@ -17,12 +16,7 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        #in_memory:
-            #memory:
-                #users:
-                    #admin:
-                        #password: 82ScvK
-                        #roles: 'ROLE_ADMIN'
+        
         db_provider:
             entity:
                 class: OrthIndexBundle:Users
@@ -30,16 +24,12 @@ security:
     # the main part of the security, where you can set up firewalls
     # for specific sections of your app
     firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
         # disables authentication for assets and the profiler, adapt it according to your needs
-#        dev:
-#            pattern:  ^/(_(profiler|wdt)|css|images|js)/
-#            security: false
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
         default:
             anonymous: ~
-            #http_basic: ~
             form_login:
                 login_path: /login
                 check_path: /login_check
@@ -59,4 +49,3 @@ security:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/account, roles: [ROLE_USER, ROLE_BCUSTOMER, ROLE_MODERATOR, ROLE_ADMIN] }
         - { path: ^/admin, roles: [ROLE_ADMIN] }
-         #- { path: ^/, roles: ROLE_ADMIN }
