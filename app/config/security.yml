@@ -5,8 +5,8 @@ security:
     encoders:   
         #Symfony\Component\Security\Core\User\User: plaintext
                 Orth\IndexBundle\Entity\Users:
-            algorithm: bcrypt
-     http://symfony.com/doc/current/book/security.html#hierarchical-roles
+                    algorithm: bcrypt
+    #http://symfony.com/doc/current/book/security.html#hierarchical-roles
     role_hierarchy:
         ROLE_USER:         ROLE_USER
         ROLE_BCUSTOMER:   [ROLE_USER]
