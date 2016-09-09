@@ -14,7 +14,7 @@
     <link href="/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href=" https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
     {% block js_top %}
-        
+
     <!-- styles needed by swiper slider -->
     <link href="/assets/css/idangerous.swiper.css" rel="stylesheet">
 
@@ -22,7 +22,7 @@
     <!-- Custom styles for this template -->
     <link href="/assets/css/style.css" rel="stylesheet">
     <link href="/assets/css/skin-5.css" rel="stylesheet">
-    
+
     <!-- Just for debugging purposes. -->
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -57,6 +57,22 @@
                         </ul>
                     </div>
                 </div>
+                <div class="col-lg-6 col-sm-6 col-xs-6 col-md-6 no-margin no-padding">
+                    <div class="pull-right">
+                        <ul class="userMenu">
+                            <li>{% if not is_granted('ROLE_OCIUSER') %} <a href="/account/my-account"><span class="hidden-xs"> Mein Konto</span> <i
+                                    class="glyphicon glyphicon-user hide visible-xs "></i></a>
+                            {% endif %}
+                            </li>
+                                   {% if (is_granted('ROLE_USER') or is_granted('ROLE_OCIUSER') )%}
+                                    <li><a href="/logout"> <span class="hidden-xs">Ausloggen</span>
+                                   {% else %}
+                                   <li><a href="/login"> <span class="hidden-xs">Einloggen</span>
+                                   {% endif %}
+                                <i class="glyphicon glyphicon-log-in hide visible-xs "></i> </a></li>
+                        </ul>
+                         </div>
+    </div>
             </div>
         </div>
     </div>
@@ -68,8 +84,6 @@
                     class="sr-only"> Toggle navigation </span> <span class="icon-bar"> </span> <span
                     class="icon-bar"> </span> <span class="icon-bar"> </span></button>
             <a class="navbar-brand" href="/"> <img src="/images/logo.png" alt="Ute Orth"> </a>
-
-            <!-- this part for mobile -->
 
         </div>
         <div style="width: 100%; height: 40px;"></div>
@@ -107,20 +121,138 @@
                         </li>
                     </ul>
                 </li>
-                <li><a href="http://orth-shop.de"> Shop </a></li>
+                <!-- change width of megamenu = use class > megamenu-fullwidth, megamenu-60width, megamenu-40width -->
 
+  {% if (app.user.permOrder is defined and app.user.permOrder == 1 or app.user is null ) %}
+                    <li class="dropdown megamenu-fullwidth"><a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    SHOP <b class="caret"> </b> </a>
+                    <ul class="dropdown-menu">
+                        <li class="megamenu-content">
+
+                            <!-- megamenu-content -->
+
+                            <h3 class="promo-1 no-margin hidden-xs"> Von Bekleidung bis Technik - hier findet man alles! </h3>
+
+                            <h3 class="promo-1sub hidden-xs"> </h3>
+                            <ul class="col-lg-2  col-sm-2 col-md-2 unstyled">
+                                <li class="no-border">
+                                    <p><strong> Arbeitsschutz</strong></p>
+                                </li>
+                                <li><a href="/shop/60-arbeitsschutz/6040-absturzsicherung"> Absturzsicherung </a></li>
+                                <li><a href="/shop/60-arbeitsschutz/6030-atemschutz"> Atemschutz </a></li>
+                                <li><a href="/shop/60-arbeitsschutz/6090-augen-und-gesichtsschutz"> Augen- und Gesichtsschutz </a></li>
+                                <li><a href="/shop/60-arbeitsschutz/6050-erste-hilfe"> Erste Hilfe </a></li>
+                                <li><a href="/shop/60-arbeitsschutz/6060-gehoerschutz"> Gehörschutz </a></li>
+                                <li><a href="/shop/60-arbeitsschutz/6070-handschutz"> Handschutz </a></li>
+                                <li><a href="/shop/60-arbeitsschutz/6011-hautschutz-reinigung"> Hautschutz/-reinigung </a></li>
+                                <li><a href="/shop/60-arbeitsschutz/6080-hitzeschutz"> Hitzeschutz </a></li>
+                                <li><a href="/shop/60-arbeitsschutz/6010-kopfschutz"> Kopfschutz </a></li>
+                            </ul>
+                            <ul class="col-lg-2  col-sm-2 col-md-2 unstyled">
+                                <li class="no-border">
+                                    <p><strong> Berufsbekleidung </strong></p>
+                                </li>
+
+                                <li><a href="/shop/4010-arbeitskleidung"> Arbeitskleidung </a></li>
+                            </ul>
+                            <ul class="col-lg-2  col-sm-2 col-md-2 unstyled">
+                                <li class="no-border">
+                                    <p><strong> Schuhe </strong></p>
+                                </li>
+                                <li><a href="/shop/5010-halbschuhe"> Halbschuhe </a></li>
+                                <li><a href="/shop/5020-stiefel"> Stiefel</a></li>
+                                <li><a href="/shop/5040-clogs"> Clogs</a></li>
+                                <li><a href="/shop/5030-sandalen"> Sandalen</a></li>
+                                <li><a href="/shop/5050-schuhzubhoer"> Schuhzubehör</a></li>
+                            </ul>
+                            <ul class="col-lg-2  col-sm-2 col-md-2 unstyled">
+                                <li class="no-border">
+                                    <p><strong> Technik </strong></p>
+                                </li>
+                                <li><a href="/shop/suche?c=6088"> Bautechnik </a></li>
+                                <li><a href="/shop/suche?c=6089"> Befestigungstechnik </a></li>
+                                <li><a href="/shop/suche?c=6090"> Beschlagsysteme & Sicherheitstechnik </a></li>
+                                <li><a href="/shop/suche?c=354"> Elektrotechnik </a></li>
+                                <li><a href="/shop/suche?c=817"> Garten- und Landschaftsbau </a></li>
+                                <li><a href="/shop/suche?c=3823"> Industrietechnik </a></li>
+                                <li><a href="/shop/suche?c=3855"> Lager- und Betriebseinrichtung </a></li>
+                                <li><a href="/shop/suche?c=127"> Maschinenelemente, Befestigungsmittel </a></li>
+                                <li><a href="/shop/suche?c=61"> Schweiß- und Schneidtechnik</a></li>
+                                <li><a href="/shop/suche?c=6409"> Werkzeugmaschinen </a></li>
+                            </ul>
+                            <ul class="col-lg-2  col-sm-2 col-md-2 unstyled">
+                                <li class="no-border">
+                                    <p><strong> Werkzeuge</strong></p>
+                                </li>
+                                <li><a href="/shop/suche?c=6400"> Druckluftwerkzeuge</a></li>
+                                <li><a href="/shop/suche?c=6401"> Einsteckwerkzeuge</a></li>
+                                <li><a href="/shop/suche?c=6402"> Elektrowerkzeuge</a></li>
+                                <li><a href="/shop/suche?c=6405"> Handwerkzeuge</a></li>
+                                <li><a href="/shop/suche?c=6406"> KFZ-Werkzeuge</a></li>
+                                <li><a href="/shop/suche?c=6407"> Messwerkzeuge</a></li>
+                                <li><a href="/shop/suche?c=6408"> Sanitärwerkzeuge</a></li>
+                                <li><a href="/shop/suche?c=6296"> Schleiftechnik</a></li>
+                                <li><a href="/shop/suche?c=6403"> Schraubwerkzeuge</a></li>
+                                <li><a href="/shop/suche?c=6410"> Werkzeugaufbewahrung</a></li>
+                                <li><a href="/shop/suche?c=6411"> Werkzeugmaschinen</a></li>
+                                <li><a href="/shop/suche?c=6404"> Zangen</a></li>
+                                <li><a href="/shop/suche?c=6227"> Zerspanung</a></li>
+                            </ul>
+                            <ul class="col-lg-2  col-sm-2 col-md-2 unstyled">
+                                <li class="no-border">
+                                    <p><strong> Hygiene & Reinigung </strong></p>
+                                </li>
+                                <li><a href="/shop/suche?c=6214"> Abfallbeseitung </a></li>
+                                <li><a href="/shop/suche?c=6211"> Reinigungsmittel</a></li>
+                                <li><a href="/shop/suche?c=6209"> Waschraumausstattung </a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                {% endif %}
+                {% if is_granted('ROLE_BCUSTOMER') %}
+                    <li><a href="/account/bestellsystem"> Bestellsystem </a></li>
+                {% endif %}
             </ul>
-      
 
-            </div>
-           
+                    <!--- this part will be hidden for mobile version -->
+                    <div class="nav navbar-nav navbar-right hidden-xs">
+
+                                        <div class="dropdown  cartMenu "><a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i
+                        class="fa fa-shopping-cart"> </i> <span class="cartRespons"> Warenkorb</span> <b
+                        class="caret"> </b> </a>
+
+                            {{ render(controller('OrthIndexBundle:Shop:miniCart', { 'max': 3 })) }}
+
+                </div>
+                <!--/.cartMenu-->
+<div class="search-box static-search pull-right">
+
+                    <form id="search-form" method="GET" action="/shop" role="search" class="navbar-form">
+                        <div class="input-group">
+                            <input type="text" style="padding:6px 6px;" name="form[q]" placeholder="Suche..."
+                                   class="form-control">
+
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+
+                    <!-- /input-group -->
+
+                </div>
+                <!--/.search-box -->
+
+                    </div>
         </div>
-        <!--/.nav-collapse -->
-
+                </div>
     </div>
     <!--/.container -->
-                      
-<!-- begin of inner content block -->                                
+
+<!-- begin of inner content block -->
 {% block content %}
 <!-- /.Fixed navbar  -->
 
@@ -206,13 +338,13 @@
             <div class="col-lg-6 lead" data-wow-delay="0s" data-wow-duration="3s" style="visibility: visible; animation-duration: 3s; animation-delay: 0s; animation-name: fadeInLeft;">
                 <h3 style="font-family: 'Source Sans Pro',sans-serif; font-weight: normal; color: #263039; font-size: 24px;"> Tradition & <span style="color: #cc0d17;">Zukunft </span></h3>
 
-                <p>Da uns die partnerschaftliche Zusammenarbeit und die stetige Weiterentwicklung am Markt sehr am Herzen liegt, 
+                <p>Da uns die partnerschaftliche Zusammenarbeit und die stetige Weiterentwicklung am Markt sehr am Herzen liegt,
                 und um Ihnen einen noch größeren Mehrwert bieten zu können, haben wir uns zusammengeschlossen.</p>
                 <p>Wir, die Firma Basis GmbH und die Firma Ute Orth Bekleidung & Technik GmbH & Co. KG</p><br/>
                 <h3 style="font-family: 'Source Sans Pro',sans-serif; font-weight: normal; color: #263039; font-size: 24px;"> Fusion zur BASIS<span style="color: #cc0d17;">ORTH</span> GmbH </h3>
 
                 <p>Von nun an sind wir als Firma BASIS<span style="color: #cc0d17;">ORTH</span> GmbH</span> Ihr Partner und Ihr zuverlässiger Großhandel für Arbeitsschutz!</p>
-                <p>Für Sie bleibt vieles wie bisher, nur dass wir Ihnen jetzt noch viel mehr bieten können. 
+                <p>Für Sie bleibt vieles wie bisher, nur dass wir Ihnen jetzt noch viel mehr bieten können.
                 </p>
             </div>
             <div class="col-lg-6" data-wow-delay="0s" data-wow-duration="3s" style="visibility: visible; animation-duration: 3s; animation-delay: 0s; animation-name: fadeInRight;">
@@ -274,20 +406,20 @@
                     <img src="/images/home/icon_star.png" style="height: 30px;"/>
                         Logo-/Emblemservice
                     </a>
-                </div>   
+                </div>
             </div>
             <div class="gap"></div>
             <div class="gap"></div>
-        </div>  
-    </div>    
+        </div>
+    </div>
 </div>
 <!-- /main container -->
 
 
 {% endblock %}
-<!-- /. end of inner content block --> 
+<!-- /. end of inner content block -->
 
-<!-- begin of footer --> 
+<!-- begin of footer -->
 <footer>
     <div class="footer">
         <div class="container">
@@ -345,7 +477,7 @@
     </div>
     <!--/.footer-bottom-->
 </footer>
-<!-- /.end of footer --> 
+<!-- /.end of footer -->
 
 <!-- Le javascript
 ================================================== -->

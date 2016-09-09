@@ -9,17 +9,17 @@ class CustomcategoryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-               
-        $builder->add('categoryName', 'text', 
+
+        $builder->add('categoryName', 'text',
                     array('label' => false))
-                ->add('parentRef', 'integer',
+                ->add('parentId', 'integer',
                     array('label' => false))
                 ->add('userRef', 'integer',
                     array('label' => false))
                 ->add('customerRef', 'integer',
                     array('label' => false))
                 ->add('save', 'submit', array('label' => 'Kategorie speichern'));
-        
+
     }
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {

@@ -7,6 +7,7 @@
     <field name="attributeRef" type="integer" column="attribute_ref" nullable="true"/>
     <field name="attributeValue" type="text" column="attribute_value" nullable="false"/>
     <field name="attributeUnit" type="text" column="attribute_unit" nullable="false"/>
+    <field name="otherTerms" type="text" column="other_terms" nullable="false"/>
     <field name="sorting" type="integer" column="sorting" nullable="false"/>
     <field name="varRef" type="integer" column="var_ref" nullable="false"/>
         <many-to-one

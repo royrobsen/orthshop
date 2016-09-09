@@ -111,6 +111,9 @@
                                             <th>
                                                 VPE Palette
                                             </th>
+                                            <th>
+                                                Keywords
+                                            </th>
                                         </tr>
                                     {% for variant in form.variants %}
                                         <tr>
@@ -146,6 +149,8 @@
                                             <td>
                                                 {{ form_widget(variant.vpePalette, { 'attr': {'class': 'form-control', 'rows' : '4', 'placeholder' : 'Preis'} }) }}
                                             </td>
+                                            <td>                                    {{ form_widget(variant.attributes, { 'attr': {'class': 'form-control', 'rows' : '4', 'style' : 'width: 100%;min-width: 100%; max-width: 100%;', 'placeholder' : 'Artikeltext'} }) }}
+                                                <td>
                                     {% endfor %}                
                                         </tr>   
                                     </table>

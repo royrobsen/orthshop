@@ -11,6 +11,10 @@
     <field name="email" type="text" column="email" nullable="false"/>
     <field name="passkey" type="text" column="passkey" nullable="false"/>
     <field name="active" type="integer" column="active" nullable="false"/>
+    <field name="permPrice" type="integer" column="perm_price" nullable="false"/>
+    <field name="permOrder" type="integer" column="perm_order" nullable="false"/>
+    <field name="permOpenshop" type="integer" column="perm_openshop" nullable="false"/>
+    <field name="permPriceopenshop" type="integer" column="perm_priceopenshop" nullable="false"/>
         <many-to-one
             field="customer"
             target-entity="Customers"
@@ -23,5 +27,13 @@
             field="token"
             target-entity="Tokens"
             mapped-by="user" />
+        <one-to-many
+            field="request"
+            target-entity="Approvals"
+            mapped-by="requestuser" />
+        <one-to-many
+            field="approve"
+            target-entity="Approvals"
+            mapped-by="approveduser" />
   </entity>
 </doctrine-mapping>

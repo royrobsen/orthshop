@@ -25,6 +25,11 @@ class ArticleAttributeValues
     private $attributeUnit;
 
     /**
+     * @var string
+     */
+    private $otherTerms;
+    
+    /**
      * @var integer
      */
     private $sorting;
@@ -109,6 +114,30 @@ class ArticleAttributeValues
         return $this->attributeUnit;
     }
 
+    /**
+     * Set otherTerms
+     *
+     * @param string $otherTerms
+     * @return ArticleAttributeValues
+     */
+    public function setOtherTerms($otherTerms)
+    {
+        $this->otherTerms = $otherTerms;
+
+        return $this;
+    }
+
+    /**
+     * Get otherTerms
+     *
+     * @return string 
+     */
+    public function getOtherTerms()
+    {
+        return $this->otherTerms;
+    }
+
+    
     /**
      * Set sorting
      *

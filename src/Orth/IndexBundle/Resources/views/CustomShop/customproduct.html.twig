@@ -8,15 +8,15 @@
         <div class="breadcrumbDiv col-lg-12">
             <ul class="breadcrumb">
                 <li><a href="/">Home</a></li>
-                <li><a href="/shop">Shop</a></li>
+                <li><a href="/account/bestellsystem">Bestellsystem</a></li>
                 {% for category in categoryPath %}
-                <li><a href="/shop/{{category.id}}-{{category.catName|slugify}}">{{category.catName}}</a></li>
+                <li><a href="/account/bestellsystem/?={{category.id}}">{{category.catName}}</a></li>
                 {% if category.children is defined %}
                 {% for childcategory in category.children %}
-                <li><a href="/shop/{{category.id}}-{{category.catName|slugify}}/{{childcategory.id}}-{{childcategory.catName|slugify}}">{{childcategory.catName}}</a></li>
+                <li><a href="/account/bestellsystem?c={{childcategory.id}}">{{childcategory.catName}}</a></li>
                 {% if childcategory.children is defined %}
                 {% for grandchildcategory in childcategory.children %}
-                <li><a href="/shop/{{category.id}}-{{category.catName|slugify}}/{{childcategory.id}}-{{childcategory.catName|slugify}}/{{grandchildcategory.id}}-{{grandchildcategory.catName|slugify}}">{{grandchildcategory.catName}}</a></li>
+                <li><a href="/account/bestellsystem?c={{grandchildcategory.id}}">{{grandchildcategory.catName}}</a></li>
                 {% endfor %}
                 {% endif %}
                 {% endfor %}
@@ -102,7 +102,7 @@
                                     <td>{{values.attributeValue}} {{values.attributeUnit}}</td>
                                     {% endfor %}
                                     <td>{{variant.price|number_format(2,',','.')}} €</td>
-                                    <td><input hidden value="{{variant.id}}" name="var[{{variant.id}}][]" /><input type="number" class="form-control" name="var[{{variant.id}}][]" id="amount{{variant.id}}" style="max-width: 75px;" min="0" step="{{variant.vpe}}"/></td>
+                                    <td><input hidden value="{{variant.id}}" name="var[{{variant.id}}][]" /><input hidden value="{{variant.custdata.0.id}}" name="var[{{variant.id}}][]" /><input type="number" class="form-control" name="var[{{variant.id}}][]" id="amount{{variant.id}}" style="max-width: 75px;" min="0" step="{{variant.vpe}}"/></td>
                                     <td>{{variant.vpe}}</td>
                                     <td><a data-toggle="modal" data-target="#myModal{{variant.id}}" class="positionstext" id="{{variant.id}}"> <i id="comm{{variant.id}}" class="fa fa-pencil"></i> </a>
                                     <div class="modal fade" id="myModal{{variant.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -202,8 +202,8 @@
                                     {% for values in variant.variantvalues %}
                                     <td>{{values.attributeValue}} {{values.attributeUnit}}</td>
                                     {% endfor %}
-                                    <td><input name="custom[{{variant.id}}][articleNumber]" id="varRef" placeholder="Ihre Artikelnummer" /></td>
-                                    <td><input type="checkbox" name="custom[{{variant.id}}][checked]" /></td>
+                                    <td><input name="custom[{{variant.id}}]['articleNumber']" id="varRef" placeholder="Ihre Artikelnummer" /></td>
+                                    <td><input type="checkbox" name="custom[{{variant.id}}]['checked']" /></td>
                                 </tr>
                                 {% endfor %}
                                 </table>

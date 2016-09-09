@@ -51,7 +51,26 @@ class Users implements AdvancedUserInterface, \Serializable
      * @var integer
      */
     private $active;
-
+    
+    /**
+     * @var integer
+     */
+    private $permPrice;    
+    
+    /**
+     * @var integer
+     */
+    private $permPriceopenshop;
+    
+    /**
+     * @var integer
+     */
+    private $permOrder;
+    
+    /**
+     * @var integer
+     */
+    private $permOpenshop;
     /**
      * Set customerRef
      *
@@ -78,7 +97,7 @@ class Users implements AdvancedUserInterface, \Serializable
     /**
      * Set firstName
      *
-     * @param integer $firstName
+     * @param string $firstName
      * @return Users
      */
     public function setFirstName($firstName)
@@ -91,7 +110,7 @@ class Users implements AdvancedUserInterface, \Serializable
     /**
      * Get firstName
      *
-     * @return integer 
+     * @return string 
      */
     public function getFirstName()
     {
@@ -403,5 +422,173 @@ class Users implements AdvancedUserInterface, \Serializable
     public function getNewPassword()
     {
         return $this->newPassword;
+    }
+    
+    /**
+     * Set permPrice
+     *
+     * @param integer $permPrice
+     * @return Users
+     */
+    public function setPermPrice($permPrice)
+    {
+        $this->permPrice = $permPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get permPrice
+     *
+     * @return integer 
+     */
+    public function getPermPrice()
+    {
+        return $this->permPrice;
+    }
+    
+    /**
+     * Set permOrder
+     *
+     * @param integer $permOrder
+     * @return Users
+     */
+    public function setPermOrder($permOrder)
+    {
+        $this->permOrder = $permOrder;
+
+        return $this;
+    }
+
+    /**
+     * Get permOrder
+     *
+     * @return integer 
+     */
+    public function getPermOrder()
+    {
+        return $this->permOrder;
+    }
+   
+    /**
+     * Set permOpenshop
+     *
+     * @param integer $permOpenshop
+     * @return Users
+     */
+    public function setPermOpenshop($permOpenshop)
+    {
+        $this->permOpenshop = $permOpenshop;
+
+        return $this;
+    }
+
+    /**
+     * Get permOpenshop
+     *
+     * @return integer 
+     */
+    public function getPermOpenshop()
+    {
+        return $this->permOpenshop;
+    }
+    
+    /**
+     * Set permPriceopenshop
+     *
+     * @param integer $permPriceopenshop
+     * @return Users
+     */
+    public function setPermPriceopenshop($permPriceopenshop)
+    {
+        $this->permPriceopenshop = $permPriceopenshop;
+
+        return $this;
+    }
+
+    /**
+     * Get permPriceopenshop
+     *
+     * @return integer 
+     */
+    public function getPermPriceopenshop()
+    {
+        return $this->permPriceopenshop;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $request;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $approve;
+
+
+    /**
+     * Add request
+     *
+     * @param \Orth\IndexBundle\Entity\Approvals $request
+     * @return Users
+     */
+    public function addRequest(\Orth\IndexBundle\Entity\Approvals $request)
+    {
+        $this->request[] = $request;
+
+        return $this;
+    }
+
+    /**
+     * Remove request
+     *
+     * @param \Orth\IndexBundle\Entity\Approvals $request
+     */
+    public function removeRequest(\Orth\IndexBundle\Entity\Approvals $request)
+    {
+        $this->request->removeElement($request);
+    }
+
+    /**
+     * Get request
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * Add approve
+     *
+     * @param \Orth\IndexBundle\Entity\Approvals $approve
+     * @return Users
+     */
+    public function addApprove(\Orth\IndexBundle\Entity\Approvals $approve)
+    {
+        $this->approve[] = $approve;
+
+        return $this;
+    }
+
+    /**
+     * Remove approve
+     *
+     * @param \Orth\IndexBundle\Entity\Approvals $approve
+     */
+    public function removeApprove(\Orth\IndexBundle\Entity\Approvals $approve)
+    {
+        $this->approve->removeElement($approve);
+    }
+
+    /**
+     * Get approve
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getApprove()
+    {
+        return $this->approve;
     }
 }

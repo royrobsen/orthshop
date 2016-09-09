@@ -191,4 +191,60 @@ class ShoppingCart
         return $this->sessionId;
     }
     
+    /**
+     * @var integer
+     */
+    private $customdataRef;
+
+    /**
+     * @var integer
+     */
+    private $approvalRef;
+
+
+    /**
+     * Set customdataRef
+     *
+     * @param integer $customdataRef
+     * @return ShoppingCart
+     */
+    public function setCustomdataRef($customdataRef)
+    {
+        $this->customdataRef = $customdataRef;
+
+        return $this;
+    }
+
+    /**
+     * Get customdataRef
+     *
+     * @return integer 
+     */
+    public function getCustomdataRef()
+    {
+        return $this->customdataRef;
+    }
+
+    /**
+     * Set approvalRef
+     *
+     * @param integer $approvalRef
+     * @return ShoppingCart
+     */
+    public function setApprovalRef($approvalRef)
+    {
+        $this->approvalRef = $approvalRef;
+
+        return $this;
+    }
+
+    /**
+     * Get approvalRef
+     *
+     * @return integer 
+     */
+    public function getApprovalRef()
+    {
+        return $this->approvalRef;
+    }
 }

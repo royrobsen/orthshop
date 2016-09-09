@@ -11,7 +11,7 @@ class OrdersRepository extends EntityRepository
     {
         return $this->getEntityManager()
             ->createQuery(
-                'SELECT o, sum(op.posPrice * op.posAmount) as sumvalue FROM OrthIndexBundle:Orders o JOIN o.positions op WHERE o.customerRef = :customerRef GROUP BY o.id'
+                'SELECT o, sum(op.price * op.amount) as sumvalue FROM OrthIndexBundle:Orders o JOIN o.positions op WHERE o.customerRef = :customerRef GROUP BY o.id'
             )
             ->setParameter('customerRef', $user->getCustomerRef())
             ->getResult();

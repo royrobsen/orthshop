@@ -2,20 +2,25 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="Orth\IndexBundle\Entity\ArticleSuppliers" table="article_suppliers" repository-class="Orth\IndexBundle\Entity\Repository\ArticleSuppliersRepository">
     <id name="id" type="integer" column="id">
-      <generator strategy="IDENTITY"/>
     </id>
+
     <field name="articleRef" type="integer" column="article_ref" nullable="true"/>
     <field name="addressRef" type="integer" column="address_ref" nullable="false"/>
     <field name="rank" type="integer" column="rank" nullable="false"/>
     <field name="price" type="float" column="price" precision="10" scale="0" nullable="false"/>
     <field name="priceUnit" type="integer" column="price_unit" nullable="false"/>
-    <field name="amountUnit" type="integer" column="amount_unit" nullable="false"/>
+    <field name="amountUnit" type="string" column="amount_unit" length="25" nullable="false"/>
     <field name="vpe" type="integer" column="vpe" nullable="false"/>
     <field name="minOrder" type="integer" column="min_order" nullable="false"/>
     <field name="vpePackage" type="integer" column="vpe_package" nullable="false"/>
     <field name="vpePalette" type="integer" column="vpe_palette" nullable="false"/>
     <field name="supplierArticleNumber" type="text" column="supplier_article_number" nullable="false"/>
     <field name="attributes" type="text" column="attributes" nullable="false"/>
+    <field name="desc1" type="string" column="desc1" length="255" nullable="false"/>
+    <field name="desc2" type="string" column="desc2" length="255" nullable="false"/>
+    <field name="detailtext" type="text" column="detailtext" nullable="false"/>
+    <field name="gtin" type="integer" column="gtin" nullable="false"/>
+    <field name="customized" type="integer" column="customized" nullable="false"/>
     <many-to-one
             field="articles"
             target-entity="Articles"
@@ -27,12 +32,19 @@
     <one-to-many
             field="variantvalues"
             target-entity="ArticleAttributeValues"
-            mapped-by="variants">            
+            mapped-by="variants">
             <order-by>
                 <order-by-field name="attributeRef" direction="ASC" />
             </order-by>
     </one-to-many>
-    
+            <one-to-many
+            field="images"
+            target-entity="ArticleImages"
+            mapped-by="articles"
+            />
+            <one-to-many
+                    field="custdata"
+                    target-entity="Customerdata"
+                    mapped-by="variants"/>             
   </entity>
 </doctrine-mapping>
-

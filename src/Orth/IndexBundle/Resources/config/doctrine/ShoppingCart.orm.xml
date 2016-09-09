@@ -10,5 +10,11 @@
     <field name="userRef" type="integer" column="user_ref" nullable="false"/>
     <field name="customerRef" type="integer" column="customer_ref" nullable="false"/>
     <field name="sessionId" type="text" column="session_id" nullable="true"/>
+    <field name="customdataRef" type="integer" column="customdata_ref" nullable="true"/>
+    <field name="approvalRef" type="integer" column="approval_ref" nullable="false">      
+      <options>
+            <option name="default">0</option>
+      </options>
+    </field>
   </entity>
 </doctrine-mapping>

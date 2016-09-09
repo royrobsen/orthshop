@@ -34,7 +34,7 @@
                                     <td class="tr-border" style="width:80%; border-bottom: 1px dotted #CCC;">
                                         <input hidden value="{{product.id}}" name="article[{{product.id}}][]"/>
                                         <input required class="form-control input-sm" name="article[{{product.id}}][]" style="width: 50px;" value="{{product.amount}}"/>
-                                    <span> x {{product.price|number_format(2)}} € </span> <a id="{{product.varref}}" class="btn btn-danger btn-sm pull-right entfernen">Entfernen </a> <b class="pull-right" style="padding-right: 10px;"><span class="jSum2">{{(product.amount * product.price)|number_format(2)}}</span> €  </b>
+                                    <span> x {{product.price|number_format(2, ',', '.')}} € </span> <a id="{{product.varref}}" class="btn btn-danger btn-sm pull-right entfernen">Entfernen </a> <b class="pull-right" style="padding-right: 10px;"><span class="jSum2">{{(product.amount * product.price)|number_format(2, ',', '.')}}</span> €  </b>
                                     <br />
                                     <a data-toggle="modal" data-target="#myModal{{product.id}}" class="positionstext" id="{{product.id}}"> <span id="comm{{product.id}}">Text hinzufügen </span></a>
                                     </td>

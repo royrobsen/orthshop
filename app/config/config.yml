@@ -25,18 +25,19 @@ framework:
     fragments:       ~
     http_method_override: true
     translator: { fallbacks: [de] }
-        
+
 
 # Twig Configuration
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-    
+
 services:
  twig.extension.text:
      class: Twig_Extensions_Extension_Text
      tags:
          - { name: twig.extension }
+
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
@@ -80,7 +81,7 @@ doctrine:
                 entity_managers:
             numeric_functions:
                 levenshtein: Orth\IndexBundle\DQL\LevenshteinFunction
-                levenshtein_ratio: Orth\IndexBundle\DQL\LevenshteinRatioFunction   
+                levenshtein_ratio: Orth\IndexBundle\DQL\LevenshteinRatioFunction
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -92,6 +93,203 @@ swiftmailer:
     encryption: "%mailer_encryption%"
     auth_mode:  "%mailer_authMode%"
     spool:     { type: memory }
+
+#fos_elastica:
+#  clients:
+#    default: { host: 'localhost', port: 9200 }
+#  indexes:
+#    search:
+#      client: default
+#      settings:
+#        index:
+#          analysis:
+#                analyzer:
+#                    custom_analyzer :
+#                        type : custom
+#                        tokenizer:    nGram
+#                        filter   :    [stopwords, asciifolding ,lowercase, snowball, elision, worddelimiter]
+#                    my_analyzer:
+#                        type: snowball
+#                        language: German
+#                    custom_search_analyzer :
+#                        type     :    custom
+#                        tokenizer : standard
+#                        filter : [stopwords, asciifolding ,lowercase, snowball, elision, worddelimiter]
+#                tokenizer :
+#                    myTokenizer1 :
+#                        type : standard
+#                        max_token_length : 900
+#                    myTokenizer2 :
+#                        type : keyword
+#                        buffer_size : 512
+#                    nGram:
+#                        type:     nGram
+#                        min_gram: 2
+#                        max_gram: 20
+#                filter :
+#                    myTokenFilter1 :
+#                        type : stop
+#                        stopwords : [stop1, stop2, stop3, stop4]
+#                    myTokenFilter2 :
+#                        type : length
+#                        min : 0
+#                    snowball:
+#                      type:     snowball
+#                      language: German
+#                    elision:
+#                      type:     elision
+#                      articles: [l, m, t, qu, n, s, j, d]
+#                    stopwords:
+#                      type:      stop
+#                      stopwords: [_german_]
+#                      ignore_case : true
+#                    worddelimiter :
+#                      type:      word_delimiter
+#      types:
+#          article:
+#              mappings:
+#                    allField:
+#                        properties:
+#                            shortName:
+#                            shortDescription:
+#                            longDescription:
+#                            variants:
+#                                type: nested
+#                                properties:
+#                                    Desc1:
+#                                       type: string
+#                                    Desc2:
+#                                       type: string
+#                                    Gtin:
+#                                       type: string
+#                                    SupplierArticleNumber:
+#                                       type: string
+#                                    price:
+#                                        type: double
+#                                    variantvalues:
+#                                        type: nested
+#                                        properties:
+#                                            attributeValue:
+#                                                type: string
+#                                            attributeUnit:
+#                                                type: string
+#                                            attrName:
+#                                                type: nested
+#                                                properties:
+#                                                    attributeName: ~
+#                        analyzer: custom_analyzer
+#                        analyzer: my_analyzer
+#                        analyzer: custom_search_analyzer
+#                    allcustField:
+#                        properties:
+#                            shortName:
+#                            shortDescription:
+#                            longDescription:
+#                            variants:
+#                                type: nested
+#                                properties:
+#                                    Desc1:
+#                                       type: string
+#                                    Desc2:
+#                                       type: string
+#                                    Gtin:
+#                                       type: string
+#                                    SupplierArticleNumber:
+#                                       type: string
+#                                    price:
+#                                        type: double
+#                                    variantvalues:
+#                                        type: nested
+#                                        properties:
+#                                            attributeValue:
+#                                                type: string
+#                                            attributeUnit:
+#                                                type: string
+#                                            attrName:
+#                                                type: nested
+#                                                properties:
+#                                                    attributeName: ~
+#                        analyzer: custom_analyzer
+#                        analyzer: my_analyzer
+#                        analyzer: custom_search_analyzer
+#                    shortName:
+#                        analyzer: custom_analyzer
+#                        analyzer: my_analyzer
+#                        analyzer: custom_search_analyzer
+#                        type: string
+#                        copyTo: [allField, allcustField]
+#                    shortDescription:
+#                        boost: 2
+#                        analyzer: custom_analyzer
+#                        analyzer: my_analyzer
+#                        analyzer: custom_search_analyzer
+#                        type: string
+#                        copyTo: [allField, allcustField]
+#                    longDescription:
+#                        analyzer: custom_analyzer
+#                        analyzer: my_analyzer
+#                        analyzer: custom_search_analyzer
+#                        type: string
+#                        copyTo: [allField, allcustField]
+#                    catRef:
+#                        type: integer
+#                    customized:
+#                        type: integer
+#                    variants:
+#                        type: nested
+#                        properties:
+#                            SupplierArticleNumber:
+#                               type: string
+#                               analyzer: custom_analyzer
+#                               analyzer: custom_search_analyzer
+#                               copyTo: [allField, allcustField]
+#                            price:
+#                                type: double
+#                            variantvalues:
+#                                type: nested
+#                                properties:
+#                                    attributeValue:
+#                                        type: string
+#                                        analyzer: custom_analyzer
+#                                        analyzer: custom_search_analyzer
+#                                        copyTo: [allField, allcustField]
+#                                    attributeUnit:
+#                                        type: string
+#                                        analyzer: custom_analyzer
+#                                        analyzer: custom_search_analyzer
+#                                        copyTo: [allField, allcustField]
+#                                    attrName:
+#                                        type: nested
+#                                        properties:
+#                                            attributeName: ~
+#                    custdata:
+#                        type: object
+#                        properties:
+#                            customerRef: ~
+#                            customCatRef: ~
+#                            customArtnr:
+#                                type: string
+#                                copyTo: [allcustField]
+#                            custcat:
+#                                type: object
+#                                properties:
+#                                    id: ~
+#                                    perm:
+#                                        type: nested
+#                                        properties:
+#                                            permStatus:
+#                                                 type: integer
+#                                            userRef:
+#                                                type: integer
+#              persistence:
+#                  driver: orm
+#                  model: Orth\IndexBundle\Entity\Articles
+#                  provider: ~
+#                  listener:
+#                        insert: true
+#                        update: true
+#                        delete: true
+#                  finder: ~
 
 fos_elastica:
   clients:
@@ -113,7 +311,11 @@ fos_elastica:
                     custom_search_analyzer :
                         type     :    custom
                         tokenizer : standard
-                        filter : [stopwords, asciifolding ,lowercase, snowball, elision, worddelimiter]
+                        filter : [stopwords, asciifolding ,lowercase, snowball, elision, worddelimiter, synonymsFilter]
+                    whitespace_analyzer:
+                        type: custom
+                        tokenizer: myTokenizer2
+                        filter: [lowercase, worddelimiter]
                 tokenizer :
                     myTokenizer1 :
                         type : standard
@@ -134,122 +336,191 @@ fos_elastica:
                         min : 0
                     snowball:
                       type:     snowball
-                      language: German
+                      language: German2
                     elision:
                       type:     elision
-                      articles: [l, m, t, qu, n, s, j, d]
+                      articles: [l, m, qu, n, s, j, d]
                     stopwords:
                       type:      stop
                       stopwords: [_german_]
                       ignore_case : true
                     worddelimiter :
                       type:      word_delimiter
+                    synonymsFilter :
+                      tokenizer: keyword
+                      type: synonym
+                      "synonyms_path" : "synonym.txt"
       types:
-          article:
+          articles:
               mappings:
                     allField:
                         properties:
                             shortName:
                             shortDescription:
                             longDescription:
-                            variants: 
+                            category:
                                 type: nested
                                 properties:
-                                    SupplierArticleNumber: 
-                                       type: string 
+                                   categoryName:
+                                       type: string
+                            variants:
+                                type: nested
+                                properties:
+                                    desc1:
+                                       type: string
+                                    desc2:
+                                       type: string
+                                    gtin:
+                                       type: string
+                                    supplierArticleNumber:
+                                       type: string
+                                    attributes:
+                                        type: string
                                     price:
                                         type: double
-                                    variantvalues:
-                                        type: nested
-                                        properties:
-                                            attributeValue:
-                                                type: string 
-                                            attributeUnit:
-                                                type: string 
-                                            attrName:
-                                                type: nested
-                                                properties:
-                                                    attributeName: ~
+#                                    variantvalues:
+#                                        type: nested
+#                                        properties:
+#                                            attributeValue:
+#                                                type: string
+#                                                copyTo: [allField, allcustField]
+#                                            attributeUnit:
+#                                                type: string
+#                                                copyTo: [allField, allcustField]
+#                                            attrName:
+#                                                type: nested
+#                                                properties:
+#                                                    attributeName:
+#                                                        type: string
                         analyzer: custom_analyzer
                         analyzer: my_analyzer
-                        analyzer: custom_search_analyzer    
+                        analyzer: custom_search_analyzer
                     allcustField:
                         properties:
                             shortName:
                             shortDescription:
                             longDescription:
-                            variants: 
+                            category:
                                 type: nested
                                 properties:
-                                    SupplierArticleNumber: 
-                                       type: string 
-                                    price: 
+                                   categoryName:
+                                       type: string
+                            variants:
+                                type: nested
+                                properties:
+                                    Desc1:
+                                       type: string
+                                    Desc2:
+                                       type: string
+                                    Gtin:
+                                       type: string
+                                    SupplierArticleNumber:
+                                       type: string
+                                    price:
                                         type: double
-                                    variantvalues:
-                                        type: nested
-                                        properties:
-                                            attributeValue:
-                                                type: string 
-                                            attributeUnit:
-                                                type: string 
-                                            attrName:
-                                                type: nested
-                                                properties:
-                                                    attributeName: ~
-                        analyzer: custom_analyzer
-                        analyzer: my_analyzer
-                        analyzer: custom_search_analyzer    
-                    shortName:
+                                    attributes:
+                                        type: string
+#                                    variantvalues:
+#                                        type: nested
+#                                        properties:
+#                                            attributeValue:
+#                                                type: string
+#                                                copyTo: [allField, allcustField]
+#                                            attributeUnit:
+#                                                type: string
+#                                                copyTo: [allField, allcustField]
+#                                            attrName:
+#                                                type: nested
+#                                                properties:
+#                                                    attributeName:
+#                                                        type: string
                         analyzer: custom_analyzer
                         analyzer: my_analyzer
                         analyzer: custom_search_analyzer
+                    id:
+                        type: integer
+                    shortName:
+                        _source:
+                            enabled: false
                         type: string
                         copyTo: [allField, allcustField]
+                        fields:
+                            shortName:
+                                type: string
+                                analyzer: custom_analyzer
+                            exact:
+                                type: string
+                                boost: 50
+                                analyzer: simple
                     shortDescription:
+                        _source:
+                            enabled: false
                         boost: 2
-                        analyzer: custom_analyzer
-                        analyzer: my_analyzer
-                        analyzer: custom_search_analyzer
                         type: string
                         copyTo: [allField, allcustField]
                     longDescription:
-                        analyzer: custom_analyzer
-                        analyzer: my_analyzer
-                        analyzer: custom_search_analyzer
+                        _source:
+                            enabled: false
                         type: string
                         copyTo: [allField, allcustField]
                     catRef:
                         type: integer
                     customized:
-                        type: integer    
-                    variants: 
+                        type: integer
+                    showedPrice:
+                        type: double
+                    category:
                         type: nested
                         properties:
-                            SupplierArticleNumber: 
-                               type: string 
+                           categoryName:
+                               type: string
+                               copyTo: [allField, allcustField]
+                    variants:
+                        type: nested
+                        properties:
+                            SupplierArticleNumber:
+                               _source:
+                                   enabled: false
+                               type: string
                                analyzer: custom_analyzer
                                analyzer: custom_search_analyzer
                                copyTo: [allField, allcustField]
                             price:
                                 type: double
+                            desc1:
+                                type: string
+                            desc2:
+                                type: string
+                            detailtext:
+                                type: string
+                            attributes:
+                                type: string
+                                boost: 3
+                                copyTo: [allField, allcustField]
+                            color:
+                                type: string
                             variantvalues:
                                 type: nested
                                 properties:
+                                    attributeRef:
+                                        type: integer
                                     attributeValue:
-                                        type: string 
-                                        analyzer: custom_analyzer
-                                        analyzer: custom_search_analyzer
+                                        type: string
+                                        index: not_analyzed
+                                        copyTo: [allField, allcustField]
+                                    otherTerms:
+                                        type: string
+                                        index: not_analyzed
                                         copyTo: [allField, allcustField]
                                     attributeUnit:
-                                        type: string 
-                                        analyzer: custom_analyzer
-                                        analyzer: custom_search_analyzer    
+                                        type: string
                                         copyTo: [allField, allcustField]
                                     attrName:
                                         type: nested
                                         properties:
-                                            attributeName: ~
-                    custdata: 
+                                            attributeName:
+                                                type: string
+                    custdata:
                         type: object
                         properties:
                             customerRef: ~
@@ -266,13 +537,59 @@ fos_elastica:
                                         properties:
                                             permStatus:
                                                  type: integer
-                                            userRef: 
+                                            userRef:
                                                 type: integer
               persistence:
                   driver: orm
                   model: Orth\IndexBundle\Entity\Articles
                   provider: ~
-                  listener: 
+                  listener:
+                        insert: true
+                        update: true
+                        delete: true
+                  finder: ~
+          variants:
+              mappings:
+                    allFieldVar:
+                        properties:
+                            desc1:
+                                type: string
+                            desc2:
+                                type: string
+                            attributes:
+                                type: string
+                        analyzer: custom_analyzer
+                        analyzer: my_analyzer
+                        analyzer: custom_search_analyzer
+                    desc1:
+                        type: string
+                        copyTo: [allFieldVar]
+                    desc2:
+                        type: string
+                        copyTo: [allFieldVar]
+                    articleRef:
+                        type: integer
+                    variantvalues:
+                        type: nested
+                        properties:
+                            attributeValue:
+                                type: string
+                                index: not_analyzed
+                            attributeRef:
+                                type: integer
+                            otherTerms:
+                                type: string
+                                index: not_analyzed
+                            attrName:
+                                type: nested
+                                properties:
+                                    attributeName:
+                                        type: string
+              persistence:
+                  driver: orm
+                  model: Orth\IndexBundle\Entity\ArticleSuppliers
+                  provider: ~
+                  listener:
                         insert: true
                         update: true
                         delete: true

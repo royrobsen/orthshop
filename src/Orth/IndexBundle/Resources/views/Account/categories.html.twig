@@ -57,7 +57,7 @@
                             {% if category.children is defined %}
                                 {% for subcategory in category.children %}
                                     {% set i2 = loop.index %}
-                                <tr class="treegrid-s{{i2}} treegrid-parent-{{i}}">
+                                <tr class="treegrid-s{{i}}{{i2}} treegrid-parent-{{i}}">
                                     <td>
                                         {{ subcategory.catName }}
                                     </td>
@@ -75,7 +75,7 @@
                                     {% if subcategory.children is defined %}
                                         {% for sub2category in subcategory.children %}
                                             {% set i3 = loop.index %}
-                                        <tr class="treegrid-a{{i3}} treegrid-parent-s{{i2}}">
+                                        <tr class="treegrid-a{{i2}}{{i3}} treegrid-parent-s{{i}}{{i2}}">
                                             <td>
                                                 {{ sub2category.catName }}
                                             </td>

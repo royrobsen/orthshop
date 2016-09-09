@@ -54,7 +54,7 @@ $(document).ready(function () {
     });
 
 
-    // Home Look 2 || Single product showcase 
+    // Home Look 2 || Single product showcase
 
     // productShowCase  carousel
     var pshowcase = $("#productShowCase");
@@ -112,8 +112,8 @@ $(document).ready(function () {
      ========================================================================================*/
 
 
-    
-	
+
+
 	  $(function () {
 		 $('.categoryProduct > .item').responsiveEqualHeightGrid()
     });
@@ -145,17 +145,17 @@ $(document).ready(function () {
 
     // collapse according add  active class
     $('.collapseWill').on('click', function (e) {
-        $(this).toggleClass("pressed"); //you can list several class names 
+        $(this).toggleClass("pressed"); //you can list several class names
         e.preventDefault();
     });
 
     $('.search-box .getFullSearch').on('click', function (e) {
-        $('.search-full').addClass("active"); //you can list several class names 
+        $('.search-full').addClass("active"); //you can list several class names
         e.preventDefault();
     });
 
     $('.search-close').on('click', function (e) {
-        $('.search-full').removeClass("active"); //you can list several class names 
+        $('.search-full').removeClass("active"); //you can list several class names
         e.preventDefault();
     });
 
@@ -166,15 +166,15 @@ $(document).ready(function () {
     });
 
 
-    // Add to Wishlist Click Event	 // Only For Demo Purpose	
+    // Add to Wishlist Click Event	 // Only For Demo Purpose
 
     $('.add-fav').click(function (e) {
         e.preventDefault();
-        $(this).addClass("active"); // ADD TO WISH LIST BUTTON 
+        $(this).addClass("active"); // ADD TO WISH LIST BUTTON
         $(this).attr('data-original-title', 'Added to Wishlist');// Change Tooltip text
     });
 
-    // List view and Grid view 
+    // List view and Grid view
 
     $(".change-view .list-view, .change-view-flat .list-view").click(function (e) { //use a class, since your ID gets mangled
         e.preventDefault();
@@ -197,11 +197,11 @@ $(document).ready(function () {
                 $('.categoryProduct > .item').responsiveEqualHeightGrid();
             }
             , 500 );
-     
+
     });
 
 
-    // product details color switch 
+    // product details color switch
     $(".swatches li").click(function () {
         $(".swatches li.selected").removeClass("selected");
         $(this).addClass('selected');
@@ -232,7 +232,7 @@ $(document).ready(function () {
     if (isMobile()) {
         // For  mobile , ipad, tab
 		 $('.introContent').addClass('ismobile');
-		
+
 
     } else {
 
@@ -276,14 +276,14 @@ $(document).ready(function () {
      Parallax
      ====================================*/
     if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        // Detect ios User // 
+        // Detect ios User //
         $('.parallax-section').addClass('isios');
         $('.navbar-header').addClass('isios');
         $('.blog-intro').addClass('isios');
     }
 
     if (/Android|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        // Detect Android User // 
+        // Detect Android User //
         $('.parallax-section').addClass('isandroid');
     }
 
@@ -294,7 +294,7 @@ $(document).ready(function () {
 
 
     } else {
-        // All Desktop 
+        // All Desktop
         $(window).bind('scroll', function (e) {
             parallaxScroll();
         });
@@ -404,7 +404,7 @@ $(document).ready(function () {
      Global Plugin
      ====================================*/
 
-    // For stylish input check box 
+    // For stylish input check box
 
 //    $(function () {
 //        $("input[type='radio'], input[type='checkbox']").ionCheckRadio();
@@ -412,7 +412,7 @@ $(document).ready(function () {
 
 
     // customs select by minimalect
-    $("select").minimalect();
+    //$("select").minimalect();
 
     // cart quantity changer sniper
     $("input[name='quanitySniper']").TouchSpin({
@@ -429,13 +429,13 @@ $(document).ready(function () {
     // dropdown-menu  Fix || Stop just one dropdown toggle from closing on click
 
     var options = [];
-    
+
 $('.miniCartAction').find('.entfernen').click(function (e) {
         e.stopPropagation();
         var varRef = $(this).attr('id');
 
         $.ajax('/removeitem', {
-                    data: { 
+                    data: {
                           'varRef' :  varRef
                     },
                     success: function(data) {
@@ -455,16 +455,16 @@ $('.miniCartAction').find('.entfernen').click(function (e) {
                            alert('Fehler!');
                     }
                 });
-    return false; 
+    return false;
     });
- 
+
 
 $('.add-fav').click(function (e) {
         var varRef = $(this).attr('id');
 
-        
+
         $.ajax('/account/add', {
-                    data: { 
+                    data: {
                           'varRef' :  varRef
                     },
                     success: function(data) {
@@ -474,9 +474,9 @@ $('.add-fav').click(function (e) {
                            alert('Fehler!');
                     }
                 });
-    return false; 
+    return false;
     });
-    
+
 $('.delete-fav').click(function (e) {
     var varRef = $(this).attr('id');
     $(".modal-body #test").text( varRef );
@@ -486,7 +486,7 @@ $('.delete-customArticle').click(function (e) {
         var varRef = $(".modal-body #test").text();
         var catId = $(".modal-body #cid").text();
         $.ajax('/account/delete', {
-                    data: { 
+                    data: {
                           'varRef' :  varRef,
                           'cid' :  catId
                     },
@@ -498,7 +498,7 @@ $('.delete-customArticle').click(function (e) {
                            alert('Fehler!');
                     }
                 });
-    return false; 
+    return false;
     });
 
     // scroll to certain anchor/div
@@ -516,7 +516,7 @@ $('.delete-customArticle').click(function (e) {
         $('html,body').animate({scrollTop: dest - 51}, 1000, 'swing');
     });
 
-    $(function() { 
+    $(function() {
       var theTable = $('table.list')
 
       $("#filter").keyup(function() {
@@ -527,12 +527,10 @@ $('.delete-customArticle').click(function (e) {
         theTable.find("tbody > tr:visible > td:eq(1)").mousedown();
         return false;
       }).focus(); //Give focus to input field
-    });  
+    });
     /*=======================================================================================
      end
      ========================================================================================*/
-
-
 
 
 }); // end Ready

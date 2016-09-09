@@ -26,6 +26,8 @@ class VariantsType extends AbstractType
                     array('label' => false))
                 ->add('vpePalette', 'integer', 
                     array('label' => false))
+                ->add('attributes', 'textarea', 
+                    array('label' => false))
                 ->add('variantvalues', 'collection', array('type' => new VariantsvaluesType()));
         
     }

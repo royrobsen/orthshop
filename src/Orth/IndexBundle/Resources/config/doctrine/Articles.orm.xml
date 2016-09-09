@@ -17,7 +17,7 @@
         <one-to-many
             field="images"
             target-entity="ArticleImages"
-            mapped-by="articles" 
+            mapped-by="product"
             />
         <one-to-many
             field="variants"

@@ -10,13 +10,24 @@
     <field name="picName" type="text" column="pic_name" nullable="false"/>
     <field name="mimetype" type="text" column="mimetype" nullable="false"/>
     <field name="sorting" type="integer" column="sorting" nullable="false"/>
+    <field name="articleRef" type="integer" column="article_ref" nullable="false"/>
+    <field name="productRef" type="integer" column="product_ref" nullable="false"/>
+    <field name="imgCrc32" type="integer" column="imgCrc32" nullable="false"/>
         <many-to-one
             field="articles"
-            target-entity="Articles"
+            target-entity="ArticleSuppliers"
             inversed-by="images"
             join-column="pic_name">
 
             <join-column name="article_ref" on-delete="CASCADE" referenced-column-name="id" />
+        </many-to-one>
+                <many-to-one
+            field="product"
+            target-entity="Articles"
+            inversed-by="images"
+            join-column="pic_name">
+
+            <join-column name="product_ref" on-delete="CASCADE" referenced-column-name="id" />
         </many-to-one>
   </entity>
 </doctrine-mapping>

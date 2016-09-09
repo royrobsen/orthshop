@@ -331,4 +331,32 @@ class Customerdata
     {
         return $this->custcat;
     }
+    /**
+     * @var \Orth\IndexBundle\Entity\ArticleSuppliers
+     */
+    private $variants;
+
+
+    /**
+     * Set variants
+     *
+     * @param \Orth\IndexBundle\Entity\ArticleSuppliers $variants
+     * @return Customerdata
+     */
+    public function setVariants(\Orth\IndexBundle\Entity\ArticleSuppliers $variants = null)
+    {
+        $this->variants = $variants;
+
+        return $this;
+    }
+
+    /**
+     * Get variants
+     *
+     * @return \Orth\IndexBundle\Entity\ArticleSuppliers 
+     */
+    public function getVariants()
+    {
+        return $this->variants;
+    }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Orth\IndexBundle\Entity\Customerdata" table="customerdata">
+  <entity name="Orth\IndexBundle\Entity\Customerdata" table="customerdata" repository-class="Orth\IndexBundle\Entity\Repository\CustomerdataRepository">
     <indexes>
       <index name="IDX_AF6BB46F86701DD9" columns="article_ref"/>
     </indexes>
@@ -22,6 +22,14 @@
 
             <join-column name="article_ref" referenced-column-name="id" />
         </many-to-one>
+        <many-to-one
+                field="variants"
+                target-entity="ArticleSuppliers"
+                inversed-by="custdata"
+                join-column="varRef">
+
+                <join-column name="var_ref" referenced-column-name="id" />
+            </many-to-one>
     <many-to-one
             field="custcat"
             target-entity="Customcategory"

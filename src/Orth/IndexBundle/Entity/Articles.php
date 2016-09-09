@@ -13,20 +13,20 @@ class Articles
     /**
      * @var string
      */
-    
-    private $showedPrice; 
-    
+
+    private $showedPrice;
+
     /**
      * @var string
      */
-    
-    private $priceDiff; 
-    
+
+    private $priceDiff;
+
     /**
      * @var string
      */
     private $shortName;
-    
+
     /**
      * @var string
      */
@@ -66,7 +66,7 @@ class Articles
      * @var integer
      */
     private $customized;
-    
+
     /**
      * Set shortName
      *
@@ -83,13 +83,13 @@ class Articles
     /**
      * Get shortName
      *
-     * @return string 
+     * @return string
      */
     public function getShortName()
     {
         return $this->shortName;
     }
-    
+
     /**
      * Set shortName1
      *
@@ -106,7 +106,7 @@ class Articles
     /**
      * Get shortName1
      *
-     * @return string 
+     * @return string
      */
     public function getShortName1()
     {
@@ -129,7 +129,7 @@ class Articles
     /**
      * Get shortDescription
      *
-     * @return string 
+     * @return string
      */
     public function getShortDescription()
     {
@@ -152,7 +152,7 @@ class Articles
     /**
      * Get longDescription
      *
-     * @return string 
+     * @return string
      */
     public function getLongDescription()
     {
@@ -175,7 +175,7 @@ class Articles
     /**
      * Get modifiedDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getModifiedDate()
     {
@@ -198,7 +198,7 @@ class Articles
     /**
      * Get catRef
      *
-     * @return integer 
+     * @return integer
      */
     public function getCatRef()
     {
@@ -221,7 +221,7 @@ class Articles
     /**
      * Get deliverable
      *
-     * @return integer 
+     * @return integer
      */
     public function getDeliverable()
     {
@@ -244,17 +244,17 @@ class Articles
     /**
      * Get customized
      *
-     * @return integer 
+     * @return integer
      */
     public function getCustomized()
     {
         return $this->customized;
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -299,7 +299,7 @@ class Articles
     /**
      * Get images
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getImages()
     {
@@ -337,7 +337,7 @@ class Articles
     /**
      * Get variants
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getVariants()
     {
@@ -375,15 +375,15 @@ class Articles
     /**
      * Get custdata
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCustdata()
     {
         return $this->custdata;
     }
-    
+
     private $allField;
-    
+
     /**
      * Set allFields
      *
@@ -400,15 +400,15 @@ class Articles
     /**
      * Get allField
      *
-     * @return string 
+     * @return string
      */
     public function getAllField()
     {
         return $this->allField;
     }
-    
+
     private $allcustField;
-    
+
     /**
      * Set allcustFields
      *
@@ -425,13 +425,13 @@ class Articles
     /**
      * Get allcustField
      *
-     * @return string 
+     * @return string
      */
     public function getAllcustField()
     {
         return $this->allcustField;
     }
-    
+
     /**
      * Set showedPrice
      *
@@ -448,34 +448,34 @@ class Articles
     /**
      * Get showedPrice
      *
-     * @return string 
+     * @return string
      */
     public function getShowedPrice()
     {
         return $this->showedPrice;
     }
-    
+
     private $attachment;
-    
+
     /**
      * Set attachment
      */
-    public function setAttachment($attachment = null) 
+    public function setAttachment($attachment = null)
     {
         $this->attachment = $attachment;
-        
+
         return $this;
     }
-    
+
     /**
      * Get attachment
      */
-            
+
     public function getAttachment()
     {
         return $this->attachment;
     }
-    
+
     /**
      * @var \Orth\IndexBundle\Entity\Categories
      */
@@ -498,13 +498,13 @@ class Articles
     /**
      * Get category
      *
-     * @return \Orth\IndexBundle\Entity\Categories 
+     * @return \Orth\IndexBundle\Entity\Categories
      */
     public function getCategory()
     {
         return $this->category;
     }
-    
+
     /**
      * Set priceDiff
      *
@@ -521,10 +521,85 @@ class Articles
     /**
      * Get priceDiff
      *
-     * @return string 
+     * @return string
      */
     public function getPriceDiff()
     {
         return $this->priceDiff;
+    }
+
+    private $displayImgOnSearch;
+
+    /**
+     * Set displayImgOnSearch
+     *
+     * @param string $displayImgOnSearch
+     * @return Articles
+     */
+    public function setDisplayImgOnSearch($displayImgOnSearch)
+    {
+        $this->displayImgOnSearch = $displayImgOnSearch;
+
+        return $this;
+    }
+
+    /**
+     * Get displayImgOnSearch
+     *
+     * @return string
+     */
+    public function getDisplayImgOnSearch()
+    {
+        return $this->displayImgOnSearch;
+    }
+
+    private $displayImgId;
+
+    /**
+     * Set displayImgId
+     *
+     * @param string $displayImgId
+     * @return Articles
+     */
+    public function setDisplayImgId($displayImgId)
+    {
+        $this->displayImgId = $displayImgId;
+
+        return $this;
+    }
+
+    /**
+     * Get displayImgId
+     *
+     * @return string
+     */
+    public function getDisplayImgId()
+    {
+        return $this->displayImgId;
+    }
+
+    private $customCategoryResultsArray;
+
+    /**
+     * Set customCategoryResultsArray
+     *
+     * @param string $customCategoryResultsArray
+     * @return Articles
+     */
+    public function SetCustomCategoryResultsArray($customCategoryResultsArray)
+    {
+        $this->customCategoryResultsArray = $customCategoryResultsArray;
+
+        return $this;
+    }
+
+    /**
+     * Get customCategoryResultsArray
+     *
+     * @return string
+     */
+    public function getCustomCategoryResultsArray()
+    {
+        return $this->customCategoryResultsArray;
     }
 }

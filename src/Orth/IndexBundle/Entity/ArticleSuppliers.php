@@ -3,11 +3,13 @@
 namespace Orth\IndexBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\EntityRepository;
+
 
 /**
  * ArticleSuppliers
  */
-class ArticleSuppliers
+class ArticleSuppliers extends EntityRepository
 {
     /**
      * @var integer
@@ -64,11 +66,35 @@ class ArticleSuppliers
      */
     private $supplierArticleNumber;
 
+     /**
+     * @var string
+     */
+    private $desc1;
+    
+    /**
+     * @var string
+     */
+    private $desc2;   
+
+    /**
+     * @var string
+     */
+    private $detailtext;
+    
+    /**
+     * @var string
+     */
+    private $gtin;
+    
+    /**
+     * @var integer
+     */
+    private $customized;
+    
     /**
      * @var integer
      */
     private $id;
-
 
     /**
      * Set articleRef
@@ -432,5 +458,324 @@ class ArticleSuppliers
     public function getAttributes()
     {
         return $this->attributes;
+    }
+    
+    /**
+     * Set desc1
+     *
+     * @param string $desc1
+     * @return Desc1
+     */
+    public function setDesc1($desc1)
+    {
+        $this->desc1 = $desc1;
+
+        return $this;
+    }
+
+    /**
+     * Get desc1
+     *
+     * @return string 
+     */
+    public function getDesc1()
+    {
+        return $this->desc1;
+    }
+    
+    /**
+     * Set desc2
+     *
+     * @param string $desc2
+     * @return Desc2
+     */
+    public function setDesc2($desc2)
+    {
+        $this->desc2 = $desc2;
+
+        return $this;
+    }
+
+    /**
+     * Get desc2
+     *
+     * @return string 
+     */
+    public function getDesc2()
+    {
+        return $this->desc2;
+    }
+    
+    /**
+     * Set detailtext
+     *
+     * @param string $detailtext
+     * @return Detailtext
+     */
+    public function setDetailtext($detailtext)
+    {
+        $this->detailtext= $detailtext;
+
+        return $this;
+    }
+
+    /**
+     * Get detailtext
+     *
+     * @return string 
+     */
+    public function getDetailtext()
+    {
+        return $this->detailtext;
+    }
+    
+    /**
+     * Set gtin
+     *
+     * @param string $gtin
+     * @return Gtin
+     */
+    public function setGtin($gtin)
+    {
+        $this->gtin = $gtin;
+
+        return $this;
+    }
+
+    /**
+     * Get gtin
+     *
+     * @return string 
+     */
+    public function getGtin()
+    {
+        return $this->gtin;
+    }
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $images;
+
+
+    /**
+     * Add images
+     *
+     * @param \Orth\IndexBundle\Entity\ArticleImages $images
+     * @return ArticleSuppliers
+     */
+    public function addImage(\Orth\IndexBundle\Entity\ArticleImages $images)
+    {
+        $this->images[] = $images;
+
+        return $this;
+    }
+
+    /**
+     * Remove images
+     *
+     * @param \Orth\IndexBundle\Entity\ArticleImages $images
+     */
+    public function removeImage(\Orth\IndexBundle\Entity\ArticleImages $images)
+    {
+        $this->images->removeElement($images);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+     * Set id
+     *
+     * @param integer $id
+     * @return ArticleSuppliers
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+    
+    private $allFieldVar;
+    
+    /**
+     * Set allFieldVar
+     *
+     * @param string allFieldVar
+     * @return Articles
+     */
+    public function setAllFieldVar($allFieldVar)
+    {
+        $this->allFieldVar = $allFieldVar;
+
+        return $this;
+    }
+
+    /**
+     * Get allFieldVar
+     *
+     * @return string 
+     */
+    public function getAllFieldVar()
+    {
+        return $this->allFieldVar;
+    }
+    
+    private $allcustField;
+    
+    /**
+     * Set allcustFields
+     *
+     * @param string allcustField
+     * @return Articles
+     */
+    public function setAllcustField($allcustField)
+    {
+        $this->allcustField = $allcustField;
+
+        return $this;
+    }
+
+    /**
+     * Get allcustField
+     *
+     * @return string 
+     */
+    
+    public function getAllcustField()
+    {
+        return $this->allcustField;
+    }
+    
+    /**
+     * Set customized
+     *
+     * @param integer $customized
+     * @return ArticleSuppliers
+     */
+    public function setCustomized($customized)
+    {
+        $this->customized = $customized;
+
+        return $this;
+    }
+
+    /**
+     * Get customized
+     *
+     * @return integer 
+     */
+    public function getCustomized()
+    {
+        return $this->customized;
+    }
+
+     public function getColorByAttr($varId) {
+        
+        $colorQuery = $this->getEntityManager()
+            ->createQuery(
+                'SELECT aav FROM OrthIndexBundle:ArticleAttributeValues aav WHERE aav.varRef = :varId AND aav.attributeRef = 1'
+            )->setParameter('varId', $varId)->setMaxResults(1)->getOneOrNullResult();
+        
+        return $colorQuery->getAttributeValue();
+    }
+    
+    private $color;
+    
+    /**
+     * Set color
+     *
+     * @param string color
+     * @return Articles
+     */
+    public function setColor($id)
+    {
+        $this->color = getColorByAttr($id);
+
+        return $this;
+    }
+
+    /**
+     * Get color
+     *
+     * @return string 
+     */
+    
+    public function getColor()
+    {
+        return $this->color;
+    }
+   
+    private $color2;
+    
+    /**
+     * Set color2
+     *
+     * @param string color2
+     * @return Articles
+     */
+    public function setColor2($id)
+    {
+        $this->color = $color2;
+
+        return $this;
+    }
+
+    /**
+     * Get color2
+     *
+     * @return string 
+     */
+    
+    public function getColor2()
+    {
+        return $this->color2;
+    }    
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $custdata;
+
+
+    /**
+     * Add custdata
+     *
+     * @param \Orth\IndexBundle\Entity\Customerdata $custdata
+     * @return ArticleSuppliers
+     */
+    public function addCustdatum(\Orth\IndexBundle\Entity\Customerdata $custdata)
+    {
+        $this->custdata[] = $custdata;
+
+        return $this;
+    }
+
+    /**
+     * Remove custdata
+     *
+     * @param \Orth\IndexBundle\Entity\Customerdata $custdata
+     */
+    public function removeCustdatum(\Orth\IndexBundle\Entity\Customerdata $custdata)
+    {
+        $this->custdata->removeElement($custdata);
+    }
+
+    /**
+     * Get custdata
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCustdata()
+    {
+        return $this->custdata;
     }
 }

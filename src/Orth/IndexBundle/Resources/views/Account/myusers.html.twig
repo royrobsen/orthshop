@@ -38,11 +38,14 @@
                     </div>
                     <form id="filter-form"><label>Benutzer suchen: </label><input name="filter" class="form-control" id="filter" value="" maxlength="30" size="30" type="text"></form>
                     <table class="table list">
-                        <tr>
-                            <th>Vorname</th>
-                            <th>Nachname</th>
-                            <th>Funktionen</th>
-                        </tr>  
+                        <thead>
+                            <tr>
+                                <th>Vorname</th>
+                                <th>Nachname</th>
+                                <th>Funktionen</th>
+                            </tr>  
+                        </thead>
+                        <tbody>
                     {% for user in users %} 
                         <tr>
                             <td>{{ user.firstName }}</td>
@@ -52,7 +55,8 @@
                             </td>
                         </tr>
                     {% endfor %}
-                            </tr></tbody></table>
+                        </tbody>
+                    </table>
                 </div>
                 <!--/.w100-->
 

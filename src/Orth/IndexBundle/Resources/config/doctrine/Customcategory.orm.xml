@@ -7,7 +7,9 @@
     <field name="categoryName" type="text" column="category_name" nullable="false"/>
     <field name="customerRef" type="integer" column="customer_ref" nullable="false"/>
     <field name="userRef" type="integer" column="user_ref" nullable="false"/>
-    <field name="parentRef" type="integer" column="parent_ref" nullable="true"/>
+    <field name="parentId" type="integer" column="parent_id" nullable="true"/>
+    <one-to-many field="children" target-entity="Customcategory" mapped-by="parent" />
+    <many-to-one field="parent" target-entity="Customcategory" inversed-by="children" />
             <one-to-many
             field="perm"
             target-entity="UserPermissions"

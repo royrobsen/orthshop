@@ -18,7 +18,7 @@ class Customcategory
      * @var integer
      */
     private $checkedCat;
-    
+
     /**
      * @var integer
      */
@@ -32,7 +32,7 @@ class Customcategory
     /**
      * @var integer
      */
-    private $parentRef;
+    private $parentId;
 
     /**
      * @var integer
@@ -56,7 +56,7 @@ class Customcategory
     /**
      * Get categoryName
      *
-     * @return string 
+     * @return string
      */
     public function getCategoryName()
     {
@@ -79,7 +79,7 @@ class Customcategory
     /**
      * Get customerRef
      *
-     * @return integer 
+     * @return integer
      */
     public function getCustomerRef()
     {
@@ -102,7 +102,7 @@ class Customcategory
     /**
      * Get userRef
      *
-     * @return integer 
+     * @return integer
      */
     public function getUserRef()
     {
@@ -110,32 +110,32 @@ class Customcategory
     }
 
     /**
-     * Set parentRef
+     * Set parentId
      *
-     * @param integer $parentRef
+     * @param integer $parentId
      * @return Customcategory
      */
-    public function setParentRef($parentRef)
+    public function setParentId($parentId)
     {
-        $this->parentRef = $parentRef;
+        $this->parentId = $parentId;
 
         return $this;
     }
 
     /**
-     * Get parentRef
+     * Get parentId
      *
-     * @return integer 
+     * @return integer
      */
-    public function getParentRef()
+    public function getParentId()
     {
-        return $this->parentRef;
+        return $this->parentId;
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -152,6 +152,7 @@ class Customcategory
     public function __construct()
     {
         $this->perm = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -180,13 +181,13 @@ class Customcategory
     /**
      * Get perm
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPerm()
     {
         return $this->perm;
     }
-    
+
     /**
      * Set checkedCat
      *
@@ -203,13 +204,13 @@ class Customcategory
     /**
      * Get checkedCat
      *
-     * @return string 
+     * @return string
      */
     public function getCheckedCat()
     {
         return $this->checkedCat;
     }
-    
+
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
@@ -242,10 +243,79 @@ class Customcategory
     /**
      * Get customdata
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCustomdata()
     {
         return $this->customdata;
     }
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $children;
+
+    /**
+     * @var \Orth\IndexBundle\Entity\Customcategory
+     */
+    private $parent;
+
+    /**
+     * Add children
+     *
+     * @param \Orth\IndexBundle\Entity\Customcategory $children
+     * @return Customcategory
+     */
+    public function addChild(\Orth\IndexBundle\Entity\Customcategory $children)
+    {
+        $this->children[] = $children;
+
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param \Orth\IndexBundle\Entity\Customcategory $children
+     */
+    public function removeChild(\Orth\IndexBundle\Entity\Customcategory $children)
+    {
+        $this->children->removeElement($children);
+    }
+
+    /**
+     * Get children
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \Orth\IndexBundle\Entity\Customcategory $parent
+     * @return Customcategory
+     */
+    public function setParent(\Orth\IndexBundle\Entity\Customcategory $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \Orth\IndexBundle\Entity\Customcategory
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
 }

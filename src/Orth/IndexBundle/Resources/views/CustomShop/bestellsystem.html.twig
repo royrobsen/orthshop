@@ -23,7 +23,7 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
     <div class="row">
 
         <!--left column-->
@@ -35,7 +35,7 @@
                     {% set anzahl = 0 %}
                     {% if category.children is defined %}
                     {% for subcategory in category.children %}
-                        {% set anzahl = anzahl + subcategory.anzahl %} 
+                        {% set anzahl = anzahl + subcategory.anzahl %}
                     {% endfor %}
                     {% endif %}
                 <div class="panel panel-default">
@@ -51,22 +51,22 @@
                                     {% set anzahl2 = 0 %}
                                     {% if subcategory.children is defined %}
                                         {% for sub2category in subcategory.children %}
-                                        {% set anzahl2 = anzahl2 + sub2category.anzahl %} 
-                                    {% endfor %}  
+                                        {% set anzahl2 = anzahl2 + sub2category.anzahl %}
+                                    {% endfor %}
                                     {% endif %}
-                                 
+
                                 <li class="dropdown-tree open-tree active"><a class="dropdown-tree-a" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'q': app.request.get('q')})|merge({'c': subcategory.id})) }}"> {{subcategory.catName}} </a>
-                                    {% if subcategory.children is defined %}    
+                                    {% if subcategory.children is defined %}
                                     <ul class="category-level-2 dropdown-menu-tree">
                                         {% for sub2category in subcategory.children %}
-                                        <li class="dropdown-tree"><a class="dropdown-tree-a" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'q': app.request.get('q')})|merge({'c': sub2category.id})) }}">{{sub2category.catName}}  </a>           
+                                        <li class="dropdown-tree"><a class="dropdown-tree-a" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'q': app.request.get('q')})|merge({'c': sub2category.id})) }}">{{sub2category.catName}}  </a>
                                         </li>
-                                        {% endfor %}    
+                                        {% endfor %}
                                     </ul>
                                     {% endif %}
                                 </li>
                                 {% endfor %}
-                                {% endif %}   
+                                {% endif %}
                             </ul>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
             <!--/.category-top-->
             <form action="{{ app.request.getBaseUrl ~ app.request.getPathInfo }}" method="get">
             <div class="form-group">
-                <div class="input-group input-group-sm"> 
+                <div class="input-group input-group-sm">
                     <div class="icon-addon addon-sm">
                         <input type="text" name="q" placeholder="Suchbegriff eingeben" class="form-control">
                         <label for="suche" class="glyphicon glyphicon-search" rel="tooltip" title="suche"></label>
@@ -112,21 +112,45 @@
                 {% for article in articles %}
                 <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
                     <div class="product">
-                        {% if is_granted('ROLE_MODERATOR') %} 
-                        {% if cid is not empty %}    
+                        {% if is_granted('ROLE_MODERATOR') %}
+                        {% if cid is not empty %}
                         <a data-toggle="modal" data-target="#myModal" id="{{article.id}}" class="delete-fav tooltipHere">
                             <i class="glyphicon glyphicon-trash"></i>
                         </a>
-                        {% endif %}    
+                        {% endif %}
                         {% endif %}
                         <div class="image">
-                            <a href="/product/{{article.id}}-{{article.shortDescription|slugify}}"><img src="/images/product/nw/{{article.images.0.picName}}" alt="img" class="img-responsive"></a>
+                          {% if article.customCategoryResultsArray|length > 1 %}
+                            <a data-toggle="modal" data-target="#model{{article.id}}"><img src="/images/product/nw/{{article.images.0.picName}}" alt="img" class="img-responsive"></a>
+                            <div class="modal fade" id="model{{article.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                 <div class="modal-dialog">
+                                   <div class="modal-content">
+                                     <div class="modal-header">
+                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                       <h4 class="modal-title">Artikel befindet sich in mehreren Kategorien </h4>
+                                     </div>
+                                     <div class="modal-body">
+                                         <h2>Kategorie wählen!</h2>
+                                       <p>Der Artikel befindet sich in mehrere Kategorien. Bitte wählen Sie die entsprechende Kategorie aus, um fortzufahren.</p>
+                                       {% for categorylink in article.customCategoryResultsArray %}
+                                        <a href="/account/bestellsystem/product/{{categorylink.id}}-{{article.id}}-{{article.shortName|slugify}}">{{categorylink.categoryName}}</a>
+                                       {% endfor %}
+                                     </div>
+                                           <div ng-cloak class="modal-footer">
 
+                                             <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+                                           </div>
+                                   </div><!-- /.modal-content -->
+                                 </div><!-- /.modal-dialog -->
+                               </div><!-- /.modal -->
+                          {% else %}
+                            <a href="/account/bestellsystem/product/{{article.customCategoryResultsArray.0.id}}-{{article.id}}-{{article.shortName|slugify}}"><img src="/images/product/nw/{{article.images.0.picName}}" alt="img" class="img-responsive"></a>
+                          {% endif %}
 
                         </div>
                         <div class="description">
                             <div class="shortname">
-                                <h4><a href="/product/{{article.id}}-{{article.shortDescription|slugify}}">{{article.shortName}}</a></h4>
+                                <h4><a href="/account/bestellsystem/product/{{article.id}}-{{article.shortName|slugify}}">{{article.shortName}}</a></h4>
                             </div>
                             <div class="grid-description">
                                 <p>{{article.shortDescription}} </p>
@@ -135,12 +159,15 @@
                                 <p> {{article.longDescription}}  </p>
                             </div>
                         </div>
-                                <div class="price"><span>ab {{article.showedprice|number_format(2, ',', '.')}} € </span></div>
+                                <div class="price"><span>{% if article.showedPrice matches '/^[-+]?[0-9]*\\.?[0-9]+$/' %}{% if article.priceDiff == true %}ab {% endif %}{{article.showedPrice|number_format(2, ',', '.')}} €{% else %} {{article.showedPrice}}{% endif %}  </span></div>
                         <div class="action-control"><a class="btn btn-primary"> <span class="add2cart"><i
-                                class="glyphicon glyphicon-shopping-cart"> </i> In den Korb </span> </a></div>
+                                class="glyphicon glyphicon-shopping-cart"> </i> Zum Artikel </span> </a></div>
                     </div>
                 </div>
                 <!--/.item-->
+                {% if article.customCategoryResultsArray|length > 1 %}
+                  </a>
+                {% endif %}
                 {% endfor %}
             </div>
             <div class="gap"></div>
@@ -156,7 +183,7 @@
                         {% if totalpages < 5 %}
                             {% set maxPage = totalpages %}
                         {% endif %}
-                        {% for i in range(1, maxPage) %} 
+                        {% for i in range(1, maxPage) %}
                         {% if app.request.get('p') <= 3%}
                             {% set pageItBase = i %}
                         <li><a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge(app.request.query.all)|merge({'p': pageItBase})) }}">{{pageItBase}}</a></li>
@@ -178,7 +205,7 @@
                     {% endif %}
                     <p>Zeige Seite {{ currPage }} von {{totalpages}} Seiten</p>
                 </div>
-                {% endif %}        
+                {% endif %}
 
 <div class="gap"></div>
 
@@ -207,7 +234,7 @@
 <!-- /wrapper -->
 
 <div class="gap"></div>
-{% if is_granted('ROLE_MODERATOR') %}     
+{% if is_granted('ROLE_MODERATOR') %}
 {% if app.request.get('c') is defined %}
              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
@@ -221,13 +248,13 @@
                         <p>Der Artikel wird aus der derzeitigen Kategorie sofort entfernt!</p>
                         <span style="display: none;" id="test"></span><span style="display: none;" id="cid">{{cid}}</span>
                       </div>
-                            <div ng-cloak class="modal-footer"> 
+                            <div ng-cloak class="modal-footer">
                               <button class="btn btn-danger delete-customArticle" data-dismiss="modal">Artikel entfernen</button>
                               <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
                             </div>
                     </div><!-- /.modal-content -->
                   </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-{% endif %}   
+{% endif %}
 {% endif %}
 {% endblock %}

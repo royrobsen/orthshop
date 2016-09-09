@@ -14,6 +14,14 @@
                 <source>Account is disabled.</source>
                 <target>Ihr Konto ist deaktiviert.</target>
             </trans-unit>
+            <trans-unit id="4">
+                <source>blau</source>
+                <target>blau</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>grün</source>
+                <target>grün</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -82,14 +82,16 @@
                     </div>
                     <form id="filter-form"><label>Adresse suchen: </label><input name="filter" class="form-control" id="filter" value="" maxlength="30" size="30" type="text"></form>
                     <table class="table list">
-                        <tr>
-                            <th>Titel</th>
-                            <th>Firma</th>
-                            <th>Name</th>
-                            <th>Straße</th>
-                            <th>Plz/Ort</th>
-                            <th>Funktionen</th>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th>Titel</th>
+                                <th>Firma</th>
+                                <th>Name</th>
+                                <th>Straße</th>
+                                <th>Plz/Ort</th>
+                                <th>Funktionen</th>
+                            </tr>
+                        </thead>
                         <tbody>
                     {% for address in addresses.others %} 
                         <tr>

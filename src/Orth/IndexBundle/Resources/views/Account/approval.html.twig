@@ -1,0 +1,131 @@
+{% extends "shopbase.html.twig" %}
+{% block js_top %}
+    <!-- styles needed by footable  -->
+    <link href="/assets/css/footable-0.1.css" rel="stylesheet" type="text/css"/>
+    <link href="/assets/css/footable.sortable-0.1.css" rel="stylesheet" type="text/css"/>
+{% endblock %}
+{% block content %}
+
+<div class="container main-container headerOffset">
+
+    <div class="row">
+        <div class="breadcrumbDiv col-lg-12">
+            <ul class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li><a href="/account/my-account">Mein Konto</a></li>
+                <li><a href="/account/order-history"> Freigabenanfrage </a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-7">
+            <h1 class="section-title-inner"><span><i class="fa fa-list-alt"></i> Freigabenanfrage </span></h1>
+
+            <div class="row userInfo">
+                <div class="col-lg-12">
+                    <h2 class="block-title-2"> Status Ihrer Freigabeanfrage </h2>
+                </div>
+
+
+                <div class="statusContent">
+
+
+                    <div class="col-sm-12">
+                        <div class=" statusTop">
+                            <p><strong>Status:</strong>
+                            {% if approval.approved == 0 %}
+                                Unbearbeitet
+                            {% elseif approval.approved == 1 %}
+                                Genehmigt
+                            {% elseif approval.approved == 2 %}
+                                Abgelehnt
+                            {% endif %}
+                            </p>
+
+                            <p><strong>Anfragdatum:</strong> {{approval.approvalRequestDate.date|date('d.m.Y')}}</p>
+
+                            <p><strong>Intere Nummer:</strong> FA-310{{approval.id}} </p>
+                        </div>
+                    </div>
+                    <div style="clear: both"></div>
+                    </div>
+
+
+                    <div class="col-sm-12 clearfix">
+                        <div class="order-box">
+                            <div class="order-box-header">
+
+                                Anfragepositionen
+                            </div>
+
+
+                            <div class="order-box-content">
+                                <div class="table-responsive">
+                                    <table class="order-details-cart">
+                                        <tbody>
+                                        {% for product in items %}
+                                        <tr class="miniCartProduct {{product.varref}}">
+                                            <td style="width:20%"  rowspan="2" class="miniCartProductThumb">
+                                                <div><a href="/product?q={{product.id}}"> <img src="/images/product/nw/{{product.image.0.picName}}" style="margin: 10px; max-height: 90px;" class="img-responsive" alt="img">
+                                                </a></div>
+                                            </td>
+                                            <td style="width:80%; vertical-align: top;">
+                                                <div class="miniCartDescription">
+                                                    <h4><a href="/product?q={{product.id}}"> {{product.shortName}}</a></h4>
+                                                    <span class="size">{{product.articlenumber}}</span>
+                                                    <span class="size">{% for var in product.varData|reverse %} {% if var.attributeName is defined %}{{var.attributeName}}{% endif %}{% if var.attributeValue is defined %}{{var.attributeValue}} {{var.attributeUnit}} | {% endif %}{% endfor %}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="tr-border miniCartAction {{product.varref}}">
+                                            <td style="width:80%"><a> <span>{{product.amount}} x {{product.price|number_format(2)}} € </span> <b class="pull-right" style="padding-right: 10px;"><span class="jSum2">{{(product.amount * product.price)|number_format(2)}}</span> €  </b></td>
+                                        </tr>
+
+                                        {% endfor %}
+
+                                        <tr class="cartTotalTr">
+                                            <td style="width:20%"></td>
+                                            <td style="width:80%">
+
+                                            </td>
+                                        </tr>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="col-lg-12 clearfix">
+                    <ul class="pager">
+                        <li class="previous pull-right"><a href="index.html"> <i class="fa fa-home"></i> Zum Shop </a>
+                        </li>
+                        <li class="next pull-left"><a href="account.html"> &larr; Zurück zu meinem Konto</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--/row end-->
+
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-5"></div>
+    </div>
+    <!--/row-->
+        <div class="col-lg-3 col-md-3 col-sm-5"></div>
+    </div>
+    <!--/row-->
+
+    <div style="clear:both"></div>
+</div>
+<!-- /wrapper -->
+
+<div class="gap"></div>
+
+{% endblock %}

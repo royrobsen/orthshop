@@ -32,6 +32,16 @@ class ArticleImages
     /**
      * @var integer
      */
+    private $productRef;
+
+    /**
+     * @var integer
+     */
+    private $imgCrc32;
+
+    /**
+     * @var integer
+     */
     private $id;
 
 
@@ -51,7 +61,7 @@ class ArticleImages
     /**
      * Get articleRef
      *
-     * @return integer 
+     * @return integer
      */
     public function getArticleRef()
     {
@@ -74,7 +84,7 @@ class ArticleImages
     /**
      * Get picName
      *
-     * @return string 
+     * @return string
      */
     public function getPicName()
     {
@@ -97,7 +107,7 @@ class ArticleImages
     /**
      * Get mimetype
      *
-     * @return string 
+     * @return string
      */
     public function getMimetype()
     {
@@ -120,7 +130,7 @@ class ArticleImages
     /**
      * Get sorting
      *
-     * @return integer 
+     * @return integer
      */
     public function getSorting()
     {
@@ -128,9 +138,32 @@ class ArticleImages
     }
 
     /**
+     * Set productRef
+     *
+     * @param integer $productRef
+     * @return ArticleImages
+     */
+    public function setProductRef($productRef)
+    {
+        $this->productRef = $productRef;
+
+        return $this;
+    }
+
+    /**
+     * Get productRef
+     *
+     * @return integer
+     */
+    public function getProductRef()
+    {
+        return $this->productRef;
+    }
+
+    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -158,10 +191,88 @@ class ArticleImages
     /**
      * Get articles
      *
-     * @return \Orth\IndexBundle\Entity\Articles 
+     * @return \Orth\IndexBundle\Entity\Articles
      */
     public function getArticles()
     {
         return $this->articles;
     }
+    /**
+     * @var \Orth\IndexBundle\Entity\Articles
+     */
+    private $product;
+
+
+    /**
+     * Set product
+     *
+     * @param \Orth\IndexBundle\Entity\Articles $product
+     * @return ArticleImages
+     */
+    public function setProduct(\Orth\IndexBundle\Entity\Articles $product = null)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \Orth\IndexBundle\Entity\Articles
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    private $toolTipColor;
+
+
+    /**
+     * Set toolTipColor
+     *
+     * @param integer $toolTipColor
+     * @return ArticleImages
+     */
+    public function settoolTipColor($toolTipColor)
+    {
+        $this->toolTipColor = $toolTipColor;
+
+        return $this;
+    }
+
+    /**
+     * Get toolTipColor
+     *
+     * @return ArticleImages
+     */
+    public function getToolTipColor()
+    {
+        return $this->toolTipColor;
+    }
+
+    /**
+     * Set imgCrc32
+     *
+     * @param integer $imgCrc32
+     * @return ArticleImages
+     */
+    public function setImgCrc32($imgCrc32)
+    {
+        $this->imgCrc32 = $imgCrc32;
+
+        return $this;
+    }
+
+    /**
+     * Get imgCrc32
+     *
+     * @return integer
+     */
+    public function getImgCrc32()
+    {
+        return $this->imgCrc32;
+    }
+
 }

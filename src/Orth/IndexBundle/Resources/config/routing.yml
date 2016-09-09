@@ -1,195 +1,195 @@
 #
-# index routing 
+# index routing
 #
 
 orth_index_homepage:
     path:     /
     defaults: { _controller: OrthIndexBundle:Index:index }
-    
+
 orth_index_account:
     path:     /login
-    defaults: { _controller: OrthIndexBundle:Security:login }    
+    defaults: { _controller: OrthIndexBundle:Security:login }
 
 orth_index_impressum:
     path:     /impressum
-    defaults: { _controller: OrthIndexBundle:Index:impressum }   
-    
+    defaults: { _controller: OrthIndexBundle:Index:impressum }
+
 orth_index_agb:
     path:     /agb
-    defaults: { _controller: OrthIndexBundle:Index:agb } 
-        
+    defaults: { _controller: OrthIndexBundle:Index:agb }
+
 orth_index_datenschutz:
     path:     /datenschutz
-    defaults: { _controller: OrthIndexBundle:Index:datenschutz } 
-    
+    defaults: { _controller: OrthIndexBundle:Index:datenschutz }
+
 orth_index_widerruf:
     path:     /widerruf
-    defaults: { _controller: OrthIndexBundle:Index:widerruf } 
-       
+    defaults: { _controller: OrthIndexBundle:Index:widerruf }
+
 orth_index_unternehmen:
     path:     /unternehmen
-    defaults: { _controller: OrthIndexBundle:Index:unternehmen }   
-    
+    defaults: { _controller: OrthIndexBundle:Index:unternehmen }
+
 orth_index_team:
     path:     /team
-    defaults: { _controller: OrthIndexBundle:Index:team }   
-    
+    defaults: { _controller: OrthIndexBundle:Index:team }
+
 orth_index_kontakt:
     path:     /kontakt
-    defaults: { _controller: OrthIndexBundle:Index:kontakt }  
-    
+    defaults: { _controller: OrthIndexBundle:Index:kontakt }
+
 orth_index_jobs:
     path:     /jobs
-    defaults: { _controller: OrthIndexBundle:Index:jobs }  
-    
+    defaults: { _controller: OrthIndexBundle:Index:jobs }
+
 orth_index_dienstleistungen:
     path:     /dienstleistungen
-    defaults: { _controller: OrthIndexBundle:Index:dienstleistungen }  
-    
+    defaults: { _controller: OrthIndexBundle:Index:dienstleistungen }
+
 orth_index_logoemblemservice:
     path:     /logo-emblemservice
-    defaults: { _controller: OrthIndexBundle:Index:logoemblemservice }  
-    
+    defaults: { _controller: OrthIndexBundle:Index:logoemblemservice }
+
 
 # landing pages
-#  
-    
+#
+
 orth_landing_arbeitsschutz:
     path:     /arbeitsschutz
-    defaults: { _controller: OrthIndexBundle:Index:arbeitsschutz } 
-    
+    defaults: { _controller: OrthIndexBundle:Index:arbeitsschutz }
+
 orth_landing_berufsbekleidung:
     path:     /berufsbekleidung
-    defaults: { _controller: OrthIndexBundle:Index:berufsbekleidung } 
+    defaults: { _controller: OrthIndexBundle:Index:berufsbekleidung }
 
 orth_landing_emblemservice:
     path:     /c-teile-management
-    defaults: { _controller: OrthIndexBundle:Index:cteilemanagement } 
-        
+    defaults: { _controller: OrthIndexBundle:Index:cteilemanagement }
+
 orth_landing_werkzeugtechnik:
     path:     /werkzeugtechnik
-    defaults: { _controller: OrthIndexBundle:Index:werkzeugtechnik } 
-    
+    defaults: { _controller: OrthIndexBundle:Index:werkzeugtechnik }
+
 orth_landing_hygieneartikel:
     path:     /hygieneartikel
-    defaults: { _controller: OrthIndexBundle:Index:hygieneartikel } 
-    
+    defaults: { _controller: OrthIndexBundle:Index:hygieneartikel }
+
 #
 # shop routing
 #
-        
+
 orth_shop:
     path:     /shop
-    defaults: { _controller: OrthIndexBundle:Shop:suche} 
-      
+    defaults: { _controller: OrthIndexBundle:Shop:suche}
+
 orth_shop_categories:
     path:     /shop/{category}/{childcategory}/{grandchildcategory}
-    defaults: { _controller: OrthIndexBundle:Shop:suche,category: null, childcategory: null, grandchildcategory: null} 
-        
+    defaults: { _controller: OrthIndexBundle:Shop:suche,category: null, childcategory: null, grandchildcategory: null}
+
 orth_shop_product:
     path:     /product/{productslug}
-    defaults: { _controller: OrthIndexBundle:Shop:product } 
-        
+    defaults: { _controller: OrthIndexBundle:Shop:product }
+
 orth_shop_sessiondata:
     path:   /getcartsessiondata
     defaults: { _controller: OrthIndexBundle:Shop:getcartsessiondata }
-    
+
 orth_shop_miniCart:
     path:   /miniCart
-    defaults: { _controller: OrthIndexBundle:Shop:miniCart }    
-    
+    defaults: { _controller: OrthIndexBundle:Shop:miniCart }
+
 orth_shop_shoppingCart:
     path:   /warenkorb
     defaults: { _controller: OrthIndexBundle:Shop:shoppingCart }
-    
+
 orth_shop_removeitem:
     path:   /removeitem
     defaults: { _controller: OrthIndexBundle:Shop:removeitem }
-    
+
 orth_shop_checkout:
     path:   /account/checkout
     defaults: { _controller: OrthIndexBundle:Checkout:checkout }
-    
+
 orth_shop_checkout_step2:
     path:   /account/checkout/step2
     defaults: { _controller: OrthIndexBundle:Checkout:step2 }
-    
+
 orth_shop_checkout_step3:
     path:   /account/checkout/step3
     defaults: { _controller: OrthIndexBundle:Checkout:step3 }
-    
+
 orth_shop_checkout_step4:
     path:   /account/checkout/step4
-    defaults: { _controller: OrthIndexBundle:Checkout:step4 } 
-    
+    defaults: { _controller: OrthIndexBundle:Checkout:step4 }
+
 orth_shop_checkout_step5:
     path:   /account/checkout/step5
-    defaults: { _controller: OrthIndexBundle:Checkout:step5 } 
-    
+    defaults: { _controller: OrthIndexBundle:Checkout:step5 }
+
 orth_shop_checkout_success:
     path:   /account/checkout/final
-    defaults: { _controller: OrthIndexBundle:Checkout:cart2Order }         
-        
+    defaults: { _controller: OrthIndexBundle:Checkout:cart2Order }
+
 #
 # account routing
-#         
-            
+#
+
 orth_account_myaccount:
     path:     /account/my-account
-    defaults: { _controller: OrthIndexBundle:Account:myaccount} 
-    
+    defaults: { _controller: OrthIndexBundle:Account:myaccount}
+
 orth_account_orderhistory:
     path:     /account/order-history
     defaults: { _controller: OrthIndexBundle:Account:orderhistory}
-    
+
 orth_account_order:
     path:     /account/order/{id}
     defaults: { _controller: OrthIndexBundle:Account:order}
-    
+
 orth_account_myaddress:
     path:     /account/my-address
     defaults: { _controller: OrthIndexBundle:Account:myaddress}
-    
+
 orth_account_addaddress:
     path:     /account/add-address
     defaults: { _controller: OrthIndexBundle:Account:addaddress}
-    
+
 orth_account_personalinfo:
     path:     /account/personal-info
     defaults: { _controller: OrthIndexBundle:Account:personalinfo}
-    
+
 orth_account_wishlist:
     path:     /account/wishlist
     defaults: { _controller: OrthIndexBundle:Account:wishlist}
-    
+
 orth_account_deleteaddress:
     path:   /account/delete-address/{id}
     defaults: { _controller: OrthIndexBundle:Account:deleteAddress }
-    
+
 orth_account_editeaddress:
     path:   /account/edit-address/{id}
     defaults: { _controller: OrthIndexBundle:Account:editAddress }
-    
+
 orth_account_changepw:
     path:   /account/change-password
     defaults: { _controller: OrthIndexBundle:Account:changePassword }
-    
+
 orth_account_myuser:
     path:   /account/my-user
     defaults: { _controller: OrthIndexBundle:Account:myuser }
-    
+
 orth_account_myuseredit:
     path:   /account/my-user/{id}
     defaults: { _controller: OrthIndexBundle:Account:myuseredit }
-    
+
 orth_account_myusermanager:
     path:   /account/my-user/{id}/bestellsystem
     defaults: { _controller: OrthIndexBundle:Account:myusermanager }
-    
+
 orth_account_config_categories:
     path:   /account/config
     defaults: { _controller: OrthIndexBundle:Account:configCategories }
-   
+
 orth_account_config_addcategory:
     path:   /account/config/categories/add-category
     defaults: { _controller: OrthIndexBundle:Account:addcategory }
@@ -201,82 +201,97 @@ orth_account_config_deletecategory:
 orth_account_config_category:
     path:   /account/config/category/{id}
     defaults: { _controller: OrthIndexBundle:Account:category }
-    
+
 orth_account_config_addsubcategory:
     path:   /account/config/category/{id}/add-category
-    defaults: { _controller: OrthIndexBundle:Account:addsubcategory } 
-    
+    defaults: { _controller: OrthIndexBundle:Account:addsubcategory }
+
 orth_account_signup:
     path:   /signup
-    defaults: { _controller: OrthIndexBundle:Account:signup } 
-        
+    defaults: { _controller: OrthIndexBundle:Account:signup }
+
 orth_account_register:
     path:   /registrierung/{token}
-    defaults: { _controller: OrthIndexBundle:Account:register }     
-    
+    defaults: { _controller: OrthIndexBundle:Account:register }
+
+orth_account_approvals:
+    path:   /account/approvals
+    defaults: { _controller: OrthIndexBundle:Account:approvals }
+
+orth_account_approval:
+    path:   /account/approval/{id}
+    defaults: { _controller: OrthIndexBundle:Account:approval }
 #
 # customer shop routing
 #
-    
+
 orth_customershop_bestellsystem:
     path:     /account/bestellsystem
     defaults: { _controller: OrthIndexBundle:CustomerShop:bestellsystem}
-   
+
+orth_customershop_bestellsystem_product:
+    path:     /account/bestellsystem/product/{productslug}
+    defaults: { _controller: OrthIndexBundle:CustomerShop:customproduct}
+
 orth_customershop_addarticle:
     path:   /account/add
-    defaults: { _controller: OrthIndexBundle:CustomerShop:addarticle } 
- 
+    defaults: { _controller: OrthIndexBundle:CustomerShop:addarticle }
+
 orth_customershop_deletearticle:
     path:   /account/delete
-    defaults: { _controller: OrthIndexBundle:CustomerShop:deletearticle }       
-    
+    defaults: { _controller: OrthIndexBundle:CustomerShop:deletearticle }
+
+orth_customershop_requireapproval:
+    path:   /account/require-approval
+    defaults: { _controller: OrthIndexBundle:CustomerShop:requireapproval }
+
 #
-# security 
-# 
-    
+# security
+#
+
 orth_security_logincheck:
     path:   /login_check
     defaults: { _controller: OrthIndexBundle:Security:login_check }
-    
+
 orth_security_passwortvergessen:
     path:   /passwort-vergessen
     defaults: { _controller: OrthIndexBundle:Security:passwortvergessen }
-    
+
 orth_security_passwortreset:
     path:   /passwort-zuruecksetzen/{token}
     defaults: { _controller: OrthIndexBundle:Security:passwortreset }
-    
+
 logout:
     path: /logout
-    
+
 #
 # OCI interface routing
 #
-    
+
 orth_oci:
     path:   /oci
-    defaults: { _controller: OrthIndexBundle:Oci:search } 
-    
+    defaults: { _controller: OrthIndexBundle:Oci:search }
+
 orth_oci_punchout:
     path:   /oci/punchout
-    defaults: { _controller: OrthIndexBundle:Oci:ocipunchout } 
-    
+    defaults: { _controller: OrthIndexBundle:Oci:ocipunchout }
+
 #
 # glossar routing
 #
-    
+
 orth_glossar:
     path:   /glossar/{letter}
-    defaults: { _controller: OrthIndexBundle:Glossar:glossar, letter: null } 
-    
+    defaults: { _controller: OrthIndexBundle:Glossar:glossar, letter: null }
+
 orth_glossar_detail:
     path:   /glossar/{letter}/{string}
-    defaults: { _controller: OrthIndexBundle:Glossar:detail } 
-    
+    defaults: { _controller: OrthIndexBundle:Glossar:detail }
+
 #
-# delete if prod 
+# delete if prod
 #
 
 orth_shop_productedit:
     path:   /productedit
-    defaults: { _controller: OrthIndexBundle:Shop:productEdit } 
+    defaults: { _controller: OrthIndexBundle:Shop:productEdit }

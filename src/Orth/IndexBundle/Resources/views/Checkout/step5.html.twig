@@ -1,5 +1,5 @@
 {% extends "shopbase.html.twig" %}
-    {% block js_top %}       
+    {% block js_top %}
     {% endblock %}
 
 {% block content %}
@@ -12,7 +12,7 @@
             </ul>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-lg-9 col-md-9 col-sm-12">
             <div class="row userInfo">
@@ -36,7 +36,7 @@
                         <div class="row userInfo">
                             <div class="col-xs-12 col-sm-12 col-lg-6">
                                 <h3 class="block-title-2"> Rechnungsadresse </h3>
-                                {% if invAddress.companyName1 is not empty %} {{invAddress.companyName1}} {{invAddress.companyName2}} {{invAddress.companyName3}}}}<br />{% endif %}
+                                {% if invAddress.companyName1 is not empty %} {{invAddress.companyName1}} {{invAddress.companyName2}} {{invAddress.companyName3}}<br />{% endif %}
                                 {{invAddress.firstName}} {{invAddress.lastName}} <br />
                                 {{invAddress.street}}{% if invAddress.companyName1 is not empty %}<br />
                                 {{invAddress.street2}}{% endif %}<br />
@@ -51,7 +51,7 @@
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-6">
                                 <h3 class="block-title-2"> Lieferadresse </h3>
-                                {% if delAddress.companyName1 is not empty %} {{delAddress.companyName1}} {{delAddress.companyName2}} {{delAddress.companyName3}}}}<br />{% endif %}
+                                {% if delAddress.companyName1 is not empty %} {{delAddress.companyName1}} {{delAddress.companyName2}} {{delAddress.companyName3}}<br />{% endif %}
                                 {{delAddress.firstName}} {{delAddress.lastName}} <br />
                                 {{delAddress.street}}{% if delAddress.companyName1 is not empty %}<br />
                                 {{delAddress.street2}}{% endif %}<br />
@@ -73,11 +73,11 @@
                                     {% set gesamtpreis = 0 %}
                                     {% for product in cart %}
                                     <tr class="miniCartProduct {{product.varref}}">
-                                        <td style="width:10%"  rowspan="2" class="miniCartProductThumb">
+                                        <td style="width:15%"  rowspan="2" class="miniCartProductThumb">
                                             <div><a href="/product/{{product.pid}}-{{product.shortName|slugify}}"> <img src="/images/product/nw/{{product.image.0.picName}}" style="margin: 10px; max-height: 90px;" class="img-responsive" alt="img">
                                             </a></div>
                                         </td>
-                                        <td style="width:90%; vertical-align: top;">
+                                        <td style="width:80%; vertical-align: top;">
                                             <div class="miniCartDescription">
                                                 <h4><a href="/product/{{product.pid}}-{{product.shortName|slugify}}"> {{product.shortName}}</a></h4>
                                                 <span class="size">{{product.articlenumber}}</span>
@@ -86,13 +86,13 @@
                                         </td>
                                         </tr>
                                     <tr class="tr-border miniCartAction {{product.varref}}">
-                                        <td style="width:90%" class="delete"><a> <span>{{product.amount}} x {{product.price|number_format(2)}} € </span> <b class="pull-right" style="padding-right: 10px;"><span class="jSum2">{{(product.amount * product.price)|number_format(2)}}</span> €  </b></td>
+                                        <td style="width:85%" class="delete"><a> <span>{{product.amount}} x {{product.price|number_format(2)}} € </span> <b class="pull-right" style="padding-right: 10px;"><span class="jSum2">{{(product.amount * product.price)|number_format(2)}}</span> €  </b></td>
                                     </tr>
                                     {% set gesamtpreis = gesamtpreis + (product.amount * product.price) %}
                                     {% endfor %}
                                     {% if cart is empty %}
                                     <tr class="miniCartProduct">
-                                        <td style="width:20%">
+                                        <td style="width:85%">
                                               </td>
                                         <td style="width:60%">
                                             <div class="miniCartDescription">
@@ -167,8 +167,8 @@
                     </form>
                 </div>
             </div>
-            <!--/row end--> 
-        </div>    
+            <!--/row end-->
+        </div>
         <div class="col-lg-3 col-md-3 col-sm-12 rightSidebar">
             <div class="w100 cartMiniTable">
                 <table id="cart-summary" class="std table">

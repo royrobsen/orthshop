@@ -18,7 +18,7 @@
                                     </td>
                                     </tr>
                                 <tr class="tr-border miniCartAction {{product.varref}}">
-                                    <td style="width:80%" class="delete"><a> <span>{{product.amount}} x {{product.price|number_format(2)}} € </span> <a id="{{product.varref}}" class="btn btn-danger btn-sm pull-right entfernen">Entfernen </a> <b class="pull-right" style="padding-right: 10px;"><span class="jSum">{{(product.amount * product.price)|number_format(2)}}</span> €  </b></td>
+                                    <td style="width:80%" class="delete"><a> <span>{{product.amount}} x {{product.price|number_format(2, ',', '.')}} € </span> <a id="{{product.varref}}" class="btn btn-danger btn-sm pull-right entfernen">Entfernen </a> <b class="pull-right" style="padding-right: 10px;"><span class="jSum">{{(product.amount * product.price)|number_format(2, ',', '.')}}</span> €  </b></td>
                                 </tr>
                                 {% set gesamtpreis = gesamtpreis + (product.amount * product.price) %}
                                 {% endfor %}
@@ -35,12 +35,18 @@
                                 {% endif %}
                             </table>
                          </div>
-                        <!--/.miniCartTable-->                            
+                        <!--/.miniCartTable-->
                         <div class="miniCartFooter text-right">
-                            <h3 class="text-right subtotal"> Gesamt: <span id="jTotal">{{gesamtpreis}}</span> € </h3>
-                            <a class="btn btn-sm btn-danger" href="/warenkorb"> <i class="fa fa-shopping-cart"> </i> Korb anzeigen </a> {% if is_granted('ROLE_OCIUSER') %} <a
-                                class="btn btn-sm btn-primary" href="/oci/punchout"> SRM Transfer </a>  {% else %}
-                        <a class="btn btn-sm btn-primary" href="/account/checkout"> KASSE </a>{% endif %}</div>
+                            <h3 class="text-right subtotal"> Gesamt: <span id="jTotal">{{gesamtpreis|number_format(2, ',', '.')}}</span> € </h3>
+                            <a class="btn btn-sm btn-danger" href="/warenkorb"> <i class="fa fa-shopping-cart"> </i> Korb anzeigen </a>
+                          {% if is_granted('ROLE_OCIUSER') %}
+                            <a class="btn btn-sm btn-primary" href="/oci/punchout"> SRM Transfer </a>  {% else %}
+                            {% if (app.user.permOrder is defined and app.user.permOrder == 1 or app.user is null ) %}
+                            <a class="btn btn-sm btn-primary" href="/account/checkout"> KASSE </a>
+                            {% else %}
+                            <a class="btn btn-sm btn-primary" href="/account/require-approval"> Freigabe anfordern</a>
+                            {% endif %}
+                          {% endif %}
+                        </div>
                         </div>
                     <!--/.dropdown-menu-->
-                     
